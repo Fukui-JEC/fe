@@ -1,6 +1,6 @@
 Cookie変更忘れずに
 
-             {
+            {
                 category: "セキュリティ",
                 question: "",
                 choices: ["", "", "", ""],
