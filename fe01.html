@@ -106,10 +106,10 @@
             // 共通鍵暗号方式
             {
                 category: "セキュリティ",
-                question: "暗号化と復号に同じ鍵を使う暗号方式",
+                question: "暗号化と復号に「同じ鍵」を使う暗号方式",
                 choices: ["ハッシュ関数", "ハイブリッド暗号方式", "公開鍵暗号方式", "共通鍵暗号方式"],
                 correctIndex: 3,
-                explanation: "「共通鍵暗号方式」とは、暗号化と復号に同じ鍵を使う方式です。「同じ鍵」とくれば「共通鍵暗号方式」です",
+                explanation: "「共通鍵暗号方式」は、暗号化と復号に同じ鍵を使います。「同じ鍵」とくれば「共通鍵暗号方式」です",
                 explanationUrl: "https://wa3.i-3-i.info/word1837.html"
             },
             // 公開鍵暗号方式
@@ -129,6 +129,15 @@
                 correctIndex: 1,
                 explanation: "「ハイブリッド暗号方式」とは、「共通鍵暗号方式」と「公開鍵暗号方式」を組み合わせた方式です。データそのものは処理が速い共通鍵で暗号化し、その共通鍵を相手に安全に届けるためだけに、処理は遅いが安全な公開鍵暗号方式を利用します。インターネットのWebサイト通信を守る「HTTPS（SSL/TLS）」などで使われています。",
                 explanationUrl: "https://wa3.i-3-i.info/word17539.html"
+            },
+            // AES
+            {
+                category: "セキュリティ",
+                question: "暗号化と復号とで同じ鍵を使用する暗号化方式はどれか。",
+                choices: ["AES", "PKI", "RSA", "SHA-256"],
+                correctIndex: 0,
+                explanation: "「AES」(Advanced Encryption Standard)は、共通鍵暗号方式の暗号化アルゴリズムです。",
+                explanationUrl: "https://wa3.i-3-i.info/word15121.html"
             },
             // デジタルフォレンジックス
             {
@@ -192,15 +201,6 @@
                 correctIndex: 1,
                 explanation: "「デジタル署名」とは、「ハンコ」のようなもので、「送信者が本人であること」を証明します。具体的には、送信者しか持っていない「秘密鍵」で暗号化（署名）を行い、誰でも手に入る送信者の「公開鍵」で復号（検証）を行うことで、「なりすまし」と「改ざん」を防ぐ技術です。",
                 explanationUrl: "https://wa3.i-3-i.info/word14396.html"
-            },
-            // AES
-            {
-                category: "セキュリティ",
-                question: "暗号化と復号とで同じ鍵を使用する暗号化方式はどれか。",
-                choices: ["AES", "PKI", "RSA", "SHA-256"],
-                correctIndex: 0,
-                explanation: "「AES」(Advanced Encryption Standard)は、共通鍵暗号方式の標準的な方式です。",
-                explanationUrl: "https://wa3.i-3-i.info/word15121.html"
             },
 
         ];
