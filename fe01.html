@@ -45,7 +45,7 @@
                     
                     <!-- 問題画像エリア（画像がない場合は非表示になります） -->
                     <div id="question-image-container" class="text-center mb-4 d-none">
-                        <img id="question-image" src="" alt="問題の画像" class="img-fluid rounded shadow-sm" style="max-height: 250px;">
+                        <img id="question-image" src="" alt="問題の画像" class="img-fluid w-100 rounded shadow-sm">
                     </div>
                     
                     <div id="choices-container">
@@ -64,7 +64,7 @@
                             
                             <!-- 解説画像エリア（説明文の後に移動しました） -->
                             <div id="explanation-image-container" class="text-center mb-3 d-none">
-                                <img id="explanation-image" src="" alt="解説の画像" class="img-fluid rounded shadow-sm" style="max-height: 200px;">
+                                <img id="explanation-image" src="" alt="解説の画像" class="img-fluid w-100 rounded shadow-sm">
                             </div>
                             
                             <div>
@@ -123,8 +123,8 @@
                 image: "", 
                 choices: ["ハッシュ関数", "ハイブリッド暗号方式", "公開鍵暗号方式", "共通鍵暗号方式"],
                 correctIndex: 3,
-                explanation: "「共通鍵暗号方式」は、暗号化と復号に「同じ鍵」を使います。「同じ鍵」とくれば「共通鍵暗号方式」です",
-                explanationImage: "",
+                explanation: "「共通鍵暗号方式」とは、暗号化と復号で「同じ鍵」を使う暗号方式です。「同じ鍵」とくれば「共通鍵暗号方式」です",
+                explanationImage: "images/image015.png",
                 explanationUrl: "https://wa3.i-3-i.info/word1837.html"
             },
             // 公開鍵暗号方式
@@ -134,19 +134,19 @@
                 image: "", 
                 choices: ["ハッシュ関数", "ハイブリッド暗号方式", "公開鍵暗号方式", "共通鍵暗号方式"],
                 correctIndex: 2,
-                explanation: "「公開鍵暗号方式」とは、みんなに ばらまく「公開鍵」と、自分だけが隠し持つ「秘密鍵」という「鍵のペア」を使う暗号方式です。片方で暗号化したものは、ペアの鍵でしか復号できません。「鍵のペア」とくれば「公開鍵暗号方式」です。",
-                explanationImage: "",
+                explanation: "「公開鍵暗号方式」とは、みんなに ばらまく「公開鍵」と、自分だけが隠し持つ「秘密鍵」という「鍵のペア」を使う暗号方式です。公開鍵で暗号化したものは、秘密鍵でしか復号できません。「鍵のペア」とくれば「公開鍵暗号方式」です。",
+                explanationImage: "images/image016.png",
                 explanationUrl: "https://wa3.i-3-i.info/word1828.html"
             },
             // ハイブリッド暗号方式
             {
                 category: "セキュリティ",
-                question: "「共通鍵暗号方式」と、「公開鍵暗号方式」を組み合わせた方式で、実際のデータを共通鍵暗号で暗号化し、その共通鍵を公開鍵暗号で暗号化して送る方式。",
+                question: "「共通鍵暗号方式」と「公開鍵暗号方式」を組み合わせた方式。実際のデータを共通鍵暗号で暗号化し、その共通鍵を公開鍵暗号で暗号化して送る。",
                 image: "", 
                 choices: ["ハッシュ関数", "ハイブリッド暗号方式", "公開鍵暗号方式", "共通鍵暗号方式"],
                 correctIndex: 1,
                 explanation: "「ハイブリッド暗号方式」とは、「共通鍵暗号方式」と「公開鍵暗号方式」を組み合わせた方式です。まず公開鍵暗号方式で共通鍵を安全に受け渡し、その後はその共通鍵を使って共通鍵暗号方式でやり取りします。インターネットのWebサイト通信を守る「HTTPS（SSL/TLS）」などで使われています。",
-                explanationImage: "",
+                explanationImage: "images/image017.png",
                 explanationUrl: "https://wa3.i-3-i.info/word17539.html"
             },
             // AES
