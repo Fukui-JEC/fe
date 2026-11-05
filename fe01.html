@@ -152,12 +152,12 @@
             // AES
             {
                 category: "セキュリティ",
-                question: "暗号化と復号とで同じ鍵を使用する暗号化アルゴリズム（共通鍵暗号方式）はどれか。",
+                question: "共通鍵暗号方式の暗号化アルゴリズムはどれか。",
                 image: "", 
                 choices: ["AES", "PKI", "RSA", "SHA-256"],
                 correctIndex: 0,
-                explanation: "「AES」（Advanced Encryption Standard）は、現在主流の共通鍵暗号方式の暗号化アルゴリズムです。",
-                explanationImage: "",
+                explanation: "「AES」（Advanced Encryption Standard）は、現在最もよく使われている共通鍵暗号方式のアルゴリズムです。",
+                explanationImage: "images/image018.png",
                 explanationUrl: "https://wa3.i-3-i.info/word15121.html"
             },
             // RSA
@@ -168,7 +168,7 @@
                 choices: ["AES", "PKI", "RSA", "SHA-256"],
                 correctIndex: 2,
                 explanation: "「RSA」とは、巨大な数の素因数分解が困難なことを利用した、公開鍵暗号方式の暗号化アルゴリズムです。「素因数分解」といえば「RSA」です。",
-                explanationImage: "",
+                explanationImage: "images/image018.png",
                 explanationUrl: "https://wa3.i-3-i.info/word15142.html"
             },
             // 電子証明書
@@ -179,7 +179,7 @@
                 choices: ["デジタル署名", "電子証明書（デジタル証明書）", "電子透かし", "ワンタイムパスワード"],
                 correctIndex: 1,
                 explanation: "「電子証明書」（デジタル証明書）とは、「この公開鍵は、間違いなくAさんのものです」という証明をしてくれるデータのことです。「公開鍵証明書」とも呼ばれ、認証局（CA）という機関が発行します。",
-                explanationImage: "",
+                explanationImage: "images/image019.png",
                 explanationUrl: "https://wa3.i-3-i.info/word1831.html"
             },
             // 認証局
@@ -190,7 +190,7 @@
                 choices: ["CSIRT", "JPCERT/CC", "タイムスタンプ局（TSA）", "認証局（CA）"],
                 correctIndex: 3,
                 explanation: "「認証局（CA）」（Certification Authority）とは、公開鍵の持ち主が本物であるかを審査し、その証明書（電子証明書/デジタル証明書）を発行する機関です。インターネット上の「市役所」や「警察署」のような役割を果たします。",
-                explanationImage: "",
+                explanationImage: "images/image020.png",
                 explanationUrl: "https://wa3.i-3-i.info/word1832.html"
             },
             // デジタル署名
@@ -201,17 +201,17 @@
                 choices: ["共通鍵暗号方式", "デジタル署名", "電子透かし", "ハッシュ関数"],
                 correctIndex: 1,
                 explanation: "「デジタル署名」とは、「ハンコ」のようなもので、「送信者が本人であること」を証明します。具体的には、送信者しか持っていない「秘密鍵」で暗号化（署名）を行い、誰でも手に入る送信者の「公開鍵」で復号（検証）を行うことで、「なりすまし」と「改ざん」を防ぐ技術です。",
-                explanationImage: "",
+                explanationImage: "images/image021.png",
                 explanationUrl: "https://wa3.i-3-i.info/word14396.html"
             },
             // 危殆化
             {
                 category: "セキュリティ",
-                question: "コンピュータの計算能力の向上や、新しい解読手法によって暗号の強度が失われること。",
+                question: "コンピュータの計算能力の向上や、新しい解読手法によって、暗号の強度が失われること。",
                 image: "", 
                 choices: ["可用性", "危殆化", "脆弱性", "真正性"],
                 correctIndex: 1,
-                explanation: "「危殆化」とは、「危険な状態になること」という意味です。昔は安全だった暗号方式が、技術の進歩によって簡単に破られるようになってしまったり、脆弱性の発見によって、安全性を失ってしまうことを言います。",
+                explanation: "「危殆化」（きたいか）とは、「危険な状態になること」という意味です。昔は安全だった暗号方式が、技術の進歩によって簡単に破られるようになってしまったり、脆弱性の発見によって、安全性を失ってしまうことを言います。",
                 explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15905.html"
             },
@@ -223,21 +223,21 @@
                 choices: ["Aさんの公開鍵", "Aさんの秘密鍵", "Bさんの公開鍵", "Bさんの秘密鍵"],
                 correctIndex: 2,
                 explanation: "内容を秘密にして送るときは、受信者の公開鍵で暗号化します。復号できるのは、対応する秘密鍵を持つ受信者本人だけです。",
-                explanationImage: "",
+                explanationImage: "images/image016.png",
                 explanationUrl: "https://wa3.i-3-i.info/word1828.html"
             },
 
             // デジタルフォレンジックス
-            {
-                category: "セキュリティ",
-                question: "コンピュータに関する犯罪が生じた際に、コンピュータから削除された電子メールを復元するなどして、証拠を収集し保全すること。",
-                image: "", 
-                choices: ["デジタルフォレンジックス", "デジタルサイネージ", "ペネトレーションテスト", "ブロックチェーン"],
-                correctIndex: 0,
-                explanation: "「デジタルフォレンジックス」（Forensics＝鑑識）は、「デジタル鑑識」とも呼ばれます。犯罪捜査のためにデジタル機器に記録されたデータの回収や分析をすることです。",
-                explanationImage: "",
-                explanationUrl: "https://wa3.i-3-i.info/word110187.html"
-            },
+            // {
+            //     category: "セキュリティ",
+            //     question: "コンピュータに関する犯罪が生じた際に、コンピュータから削除された電子メールを復元するなどして、証拠を収集し保全すること。",
+            //     image: "", 
+            //     choices: ["デジタルフォレンジックス", "デジタルサイネージ", "ペネトレーションテスト", "ブロックチェーン"],
+            //     correctIndex: 0,
+            //     explanation: "「デジタルフォレンジックス」（Forensics＝鑑識）は、「デジタル鑑識」とも呼ばれます。犯罪捜査のためにデジタル機器に記録されたデータの回収や分析をすることです。",
+            //     explanationImage: "",
+            //     explanationUrl: "https://wa3.i-3-i.info/word110187.html"
+            // },
             // 対タンパ性
             {
                 category: "セキュリティ",
@@ -246,7 +246,7 @@
                 choices: ["可用性", "真正性", "透過性", "対タンパ性"],
                 correctIndex: 3,
                 explanation: "「対タンパ性」とは、ICカードなどのデータを不正に読み取られないようにする性質のことです。例えばICカードを無理やりこじ開けるなどした瞬間に、中のデータを自動的に破壊して読めなくします（自爆）。",
-                explanationImage: "",
+                explanationImage: "https://assets.st-note.com/img/1766324727-PBtfexERaSInljH1cQ3GpMLY.jpg",
                 explanationUrl: "https://wa3.i-3-i.info/word19055.html"
             },
             // S/MIME
@@ -260,7 +260,7 @@
                 explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15950.html"
             },
-            // ブロックチェーン
+            // ブロックチェーン★除外
             {
                 category: "セキュリティ",
                 question: "ビットコインなどの暗号資産の基盤技術として利用されており、複数のコンピュータが同じ内容のデータを保持し、各コンピュータがデータの正当性を検証して担保することによって、改ざんが非常に困難な技術",
@@ -271,10 +271,10 @@
                 explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word16453.html"
             },
-            // ソーシャルエンジニアリング
+            // ソーシャルエンジニアリング★除外
             {
                 category: "セキュリティ",
-                question: "ITの技術を使うのではなく、人間の心理的な隙を利用して機密情報を盗み出す手法。例えば、背中からパスワードを盗み見たり、ゴミ箱をあさったりシステム管理者になりすましてパスワードを聞き出すなどがある。",
+                question: "ITの技術を使うのではなく、人間の心理的な隙を利用して機密情報を盗み出す手法。例えば、背中からパスワードを盗み見たり、ゴミ箱をあさったりシステム管理者になりすましてパスワードを聞き出すなど。",
                 image: "", 
                 choices: ["ブルートフォース攻撃", "ソーシャルエンジニアリング", "SQLインジェクション", "ゼロデイ攻撃"],
                 correctIndex: 1,
@@ -290,7 +290,7 @@
                 choices: ["機会、情報、正当化", "機会、正当化、動機", "機会、情報、動機", "情報、正当化、動機"],
                 correctIndex: 1,
                 explanation: "「機会、正当化、動機」を不正のトライアングルと呼び、3つの要素が揃った場合に不正が発生することがあります。「機会＝不正のチャンス」「正当化＝不正の言い訳」「動機＝不正を行う理由」",
-                explanationImage: "",
+                explanationImage: "https://www.abitus.co.jp/column_voice/img1.png",
                 explanationUrl: "https://wa3.i-3-i.info/word15928.html"
             },
             // ポートスキャン
@@ -301,7 +301,7 @@
                 choices: ["IPスプーフィング", "ソーシャルエンジニアリング", "ポートスキャン", "ブルートフォース攻撃"],
                 correctIndex: 2,
                 explanation: "「ポートスキャン」とは、サーバ上で動いているサービス(アプリケーションソフトウェア)を調査する行為です。攻撃できそうなサービスがあるかどうかの事前調査を行います。例えるなら、家の周りをぐるぐると歩き回って、『どこか開けっぱなしの窓はないか？』と探ることに似ています。",
-                explanationImage: "",
+                explanationImage: "https://cyber-insurance.jp/wp-content/uploads/2025/06/cyber-56_2_portscan.jpg",
                 explanationUrl: "https://wa3.i-3-i.info/word14945.html"
             },
             // パスワードリスト攻撃
@@ -345,7 +345,7 @@
                 choices: ["キーロガー", "バックドア", "ボット", "ランサムウェア"],
                 correctIndex: 0,
                 explanation: "「キーロガー」（KeyLogger）とは、キーボード入力を記録するプログラムです。ネットカフェのPCに仕掛けられていることがあり、利用者が入力したパスワードなどを記録し、盗み出します。",
-                explanationImage: "",
+                explanationImage: "http://www.sql-master.net/wp-content/uploads/2018/10/keylogger-1.png",
                 explanationUrl: "https://wa3.i-3-i.info/word14100.html"
             },
             // フィッシング
@@ -356,7 +356,7 @@
                 choices: ["クロスサイトスクリプティング", "ショルダーハック", "フィッシング", "ブルートフォース攻撃"],
                 correctIndex: 2,
                 explanation: "「フィッシング」とは、利用者を偽サイトに誘導し、個人情報を入力させて、それらを不正に取得することです。被害者をだまして「釣る」からフィッシングです。",
-                explanationImage: "",
+                explanationImage: "images/image022.png",
                 explanationUrl: "https://wa3.i-3-i.info/word15830.html"
             },
             // ドライブバイダウンロード
