@@ -41,7 +41,12 @@
                     <div class="mb-2">
                         <span id="category-badge" class="badge bg-primary px-3 py-2 rounded-pill shadow-sm"></span>
                     </div>
-                    <p id="question-text" class="fs-5 mb-4 fw-bold">読み込み中...</p>
+                    <p id="question-text" class="fs-5 mb-3 fw-bold">読み込み中...</p>
+                    
+                    <!-- 問題画像エリア（画像がない場合は非表示になります） -->
+                    <div id="question-image-container" class="text-center mb-4 d-none">
+                        <img id="question-image" src="" alt="問題の画像" class="img-fluid rounded shadow-sm" style="max-height: 250px;">
+                    </div>
                     
                     <div id="choices-container">
                         <!-- 選択肢がJavaScriptで生成されます -->
@@ -53,7 +58,15 @@
                         
                         <div id="explanation-container" class="card bg-light text-start p-3 mb-3 d-none border-0">
                             <h6 class="fw-bold mb-2">💡 解説</h6>
-                            <p id="explanation-text" class="small mb-2 text-secondary"></p>
+                            
+                            <!-- 解説文 -->
+                            <p id="explanation-text" class="small mb-3 text-secondary"></p>
+                            
+                            <!-- 解説画像エリア（説明文の後に移動しました） -->
+                            <div id="explanation-image-container" class="text-center mb-3 d-none">
+                                <img id="explanation-image" src="" alt="解説の画像" class="img-fluid rounded shadow-sm" style="max-height: 200px;">
+                            </div>
+                            
                             <div>
                                 <a id="explanation-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-info">
                                     詳細ページを開く ↗
@@ -107,90 +120,110 @@
             {
                 category: "セキュリティ",
                 question: "暗号化と復号に「同じ鍵」を使う暗号方式",
+                image: "", 
                 choices: ["ハッシュ関数", "ハイブリッド暗号方式", "公開鍵暗号方式", "共通鍵暗号方式"],
                 correctIndex: 3,
                 explanation: "「共通鍵暗号方式」は、暗号化と復号に「同じ鍵」を使います。「同じ鍵」とくれば「共通鍵暗号方式」です",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word1837.html"
             },
             // 公開鍵暗号方式
             {
                 category: "セキュリティ",
                 question: "「鍵のペア」を使い、一方で暗号化したものはもう一方でしか復号できない暗号方式",
+                image: "", 
                 choices: ["ハッシュ関数", "ハイブリッド暗号方式", "公開鍵暗号方式", "共通鍵暗号方式"],
                 correctIndex: 2,
                 explanation: "「公開鍵暗号方式」とは、みんなに ばらまく「公開鍵」と、自分だけが隠し持つ「秘密鍵」という「鍵のペア」を使う暗号方式です。片方で暗号化したものは、ペアの鍵でしか復号できません。「鍵のペア」とくれば「公開鍵暗号方式」です。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word1828.html"
             },
             // ハイブリッド暗号方式
             {
                 category: "セキュリティ",
                 question: "「共通鍵暗号方式」と、「公開鍵暗号方式」を組み合わせた方式で、実際のデータを共通鍵暗号で暗号化し、その共通鍵を公開鍵暗号で暗号化して送る方式。",
+                image: "", 
                 choices: ["ハッシュ関数", "ハイブリッド暗号方式", "公開鍵暗号方式", "共通鍵暗号方式"],
                 correctIndex: 1,
                 explanation: "「ハイブリッド暗号方式」とは、「共通鍵暗号方式」と「公開鍵暗号方式」を組み合わせた方式です。まず公開鍵暗号方式で共通鍵を安全に受け渡し、その後はその共通鍵を使って共通鍵暗号方式でやり取りします。インターネットのWebサイト通信を守る「HTTPS（SSL/TLS）」などで使われています。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word17539.html"
             },
             // AES
             {
                 category: "セキュリティ",
                 question: "暗号化と復号とで同じ鍵を使用する暗号化アルゴリズム（共通鍵暗号方式）はどれか。",
+                image: "", 
                 choices: ["AES", "PKI", "RSA", "SHA-256"],
                 correctIndex: 0,
                 explanation: "「AES」（Advanced Encryption Standard）は、現在主流の共通鍵暗号方式の暗号化アルゴリズムです。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15121.html"
             },
             // RSA
             {
                 category: "セキュリティ",
                 question: "公開鍵暗号方式の暗号アルゴリズムの一つで、巨大な数の素因数分解が難しいことを利用したもの。",
+                image: "", 
                 choices: ["AES", "PKI", "RSA", "SHA-256"],
                 correctIndex: 2,
                 explanation: "「RSA」とは、巨大な数の素因数分解が困難なことを利用した、公開鍵暗号方式の暗号化アルゴリズムです。「素因数分解」といえば「RSA」です。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15142.html"
             },
             // 電子証明書
             {
                 category: "セキュリティ",
                 question: "通信相手から送られてきた「公開鍵」が、間違いなく「送信者本人の公開鍵」であることを保証するもの",
+                image: "", 
                 choices: ["デジタル署名", "電子証明書（デジタル証明書）", "電子透かし", "ワンタイムパスワード"],
                 correctIndex: 1,
                 explanation: "「電子証明書」（デジタル証明書）とは、「この公開鍵は、間違いなくAさんのものです」という証明をしてくれるデータのことです。「公開鍵証明書」とも呼ばれ、認証局（CA）という機関が発行します。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word1831.html"
             },
             // 認証局
             {
                 category: "セキュリティ",
                 question: "利用者やサーバーの公開鍵が「間違いなく本人のものである（なりすましではない）」ことを証明する「電子証明書（デジタル証明書）」を発行する機関。",
+                image: "", 
                 choices: ["CSIRT", "JPCERT/CC", "タイムスタンプ局（TSA）", "認証局（CA）"],
                 correctIndex: 3,
                 explanation: "「認証局（CA）」（Certification Authority）とは、公開鍵の持ち主が本物であるかを審査し、その証明書（電子証明書/デジタル証明書）を発行する機関です。インターネット上の「市役所」や「警察署」のような役割を果たします。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word1832.html"
             },
             // デジタル署名
             {
                 category: "セキュリティ",
                 question: "「送信者が間違いなく本人であること（なりすましではないこと）」と、「データが改ざんされていないこと」を、受信者側で確認できるようにするための仕組み。",
+                image: "", 
                 choices: ["共通鍵暗号方式", "デジタル署名", "電子透かし", "ハッシュ関数"],
                 correctIndex: 1,
                 explanation: "「デジタル署名」とは、「ハンコ」のようなもので、「送信者が本人であること」を証明します。具体的には、送信者しか持っていない「秘密鍵」で暗号化（署名）を行い、誰でも手に入る送信者の「公開鍵」で復号（検証）を行うことで、「なりすまし」と「改ざん」を防ぐ技術です。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word14396.html"
             },
             // 危殆化
             {
                 category: "セキュリティ",
                 question: "コンピュータの計算能力の向上や、新しい解読手法によって暗号の強度が失われること。",
+                image: "", 
                 choices: ["可用性", "危殆化", "脆弱性", "真正性"],
                 correctIndex: 1,
                 explanation: "「危殆化」とは、「危険な状態になること」という意味です。昔は安全だった暗号方式が、技術の進歩によって簡単に破られるようになってしまったり、脆弱性の発見によって、安全性を失ってしまうことを言います。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15905.html"
             },
             // 公開鍵の使い方
             {
                 category: "セキュリティ",
                 question: "Aさんは、Bさんにインターネットを使ってデータを送ろうとしている。データの内容は秘密にする必要があるので、公開鍵暗号方式を使って暗号化して送信したい。そのときに使用する鍵はどれか。",
+                image: "", 
                 choices: ["Aさんの公開鍵", "Aさんの秘密鍵", "Bさんの公開鍵", "Bさんの秘密鍵"],
                 correctIndex: 2,
                 explanation: "内容を秘密にして送るときは、受信者の公開鍵で暗号化します。復号できるのは、対応する秘密鍵を持つ受信者本人だけです。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word1828.html"
             },
 
@@ -198,293 +231,356 @@
             {
                 category: "セキュリティ",
                 question: "コンピュータに関する犯罪が生じた際に、コンピュータから削除された電子メールを復元するなどして、証拠を収集し保全すること。",
+                image: "", 
                 choices: ["デジタルフォレンジックス", "デジタルサイネージ", "ペネトレーションテスト", "ブロックチェーン"],
                 correctIndex: 0,
                 explanation: "「デジタルフォレンジックス」（Forensics＝鑑識）は、「デジタル鑑識」とも呼ばれます。犯罪捜査のためにデジタル機器に記録されたデータの回収や分析をすることです。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word110187.html"
             },
             // 対タンパ性
             {
                 category: "セキュリティ",
                 question: "ICカードを分解してデータを読み取ろうとすると、自動でデータが消去されるなど、不正にデータを読み取られづらくする性質",
+                image: "", 
                 choices: ["可用性", "真正性", "透過性", "対タンパ性"],
                 correctIndex: 3,
                 explanation: "「対タンパ性」とは、ICカードなどのデータを不正に読み取られないようにする性質のことです。例えばICカードを無理やりこじ開けるなどした瞬間に、中のデータを自動的に破壊して読めなくします（自爆）。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word19055.html"
             },
             // S/MIME
             {
                 category: "セキュリティ",
                 question: "電子メールを安全に送るためのプロトコル。「暗号化」して盗聴を防いだり、「デジタル署名」により送信者のなりすましを防ぐことができる。",
+                image: "", 
                 choices: ["IMAP4", "S/MIME", "SMTP", "WPA2"],
                 correctIndex: 1,
                 explanation: "「S/MIME」（Secure / Multipurpose Internet Mail Extensions）とは、メールを暗号化する仕組みです。メールの暗号化とデジタル署名により、メールの盗聴やなりすまし（フィッシング詐欺など）を防ぐことができます。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15950.html"
             },
             // ブロックチェーン
             {
                 category: "セキュリティ",
                 question: "ビットコインなどの暗号資産の基盤技術として利用されており、複数のコンピュータが同じ内容のデータを保持し、各コンピュータがデータの正当性を検証して担保することによって、改ざんが非常に困難な技術",
+                image: "", 
                 choices: ["クラウドコンピューティング", "ディープラーニング", "ブロックチェーン", "リレーショナルデータベース"],
                 correctIndex: 2,
                 explanation: "「ブロックチェーン」とは、ビットコインなどの暗号資産を管理する技術です。取引記録の改ざんが非常に難しいという特徴をもちます。「ビットコイン」とくればブロックチェーンです。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word16453.html"
             },
             // ソーシャルエンジニアリング
             {
                 category: "セキュリティ",
                 question: "ITの技術を使うのではなく、人間の心理的な隙を利用して機密情報を盗み出す手法。例えば、背中からパスワードを盗み見たり、ゴミ箱をあさったりシステム管理者になりすましてパスワードを聞き出すなどがある。",
+                image: "", 
                 choices: ["ブルートフォース攻撃", "ソーシャルエンジニアリング", "SQLインジェクション", "ゼロデイ攻撃"],
                 correctIndex: 1,
                 explanation: "「ソーシャルエンジニアリング」は、ITを使わず、人間の心理的な隙をついて不正を行います。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word1231.html"
             },
             // 不正のトライアングル
             {
                 category: "セキュリティ",
                 question: "「不正のトライアングル」と呼ばれ、これが揃うと不正が発生する可能性がある3つの要素はどれか。",
+                image: "", 
                 choices: ["機会、情報、正当化", "機会、正当化、動機", "機会、情報、動機", "情報、正当化、動機"],
                 correctIndex: 1,
                 explanation: "「機会、正当化、動機」を不正のトライアングルと呼び、3つの要素が揃った場合に不正が発生することがあります。「機会＝不正のチャンス」「正当化＝不正の言い訳」「動機＝不正を行う理由」",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15928.html"
             },
             // ポートスキャン
             {
                 category: "セキュリティ",
                 question: "サイバー攻撃を行う前の事前準備として、攻撃できそうなサービスがあるかどうかを調査する行為",
+                image: "", 
                 choices: ["IPスプーフィング", "ソーシャルエンジニアリング", "ポートスキャン", "ブルートフォース攻撃"],
                 correctIndex: 2,
                 explanation: "「ポートスキャン」とは、サーバ上で動いているサービス(アプリケーションソフトウェア)を調査する行為です。攻撃できそうなサービスがあるかどうかの事前調査を行います。例えるなら、家の周りをぐるぐると歩き回って、『どこか開けっぱなしの窓はないか？』と探ることに似ています。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word14945.html"
             },
             // パスワードリスト攻撃
             {
                 category: "セキュリティ",
                 question: "不正に入手した他サイトのIDとパスワードを用いてログインを試みる手法。",
+                image: "", 
                 choices: ["DoS攻撃", "SQLインジェクション", "パスワードリスト攻撃", "フィッシング"],
                 correctIndex: 2,
                 explanation: "「パスワードリスト攻撃」とは、どこかから不正に入手したIDとパスワードを試す攻撃です。複数のサイトで同じIDとパスワードを使いまわす利用者が多いことに着目しています。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word14991.html"
             },
             // スパイウェア
             {
                 category: "セキュリティ",
                 question: "利用者の個人情報やアクセス履歴などの情報を不正に収集するプログラム",
+                image: "", 
                 choices: ["スパイウェア", "トロイの木馬", "ボット", "ランサムウェア"],
                 correctIndex: 0,
                 explanation: "「スパイウェア」とは、利用者に気づかれないように個人情報などを収集するプログラムです。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word1127.html"
             },
             // バックドア
             {
                 category: "セキュリティ",
                 question: "コンピュータへの不正侵入に成功した攻撃者が、次回も簡単にシステムに不正侵入するための裏口",
+                image: "", 
                 choices: ["キーロガー", "ハニーポット", "バックドア", "ボット"],
                 correctIndex: 2,
                 explanation: "「バックドア」とは、システムに不正アクセスするための裏口です。システムにバックドアを仕掛けることで、パスワード認証などせずに簡単に侵入できるようになります。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15087.html"
             },
             // キーロガー
             {
                 category: "セキュリティ",
                 question: "キーボード入力を記録するプログラム",
+                image: "", 
                 choices: ["キーロガー", "バックドア", "ボット", "ランサムウェア"],
                 correctIndex: 0,
                 explanation: "「キーロガー」（KeyLogger）とは、キーボード入力を記録するプログラムです。ネットカフェのPCに仕掛けられていることがあり、利用者が入力したパスワードなどを記録し、盗み出します。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word14100.html"
             },
             // フィッシング
             {
                 category: "セキュリティ",
                 question: "実在する会社などに似せた偽のWebサイトにアクセスさせ、個人情報をだまし取る",
+                image: "", 
                 choices: ["クロスサイトスクリプティング", "ショルダーハック", "フィッシング", "ブルートフォース攻撃"],
                 correctIndex: 2,
                 explanation: "「フィッシング」とは、利用者を偽サイトに誘導し、個人情報を入力させて、それらを不正に取得することです。被害者をだまして「釣る」からフィッシングです。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15830.html"
             },
             // ドライブバイダウンロード
             {
                 category: "セキュリティ",
                 question: "悪意のあるWebサイトを閲覧するだけで、マルウェアに感染させる攻撃",
+                image: "", 
                 choices: ["DDoS攻撃", "SQLインジェクション", "ドライブバイダウンロード", "フィッシング"],
                 correctIndex: 2,
                 explanation: "「ドライブバイダウンロード」とは、Webブラウザの脆弱性を利用し、Webページを見ただけでウイルスに感染させる攻撃です。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word12467.html"
             },
             // SEOポイズニング
             {
                 category: "セキュリティ",
                 question: "検索サイトの検索結果の上位に悪意のあるサイトが並ぶように細工する攻撃",
+                image: "", 
                 choices: ["SEOポイズニング", "SQLインジェクション", "ゼロデイ攻撃", "ドライブバイダウンロード"],
                 correctIndex: 0,
                 explanation: "「SEOポイズニング」（Search Engine Optimization Poisoning）とは、悪意のあるサイトを検索サイトの検索結果の上位に表示させ、より多くの利用者に閲覧させることです。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word111400.html"
             },
             // DNSキャッシュポイズニング
             {
                 category: "セキュリティ",
                 question: "ドメイン名とIPアドレスの対応情報を不正に書き換えることによって、利用者を偽のサイトへ誘導する攻撃。",
+                image: "", 
                 choices: ["DDoS攻撃", "DNSキャッシュポイズニング", "SQLインジェクション", "フィッシング"],
                 correctIndex: 1,
                 explanation: "「DNSキャッシュポイズニング」とは、DNSのキャッシュを不正に書き換えて本来とは別のWebサイトに誘導する攻撃です。利用者が正しいURLを入力しているにもかかわらず、偽サイトへ飛ばされてしまうため、被害に気づきにくい非常に危険な攻撃です。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word111943.html"
             },
             // SQLインジェクション
             {
                 category: "セキュリティ",
                 question: "Webアプリケーション上で、不正なSQL文を実行することで、データベースを改ざんしたり、不正にデータを取得したりする攻撃。",
+                image: "", 
                 choices: ["SQLインジェクション", "クロスサイトスクリプティング", "ディレクトリトラバーサル", "バッファオーバーフロー"],
                 correctIndex: 0,
                 explanation: "「SQLインジェクション」（Injection=注入）とは、入力フォームに悪意のあるSQL文を「注入」して、裏側にあるデータベース（顧客名簿など）を不正に操作する攻撃です",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word12800.html"
             },
             // ディレクトリトラバーサル
             {
                 category: "セキュリティ",
                 question: "攻撃者がパス名を使ってファイルを指定し、管理者の意図していないファイルを不正に閲覧する手法",
+                image: "", 
                 choices: ["SQLインジェクション", "クロスサイトスクリプティング", "ディレクトリトラバーサル", "バッファオーバーフロー"],
                 correctIndex: 2,
                 explanation: "「ディレクトリトラバーサル」（Directory Traversal）とは、管理者が想定していなかったファイル名を指定することで、本当は見られないはずだったファイルの中身を見ようとする攻撃です。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15913.html"
             },
             // リスクの受容
             {
                 category: "マネジメント",
                 question: "リスク対応策のうち、リスクの発生確率や影響度が非常に小さいため、あえて何もしないこと。",
+                image: "", 
                 choices: ["リスクの回避", "リスクの軽減（低減）", "リスクの受容（保有）", "リスクの転嫁"],
                 correctIndex: 2,
                 explanation: "「リスクの受容（保有）」とは、あえて何も対策しないことです。もしものときはその損害を受け入れます（受容）。『例：画面の保護フィルムは高いから貼らない。もし割れたら、その時はその時だ』",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word18829.html"
             },
             // リスクの軽減
             {
                 category: "マネジメント",
                 question: "リスク対応策のうち、リスクが起きる「確率」を下げたり、万が一リスクが発生してしまった時の「被害の大きさ（ダメージ）」を小さく抑えるための対策をすること。",
+                image: "", 
                 choices: ["リスクの回避", "リスクの軽減（低減）", "リスクの受容（保有）", "リスクの転嫁"],
                 correctIndex: 1,
                 explanation: "「リスクの軽減（低減）」とは、リスクの発生確率を下げたり、被害ができるだけ小さくなるように対策しておくことです。『例：スマホを落としても割れにくいように頑丈なケースに入れる』",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word111798.html"
             },
             // リスクの転嫁
             {
                 category: "マネジメント",
                 question: "リスク対応策のうち、保険を掛ける、他社に業務を委託するなど、リスクを他社に移すこと。",
+                image: "", 
                 choices: ["リスクの回避", "リスクの軽減（低減）", "リスクの受容（保有）", "リスクの移転（共有）"],
                 correctIndex: 3,
                 explanation: "「リスクの移転（共有）」とは、「保険」をかけるなどして万が一のときの被害を別の会社に肩代わりしてもらうことです。「保険」とくれば必ず「リスクの移転」です。『例：月々お金を払ってAppleCare（端末保証・保険）に入る』",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word111800.html"
             },
             // BCP
             {
                 category: "ストラテジ",
                 question: "企業が大規模な災害などの緊急事態に陥った場合にも、事業を継続するための行動計画",
+                image: "", 
                 choices: ["BCP", "BPO", "BTO", "CSR"],
                 correctIndex: 0,
                 explanation: "「BCP」（Business Continuity Plan：事業継続計画）とは、大規模な災害が起こったときにも、「どうやって事業を続けるか」（事業継続）の計画です。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word12143.html"
             },
             // 機密性
             {
                 category: "セキュリティ",
                 question: "情報セキュリティの3大要素の一つで、「許可された人だけが情報にアクセスできる」こと",
+                image: "", 
                 choices: ["完全性", "可用性", "機密性", "真正性"],
                 correctIndex: 2,
                 explanation: "「機密性」とは、データを見せたくない人には見せないように保護された状態のことです。（例：スマホの画面ロック、パスワード設定、ファイルの暗号化など）",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15461.html"
             },
             // 完全性
             {
                 category: "セキュリティ",
                 question: "情報セキュリティの3大要素の一つで、情報が勝手に改ざんされたり破壊されたりしないこと",
+                image: "", 
                 choices: ["完全性", "可用性", "機密性", "真正性"],
                 correctIndex: 0,
                 explanation: "「完全性」とは、情報が「正しい（改ざんされていない）」状態であることです。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15462.html"
             },
             // 可用性
             {
                 category: "セキュリティ",
                 question: "情報セキュリティの3大要素の一つで、利用者が必要なときにいつでも利用できること",
+                image: "", 
                 choices: ["完全性", "可用性", "機密性", "真正性"],
                 correctIndex: 1,
                 explanation: "「可用性」とは、いつでも必要な時に使えることです。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15460.html"
             },
             // IDS
             {
                 category: "セキュリティ",
                 question: "サーバやネットワークを監視し,侵入や侵害を検知した場合に管理者へ通知するシステム。",
+                image: "", 
                 choices: ["IDS", "IPS", "検疫ネットワーク", "VPN"],
                 correctIndex: 0,
                 explanation: "「IDS」（Intrusion Detection System）とは、「侵入検知システム」のことです。サーバーやネットワークを監視し、侵入を検知した場合に管理者にメールなどで通知します。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15235.html"
             },
             // WAF
             {
                 category: "セキュリティ",
                 question: "Webサイトへのアクセス内容を監視し,攻撃とみなされるパターンを検知したときにそのアクセスを遮断する。",
+                image: "", 
                 choices: ["DMZ", "IDS", "MACアドレスフィルタリング", "WAF"],
                 correctIndex: 3,
                 explanation: "「WAF」（Web Application Firewall）とは、Webサイトを不正なアクセスから保護するシステムのことです。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15376.html"
             },
             // DMZ
             {
                 category: "セキュリティ",
                 question: "「非武装地帯」を意味する領域で、外部のインターネットと内部ネットワーク（LAN）の間につくられる中間のネットワーク領域",
+                image: "", 
                 choices: ["ファイアウォール", "プロキシ", "DMZ", "DNS"],
                 correctIndex: 2,
                 explanation: "DMZとは、外部ネットワークと内部ネットワークの間につくられる中間の領域です。たとえば家の「庭」のようなもので、勝手に入ってほしくないが、郵便屋さんだけは手紙を届けるために入ってもよいような中間の領域です。外部からのアクセスを許可しつつ、万が一そのサーバが乗っ取られても、社内の機密データを扱う内部ネットワークへの侵入を防ぐための「緩衝地帯」です。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word12988.html"
             },
             // HTTPS
             {
                 category: "セキュリティ",
                 question: "Webサイトを安全に閲覧するプロトコルで、WebサーバとWebブラウザの間の通信を暗号化したり、通信先のサーバーが本物であることを確認する。",
+                image: "", 
                 choices: ["FTP", "HTTP", "HTTPS", "SMTP"],
                 correctIndex: 2,
                 explanation: "「HTTPS」（HTTP Secure）とは、SSL/TLSを用いてHTTPによる通信を暗号化するためのプロトコルです。また、サーバ証明書によって通信先のWebサーバーが本物であることも確認でき、安全に通信を行うことができます。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word1232.html"
             },
             // WPA3
             {
                 category: "セキュリティ",
                 question: "無線LAN上の通信を暗号化する規格",
+                image: "", 
                 choices: ["MACアドレスフィルタリング", "WPA3", "WPS", "ESSID"],
                 correctIndex: 1,
                 explanation: "「WPA3」（Wi-Fi Protected Access 3）とは、無線LANのセキュリティ規格です。無線LAN（PCとアクセスポイントの間）を暗号化します。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word17975.html"
             },
             // パターンマッチング法
             {
                 category: "セキュリティ",
                 question: "マルウェア検出方法の一つで、すでに見つかっているマルウェアの特徴（シグネチャコード）と一致するか検査する方法。",
+                image: "", 
                 choices: ["サンドボックス", "パターンマッチング法", "ビヘイビア法", "ヒューリスティック法"],
                 correctIndex: 1,
                 explanation: "「パターンマッチング法」とは、すでに発見されているウイルスの特徴（シグネチャコード）をまとめた「ウイルス定義ファイル（パターンファイル）」と比較してウイルスを検出する方法です。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word111880.html"
             },
             // BYOD
             {
                 category: "セキュリティ",
                 question: "従業員が私物のスマートフォンやノートPCなどの情報端末を、業務に使うこと",
+                image: "", 
                 choices: ["BCP", "BYOD", "MDM", "VPN"],
                 correctIndex: 1,
                 explanation: "「BYOD」（Bring Your Own Device）とは、社員の「私物」の情報端末を、会社の許可を得たうえで仕事に使うことです。ただし、社員のプライベート用のコンピュータには会社のセキュリティ管理が届きにくいため、ウイルス感染などのリスクは高まります。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word12059.html"
             },
             // MDM
             {
                 category: "セキュリティ",
                 question: "業務に使うスマートフォンに対して、セキュリティポリシーに従った一元的な設定をしたり、専用のアプリをインストールすることでスマートフォンの利用状況（いつ、どこで使ったか）を一元管理すること",
+                image: "", 
                 choices: ["BYOD", "MDM", "SSO", "VPN"],
                 correctIndex: 1,
                 explanation: "「MDM」（Mobile Device Management：モバイル端末管理）とは、業務に使うスマートフォンをセキュリティポリシーに従って一元管理することです。MDMを導入しておけば、万がースマートフォンを紛失した場合に、スマートフォンを遠隔操作することで、機密データを削除することも可能です。",
+                explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word12920.html"
             },
-
-
         ];
+
 
         // 状態管理
         let queueIndices = [];       
@@ -534,6 +630,10 @@
         const progressBadge = document.getElementById("progress-badge");
         const categoryBadge = document.getElementById("category-badge");
         const questionText = document.getElementById("question-text");
+        
+        const questionImageContainer = document.getElementById("question-image-container");
+        const questionImage = document.getElementById("question-image");
+        
         const choicesContainer = document.getElementById("choices-container");
         const resultMessage = document.getElementById("result-message");
         const nextBtn = document.getElementById("next-btn");
@@ -549,6 +649,10 @@
         
         const explanationContainer = document.getElementById("explanation-container");
         const explanationText = document.getElementById("explanation-text");
+        
+        const explanationImageContainer = document.getElementById("explanation-image-container");
+        const explanationImage = document.getElementById("explanation-image");
+        
         const explanationLink = document.getElementById("explanation-link");
 
         // --- 初期化処理 ---
@@ -563,8 +667,6 @@
                                 Array.isArray(savedData.queue) &&
                                 savedData.queue.every(idx => idx >= 0 && idx < originalQuizData.length);
 
-            // 【変更点】savedData.queue.length > 0 の条件を削除。
-            // 残り0問（クリア状態）のデータでも有効なセーブデータとして読み込むようにしました。
             if (!forceReset && isValidSave) {
                 queueIndices = savedData.queue;
                 attemptedIndices = savedData.attempted || [];
@@ -589,11 +691,9 @@
         // --- 不正解問題への再挑戦 ---
         function retryMissedQuestions() {
             queueIndices = [...missedFirstTryIndices];
-            
             attemptedIndices = [];
             firstTryCorrectCount = 0;
             missedFirstTryIndices = [];
-            
             saveProgressToCookie();
             
             quizContainer.classList.remove("d-none");
@@ -606,11 +706,9 @@
         // --- 「後で見直す」問題への再挑戦 ---
         function retryReviewQuestions() {
             queueIndices = [...reviewLaterIndices];
-            
             attemptedIndices = [];
             firstTryCorrectCount = 0;
             missedFirstTryIndices = [];
-            
             saveProgressToCookie();
             
             quizContainer.classList.remove("d-none");
@@ -623,7 +721,6 @@
         // --- 問題読み込み ---
         function loadNextQuestion() {
             if (queueIndices.length === 0) {
-                // 【変更点】クリア時に clearProgressCookie() を呼ばないようにし、クリア状態を保存する
                 saveProgressToCookie(); 
 
                 quizContainer.classList.add("d-none");
@@ -654,9 +751,20 @@
             currentQuestionIndex = queueIndices[0];
             currentQuestion = originalQuizData[currentQuestionIndex];
 
+            // UIの初期化
             progressBadge.textContent = `残り ${queueIndices.length} 問`;
             categoryBadge.textContent = currentQuestion.category;
             questionText.textContent = currentQuestion.question;
+            
+            // 問題画像の表示判定
+            if (currentQuestion.image) {
+                questionImage.src = currentQuestion.image;
+                questionImageContainer.classList.remove("d-none");
+            } else {
+                questionImage.src = "";
+                questionImageContainer.classList.add("d-none");
+            }
+
             choicesContainer.innerHTML = "";
             resultMessage.style.display = "none";
             explanationContainer.classList.add("d-none");
@@ -721,8 +829,18 @@
 
             saveProgressToCookie();
 
+            // 解説の表示ロジック
             if (currentQuestion.explanation) {
                 explanationText.textContent = currentQuestion.explanation;
+                
+                if (currentQuestion.explanationImage) {
+                    explanationImage.src = currentQuestion.explanationImage;
+                    explanationImageContainer.classList.remove("d-none");
+                } else {
+                    explanationImage.src = "";
+                    explanationImageContainer.classList.add("d-none");
+                }
+
                 if (currentQuestion.explanationUrl) {
                     explanationLink.href = currentQuestion.explanationUrl;
                     explanationLink.classList.remove("d-none");
@@ -736,7 +854,7 @@
             reviewLaterBtn.classList.remove("d-none");
         }
 
-        // --- 「後で見直す」ボタンのクリック処理（トグル機能） ---
+        // --- 「後で見直す」ボタンのクリック処理 ---
         reviewLaterBtn.addEventListener("click", () => {
             if (reviewLaterIndices.includes(currentQuestionIndex)) {
                 reviewLaterIndices = reviewLaterIndices.filter(index => index !== currentQuestionIndex);

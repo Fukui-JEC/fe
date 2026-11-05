@@ -1,10 +1,14 @@
 Cookie変更忘れずに
 
+            // 
             {
-                category: "セキュリティ",
+                category: "システムの構成要素",
                 question: "",
+                image: "", 
                 choices: ["", "", "", ""],
                 correctIndex: ,
                 explanation: "",
+                explanationImage: "",
                 explanationUrl: ""
             },
+

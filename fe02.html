@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4択クイズ</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .choice-btn {
+            width: 100%;
+            margin-bottom: 10px;
+            text-align: left;
+            transition: all 0.2s;
+        }
+        .choice-btn:hover:not(:disabled) {
+            transform: translateX(5px);
+        }
+        #result-message {
+            display: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body class="bg-light pt-5">
+    <div class="container">
+        <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+            <div class="card-body p-4">
+                <!-- ヘッダー領域 -->
+                <div class="d-flex justify-content-between align-items-start mb-4 border-bottom pb-3">
+                    <h2 class="card-title m-0 pt-1">確認クイズ</h2>
+                    <div class="text-end">
+                        <span id="progress-badge" class="badge bg-secondary mb-2 d-block"></span>
+                        <button id="reset-btn" class="btn btn-sm btn-outline-danger" style="font-size: 0.8rem;">🔄 リセット</button>
+                    </div>
+                </div>
+                
+                <!-- クイズエリア -->
+                <div id="quiz-container">
+                    <div class="mb-2">
+                        <span id="category-badge" class="badge bg-primary px-3 py-2 rounded-pill shadow-sm"></span>
+                    </div>
+                    <p id="question-text" class="fs-5 mb-3 fw-bold">読み込み中...</p>
+                    
+                    <!-- 問題画像エリア（画像がない場合は非表示になります） -->
+                    <div id="question-image-container" class="text-center mb-4 d-none">
+                        <img id="question-image" src="" alt="問題の画像" class="img-fluid rounded shadow-sm" style="max-height: 250px;">
+                    </div>
+                    
+                    <div id="choices-container">
+                        <!-- 選択肢がJavaScriptで生成されます -->
+                    </div>
+                    
+                    <!-- 結果表示・解説エリア -->
+                    <div id="result-container" class="mt-4 text-center">
+                        <p id="result-message" class="mb-2"></p>
+                        
+                        <div id="explanation-container" class="card bg-light text-start p-3 mb-3 d-none border-0">
+                            <h6 class="fw-bold mb-2">💡 解説</h6>
+                            
+                            <!-- 解説文 -->
+                            <p id="explanation-text" class="small mb-3 text-secondary"></p>
+                            
+                            <!-- 解説画像エリア（説明文の後に移動しました） -->
+                            <div id="explanation-image-container" class="text-center mb-3 d-none">
+                                <img id="explanation-image" src="" alt="解説の画像" class="img-fluid rounded shadow-sm" style="max-height: 200px;">
+                            </div>
+                            
+                            <div>
+                                <a id="explanation-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-info">
+                                    詳細ページを開く ↗
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- アクションボタンエリア -->
+                        <div class="d-flex justify-content-center gap-2 mt-3">
+                            <button id="review-later-btn" class="btn btn-outline-warning d-none">⭐ 後で見直す</button>
+                            <button id="next-btn" class="btn btn-primary px-4 d-none">次の問題へ</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 完了画面 -->
+                <div id="completion-container" class="text-center d-none py-4">
+                    <h3 class="text-success mb-3">全問クリア！</h3>
+                    <p class="text-muted mb-4">お疲れ様でした。</p>
+                    
+                    <!-- 一発正解数の表示パネル -->
+                    <div class="card bg-light border-0 mb-4 mx-auto shadow-sm" style="max-width: 300px;">
+                        <div class="card-body">
+                            <h5 class="card-title text-secondary fs-6">一発正解数</h5>
+                            <p class="display-4 mb-0 text-primary fw-bold">
+                                <span id="first-try-count-display">0</span><span class="fs-4 text-muted fw-normal"> / <span id="total-questions-display">0</span></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- ボタンエリア -->
+                    <div class="d-grid gap-2 col-10 mx-auto">
+                        <button id="retry-missed-btn" onclick="retryMissedQuestions()" class="btn btn-danger fw-bold d-none">
+                            ⚠️ 不正解だった問題に再チャレンジ
+                        </button>
+                        <button id="retry-review-btn" onclick="retryReviewQuestions()" class="btn btn-warning text-dark fw-bold d-none">
+                            ⭐ 「後で見直す」問題にチャレンジ
+                        </button>
+                        <button onclick="initQuiz(true)" class="btn btn-outline-primary">
+                            最初からすべてやり直す
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const originalQuizData = [
+            // 機械学習
+            {
+                category: "AI",
+                question: "記憶したデータから特定のパターンを見つけ出すなどの、人が自然に行っている学習能力をコンピュータにもたせるための技術",
+                image: "", 
+                choices: ["RPA", "VR", "機械学習", "ブロックチェーン"],
+                correctIndex: 2,
+                explanation: "「機械学習」とは、人間が持つ学習能力をコンピュータ上に再現する技術です。機械学習は大きく「教師あり学習」「教師なし学習」「強化学習」の3つに分類されます。",
+                explanationImage: "https://webpia.jp/wp-content/uploads/2020/06/%E4%BA%BA%E5%B7%A5%E7%9F%A5%E8%83%BD_%E5%88%86%E9%A1%9E%E5%9B%B3.jpg",
+                explanationUrl: "https://wa3.i-3-i.info/word13071.html"
+            },
+            // 教師あり学習
+            {
+                category: "AI",
+                question: "機械学習の方法の一つで、「正解のデータを提示」したり、データが誤りであることを指摘したりすることによって、未知のデータに対して正誤を得ることを助ける。",
+                image: "", 
+                choices: ["強化学習", "教師あり学習", "教師なし学習", "ディープラーニング"],
+                correctIndex: 1,
+                explanation: "「教師あり学習」とは、人間が「この画像は猫である」という【正解のデータを提示】し、学習させる手法です。迷惑メールフィルターや、画像認識などに広く使われています。",
+                explanationImage: "https://psc-smartwork.com/topics/upload/COMPARE.png",
+                explanationUrl: ""
+            },
+            // ディープラーニング
+            {
+                category: "AI",
+                question: "人間の脳神経回路を模傲して、認識などの知能を実現する方法であり、ニューラルネットワークを用いて、人間と同じような認識ができるようにするもの。",
+                image: "", 
+                choices: ["強化学習", "教師あり学習", "教師なし学習", "ディープラーニング"],
+                correctIndex: 3,
+                explanation: "「ディープラーニング」とは、人間の脳の仕組みを模した「ニューラルネットワーク」を用いて、人間と同じような認識ができるようにしたものです。",
+                explanationImage: "https://corp.rakuten.co.jp/event/rakutentech/assets/img/article/deep-learning_3.jpg",
+                explanationUrl: "https://wa3.i-3-i.info/word13070.html"
+            },
+            // ファインチューニング
+            {
+                category: "AI",
+                question: "生成AIにおいて、すでに学習済みの基盤モデルに特定のデータで「追加学習」を行うことで、特定の業務に特化したAIを構築する手法。",
+                image: "", 
+                choices: ["アノテーション", "スクラッチ開発", "ファインチューニング", "プロンプトエンジニアリング"],
+                correctIndex: 2,
+                explanation: "「ファインチューニング」とは、すでに完成している賢いAIをベースにして、追加の学習データで「特定分野の専門家」に仕立て上げる技術です。ゼロからAIを作るよりも効率的です。",
+                explanationImage: "https://fptsoftware.jp/-/media/project/fpt-software/fjp/resources-center/column/2026/fine-tuning_02.png?la=ja-jp&modified=00010101000000&extension=webp&hash=452201B3D03EF5E58B3C9CC058C328F2",
+                explanationUrl: "https://wa3.i-3-i.info/word112116.html"
+            },
+            // スタック
+            {
+                category: "データ構造",
+                question: "データ構造の一つで、最後に入れたデータを先に取り出す「後入れ先出し（LIFO：Last In First Out）」方式はどれか",
+                image: "https://tech.pjin.jp/wp-content/uploads/2022/08/10d196d7af1673db9f4f6927dd62b732.gif", 
+                choices: ["キュー", "スタック", "ツリー", "リスト"],
+                correctIndex: 1,
+                explanation: "「スタック」とは、「積み重ねる（Stack）」という意味の通り、最後に保存した（一番上に積んだ）データを最初に取り出すデータ構造です。イメージとしては「積み上げられた本」です。パソコンの「元に戻す（Ctrl+Z）」機能や、Webブラウザの「戻る」ボタンの履歴管理などに使われます。",
+                explanationImage: "https://medium-company.com/wp-content/uploads/2020/09/stack.png",
+                explanationUrl: "https://wa3.i-3-i.info/word14717.html"
+            },
+            // キュー
+            {
+                category: "データ構造",
+                question: "データ構造の一つで、最初に保存したデータを最初に取り出す「先入れ先出し（FIFO：First In First Out）」方式はどれか",
+                image: "https://tech.pjin.jp/wp-content/uploads/2022/08/e131b9d2f07dc7441ee8f64fa0e9209b.gif", 
+                choices: ["キュー", "スタック", "ツリー", "リスト"],
+                correctIndex: 0,
+                explanation: "「キュー」とは、「待ち行列（Queue）」を意味します。最初に格納されたデータから順番に処理されていくデータ構造で、スーパーのレジ待ちのようなイメージです。",
+                explanationImage: "https://medium-company.com/wp-content/uploads/2020/09/queue_1-768x149.png",
+                explanationUrl: "https://wa3.i-3-i.info/word14716.html"
+            },
+
+            // 2分探索木
+            {
+                category: "データ構造",
+                question: "木構造の一つで、すべての節（ノード）において、「左の子側の値は自分より小さく、右の子側の値は自分より大きい」という規則でデータを配置したものはどれか。",
+                image: "https://medium-company.com/wp-content/uploads/2021/09/2tree_2.png", 
+                choices: ["キュー", "スタック", "2分探索木", "連結リスト"],
+                correctIndex: 2,
+                explanation: "「2分探索木」とは、すべての要素で値の大小関係が「左＜自分＜右」になっている構造のことです。目的のデータを効率よく探し出すことができます。",
+                explanationImage: "https://medium-company.com/wp-content/uploads/2021/09/2tree_3.png",
+                explanationUrl: "https://wa3.i-3-i.info/word111168.html"
+            },
+            // CSS
+            {
+                category: "言語",
+                question: "HTML文書の文字の大きさ、文字の色、行間といったデザイン（視覚表現）を指定する言語",
+                image: "", 
+                choices: ["CSS", "HTML", "Java", "SQL"],
+                correctIndex: 0,
+                explanation: "「CSS」（Cascading Style Sheets）とは、Webページの見た目（デザインやレイアウト）を指定する言語です。",
+                explanationImage: "",
+                explanationUrl: "https://wa3.i-3-i.info/word11298.html"
+            },
+            // XML
+            {
+                category: "言語",
+                question: "ネットワークを介したデータ交換を容易にするために、任意のタグを自分で定義できるマークアップ言語",
+                image: "", 
+                choices: ["JSON", "UML", "XML", "HTML"],
+                correctIndex: 2,
+                explanation: "「XML」（eXtensible Markup Language）とは、利用者が任意のタグを自分で作ることができるマークアップ言語です。XMLの用途は「Web上でデータを交換すること」です。",
+                explanationImage: "images/image013.png",
+                explanationUrl: "https://wa3.i-3-i.info/word1577.html"
+            },
+            // Ajax
+            {
+                category: "言語",
+                question: "JavaScriptの「非同期通信」の機能を使うことによって、動的なユーザーインタフェースを画面遷移を伴わずに実現する技術。",
+                image: "", 
+                choices: ["Ajax", "CSS", "RSS", "SNS"],
+                correctIndex: 0,
+                explanation: "「Ajax」とは、JavaScriptの「非同期通信」の機能を使うことによって、Webページ上で画面を切り替えることなく、動的なユーザーインターフェースを実現する技術です。Ajaxの技術を利用したWebアプリケーションの代表例の1つに「Googleマップ」があります。Googleマップでは、ブラウザに表示された地図をドラッグすると、同じWebページ上に新しい地図が表示されます。このとき、Webページの切り替えは行われません。",
+                explanationImage: "images/image014.png",
+                explanationUrl: "https://wa3.i-3-i.info/word12672.html"
+            },
+
+            // 間接アドレス指定
+            {
+                category: "コンピュータの構成要素",
+                question: "主記憶のデータを図のように参照するアドレス指定方式はどれか。",
+                image: "https://medium-company.com/wp-content/uploads/2021/09/addressingMethod1.png", 
+                choices: ["直接アドレス指定", "間接アドレス指定", "指標アドレス指定", "相対アドレス指定"],
+                correctIndex: 1,
+                explanation: "「間接アドレス指定」とは、アドレス部の値が主記憶装置上のアドレスを指し、そのアドレスに有効アドレスが入っている方式です。図の場合、25が有効アアドレスです。データを間接的に指定するので、間接アドレス指定と呼ばれます。",
+                explanationImage: "",
+                explanationUrl: "https://medium-company.com/%E5%9F%BA%E6%9C%AC%E6%83%85%E5%A0%B1-%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E6%8C%87%E5%AE%9A%E6%96%B9%E5%BC%8F/"
+            },
+
+            // MIPS
+            {
+                category: "コンピュータの構成要素",
+                question: "MIPSはCPUの処理性能を表す単位で、1MIPSは「1秒間に100万回の命令を実行できる」ことを表す。5MIPSは一秒間に何命令実行できるか。",
+                image: "", 
+                choices: ["500000", "5000000", "50000000", "500000000"],
+                correctIndex: 1,
+                explanation: "1MIPSは1秒間に100万回の命令を実行できることを表すため、5MIPSなら1秒間に500万命令実行できる。",
+                explanationImage: "",
+                explanationUrl: "https://wa3.i-3-i.info/word111460.html"
+            },
+
+            // プログラムカウンタ
+            {
+                category: "コンピュータの構成要素",
+                question: "「次に実行すべき命令」が格納されているアドレス（番地）を保持しているもの",
+                image: "", 
+                choices: ["アキュムレータ", "命令レジスタ", "プログラムカウンタ", "ベースレジスタ"],
+                correctIndex: 2,
+                explanation: "「プログラムカウンタ」とは、「次の命令のアドレス」を格納するレジスタです。CPUは、",
+                explanationImage: "https://medium-company.com/wp-content/uploads/2021/10/programCounter.png",
+                explanationUrl: "https://medium-company.com/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%A0%E3%82%AB%E3%82%A6%E3%83%B3%E3%82%BF/"
+            },
+
+            // 内部割込み
+            {
+                category: "コンピュータの構成要素",
+                question: "CPUがプログラムを実行している途中で、その実行中のプログラム自身が原因となって発生する割り込み（例：0による割り算など）",
+                image: "", 
+                choices: ["外部割込み", "タイマ割込み", "内部割込み", "機械チェック割込み"],
+                correctIndex: 2,
+                explanation: "「割込み」とは、現在実行中のプログラムを中断して、別のプログラムに切り替えることです。「外部割込み」と「内部割込み」があり、「内部割込み」は、実行中のプログラム自身が原因となって発生する割り込みです。代表例は「0による割り算」や「計算結果のオーバーフロー」などです。",
+                explanationImage: "",
+                explanationUrl: "https://nlab-notebook.com/entry/types-of-interrupt-processing-part1"
+            },
+
+            // 外部割込み
+            {
+                category: "コンピュータの構成要素",
+                question: "実行中のプログラム以外が原因で発生する割込み（例：インターバルタイマによる指定時間の経過時など）",
+                image: "", 
+                choices: ["外部割込み", "タイマ割込み", "内部割込み", "機械チェック割込み"],
+                correctIndex: 0,
+                explanation: "「外部割込み」とは、実行中のプログラム以外が原因で発生する割込みです。インターバルタイマによって指定時間経過時に生じる「タイマ割込み」が代表的です。",
+                explanationImage: "",
+                explanationUrl: "https://www.zealseeds.com/ITSkilStandard/BasicSoftware/Interrupt/HardwareInterrupt/index.html#google_vignette"
+            },
+
+            // キャッシュメモリ
+            {
+                category: "コンピュータの構成要素",
+                question: "CPUと主記憶（メインメモリ）の間にある超高速なメモリで、CPUが頻繁に利用するデータを一時的に保存しておくことで、システム全体の処理速度を向上させるもの",
+                image: "", 
+                choices: ["仮想メモリ", "キャッシュメモリ", "ディスクキャッシュ", "フラッシュメモリ"],
+                correctIndex: 1,
+                explanation: "「キャッシュメモリ」とは、CPUと主記憶装置の間にある超高速の記憶装置です。「CPUと主記憶装置の処理速度の差」を埋めるために使われます。",
+                explanationImage: "https://assets.st-note.com/production/uploads/images/279322370/rectangle_large_type_2_7b1fd89b51966130353dbfe52ffc9a07.png?width=1240",
+                explanationUrl: "https://wa3.i-3-i.info/word15145.html"
+            },
+
+            // ライトバック
+            {
+                category: "コンピュータの構成要素",
+                question: "通常はキャッシュメモリのみにデータを書き込み、不要なデータをキャッシュメモリ上から追い出す際に、その追い出すデータを主記憶装置に書き込む方式。",
+                image: "", 
+                choices: ["スワッピング", "メモリインタリーブ", "ライトスルー", "ライトバック"],
+                correctIndex: 3,
+                explanation: "「ライトバック」とは、「後で書き戻す（Write Back）」という意味です。普段は高速なキャッシュメモリにだけ書き込みを続けるため処理が速くなります。",
+                explanationImage: "images/image002.png",
+                explanationUrl: "https://wa3.i-3-i.info/word111463.html"
+            },
+
+            // メモリインタリーブ
+            {
+                category: "コンピュータの構成要素",
+                question: "主記憶装置へのアクセスを高速化するために、主記憶装置内部を複数のバンクと呼ばれる単位に分割し、各バンクに並列にアクセスする",
+                image: "", 
+                choices: ["スワッピング", "メモリインタリーブ", "ライトスルー", "ライトバック"],
+                correctIndex: 1,
+                explanation: "「メモリインタリーブ」とは、",
+                explanationImage: "images/image001.png",
+                explanationUrl: "https://wa3.i-3-i.info/word110339.html"
+            },
+
+            // USB
+            {
+                category: "コンピュータの構成要素",
+                question: "図のような端子を持ち、スーパースピードと呼ばれる5Gビット/秒のデータ転送モードをもつシリアルインターフェース",
+                image: "images/image003.png", 
+                choices: ["HDMI", "PCI Express", "SATA", "USB"],
+                correctIndex: 3,
+                explanation: "「USB」とはパソコンとキーボードなどの周辺機器を接続するためのシリアルインターフェイスです。USB3.0ではスーパースピードと呼ばれる5Gビット/秒のデータ転送が可能です。",
+                explanationImage: "images/image004.png",
+                explanationUrl: "https://www.sanwa.co.jp/product/cable/howto/usb.html"
+            },
+
+            // デバイスドライバ
+            {
+                category: "コンピュータの構成要素",
+                question: "PCに接続された周辺機器を制御するソフトウェア",
+                image: "", 
+                choices: ["インストーラ", "デバイスドライバ", "ファームウェア", "プラグアンドプレイ"],
+                correctIndex: 1,
+                explanation: "「デバイスドライバ」（Device Driver）とは、PCに接続されたキーボードやプリンタなど周辺機器を制御するソフトウェアです。通常、周辺機器をPCに接続したときに自動的にインストールされます。",
+                explanationImage: "https://wa3.i-3-i.info/img/data/1400/d001402-8.png",
+                explanationUrl: "https://wa3.i-3-i.info/word11402.html"
+            },
+
+            // 3Dプリンタ
+            {
+                category: "コンピュータの構成要素",
+                question: "熱溶解積層方式などによって、立体物を造形する機器",
+                image: "", 
+                choices: ["3Dスキャナ", "3Dプリンタ", "感熱式プリンター", "レーザプリンタ"],
+                correctIndex: 1,
+                explanation: "「3Dプリンタ」とは、3次元のデータをもとにして「立体物」を造形する機械です。",
+                explanationImage: "https://www.biccamera.com/bc/include_cms_contents/topics/osusume_3d_printer/01.jpg",
+                explanationUrl: "https://www.biccamera.com/bc/i/topics/osusume_3d_printer/index.jsp"
+            },
+
+            // 3層クライアントサーバーシステム
+            {
+                category: "システムの構成要素",
+                question: "業務処理はサーバー側で実行し、クライアントソフトはHTMLの記述に従って、その結果を画面に表示するWebシステムの構成",
+                image: "", 
+                choices: ["3層クライアントサーバーシステム", "シンクライアントシステム", "ピアツーピアシステム", "分散データベースシステム"],
+                correctIndex: 0,
+                explanation: "「3層クライアントサーバーシステム」とは、複数のコンピュータをネットワークでつなぎ、クライアントが処理要求をサーバに出し、サーバが処理を行うシステムです。",
+                explanationImage: "images/image005.png",
+                explanationUrl: "https://wa3.i-3-i.info/word12355.html"
+            },
+
+            // デュアルシステム
+            {
+                category: "システムの構成要素",
+                question: "2つのコンピュータが同じ処理を行い、結果を「照合」して正しいことを確認するシステム構成。",
+                image: "", 
+                choices: ["クラスタシステム", "デュアルシステム", "デュプレックスシステム", "マルチプロセッサシステム"],
+                correctIndex: 1,
+                explanation: "「デュアルシステム」とは、2つのコンピュータが全く同じ処理を行い、答え合わせをしながら進める究極の高信頼システムです。金融機関の勘定系システムや飛行機の制御システムなど、絶対に止めることが許されない環境で使われます。",
+                explanationImage: "https://tech-begin.com/wp-content/uploads/2021/09/10.jpg",
+                explanationUrl: "https://wa3.i-3-i.info/word16099.html"
+            },
+
+            // ホットスタンバイ
+            {
+                category: "システムの構成要素",
+                question: "コンピュータを2台用意しておき、現用系が故障したときは、現用系と同じシステムをあらかじめ起動してある待機系のコンピュータにすぐに切り替えて、処理を続行するシステム",
+                image: "", 
+                choices: ["コールドスタンバイシステム", "ホットスタンバイシステム", "マルチプロセッサシステム", "マルチユーザーシステム"],
+                correctIndex: 1,
+                explanation: "「ホットスタンバイ」とは、待機系にも常に電源を入れておき、現用系と同じシステムを起動して待機しておく状態です。現用系に障害が発生した場合に、すぐに処理を引き継ぐことができます。常に電源が入っていて熱い状態（Hotな状態）なので「ホットスタンバイ」と呼ばれています。",
+                explanationImage: "https://for-spring.com/wp-content/uploads/2023/10/4-1024x538.png",
+                explanationUrl: "https://wa3.i-3-i.info/word1338.html"
+            },
+
+            // フォールトトレラントシステム
+            {
+                category: "システムの構成要素",
+                question: "システムが部分的に故障しても、システム全体としては必要な機能を維持するシステム",
+                image: "", 
+                choices: ["フェールセーフ", "フェールソフト", "フォールトトレラントシステム", "フールプルーフ"],
+                correctIndex: 2,
+                explanation: "「フォールトトレラントシステム」とは、システムが部分的に故障しても、システム全体としては必要な機能を維持する設計です。特に銀行や飛行機、原子力などに関わるシステムは、私たちの生活に大きな影響があるので、フォールトトレラントが重要です。",
+                explanationImage: "https://mentena.biz/wp-content/uploads/2024/10/%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%83%88%E3%83%88%E3%83%AC%E3%83%A9%E3%83%B3%E3%82%B9%E3%81%A8%E3%81%AF-1024x463.png",
+                explanationUrl: "https://wa3.i-3-i.info/word110518.html"
+            },
+
+            // フールプルーフ
+            {
+                category: "システムの構成要素",
+                question: "利用者が誤った操作をしても,システムに異常が起こらないようにする設計。",
+                image: "", 
+                choices: ["フェールセーフ", "フェールソフト", "フォールトトレラントシステム", "フールプルーフ"],
+                correctIndex: 3,
+                explanation: "「フールプルーフ」（Fool Proof）とは、人間が間違った使い方をしても、システムに異常が起こらないようにする設計です。例えば、ドアを閉めないと加熱できない電子レンジなどです。（Fool=ばか者）",
+                explanationImage: "https://www.seishin-syoji.co.jp/websys/wp-content/uploads/2025/09/fool-proof-instnace2.png",
+                explanationUrl: "https://wa3.i-3-i.info/word16922.html"
+            },
+            // ストライピング
+            {
+                category: "システムの構成要素",
+                question: "データを分散して複数の磁気ディスクに書き込むことによって,データ入出力の高速化を図る方式はどれか。",
+                image: "", 
+                choices: ["ストライピング（RAID0）", "スワッピング", "ディスクキャッシュ", "ミラーリング（RAID1）"],
+                correctIndex: 0,
+                explanation: "「ストライピング」（Striping）とは、データを複数のハードディスクに分散させて書き込む記憶方式です。ディスクに並列でアクセスできるので、データの読み書きを「高速化」できます。「RAID0」とも呼ばれます。",
+                explanationImage: "images/image006.png",
+                explanationUrl: "https://wa3.i-3-i.info/word11460.html"
+            },
+            // ミラーリング
+            {
+                category: "システムの構成要素",
+                question: "複数のハードディスクに同じデータを書き込む記憶方式。",
+                image: "", 
+                choices: ["RAID0（ストライピング）", "RAID1（ミラーリング）", "RAID2", "RAID3"],
+                correctIndex: 1,
+                explanation: "「ミラーリング」（Mirroring）とは、鏡のように複数のハードディスクに同じデータを書き込む記憶方式です。1つのディスクが壊れても、別のディスクからデータが復元できます。「RAID1」とも呼ばれます。",
+                explanationImage: "images/image007.png",
+                explanationUrl: "https://wa3.i-3-i.info/word1387.html"
+            },
+            // スループット
+            {
+                category: "システムの構成要素",
+                question: "コンピュータシステムによって単位時間当たりに処理される仕事の量を表す用語。",
+                image: "", 
+                choices: ["スループット", "ターンアラウンドタイム", "タイムスライス", "レスポンスタイム"],
+                correctIndex: 0,
+                explanation: "「スループット」とは、システムが単位時間当たりに処理する仕事の量です（処理能力）。プリンターでいうと、単位時間当たりの印刷ページ数がスループットになります。（例：1分当たり10枚など）",
+                explanationImage: "",
+                explanationUrl: "https://wa3.i-3-i.info/word12830.html"
+            },
+            // スケールアウト
+            {
+                category: "システムの構成要素",
+                question: "Webサイトへのアクセスが急激に増加したとき、サーバーを追加導入することによって、システム全体の処理能力を向上させること。",
+                image: "", 
+                choices: ["スケールアップ", "スケールアウト", "フェールオーバー", "フォールバック"],
+                correctIndex: 1,
+                explanation: "「スケールアウト」（Scale-out）とは、サーバーの台数を増やすことで、システム全体の処理能力を向上させることです。",
+                explanationImage: "images/image008.png",
+                explanationUrl: "https://wa3.i-3-i.info/word18711.html"
+            },
+            // ベンチマークテスト
+            {
+                category: "システムの構成要素",
+                question: "使用目的に合わせて選定した標準的なプログラムを実行させ,その処理性能を測定する。",
+                image: "", 
+                choices: ["システムテスト", "ストレステスト", "チューニング", "ベンチマークテスト"],
+                correctIndex: 3,
+                explanation: "「ベンチマークテスト」とは、システムの性能を比較するために行うテストです。",
+                explanationImage: "https://www.pc-master.jp/jisaku/image/benchmark-test1.jpg",
+                explanationUrl: "https://wa3.i-3-i.info/word1328.html"
+            },
+
+            // MTBF
+            {
+                category: "システムの構成要素",
+                question: "「平均故障間隔」とも言われ、システムが故障せずに正しく動いていた時間の平均値",
+                image: "", 
+                choices: ["MTBF", "MTTR", "稼働率", "スループット"],
+                correctIndex: 0,
+                explanation: "「MTBF」（Mean Time Between Failures）とは「平均故障間隔」のことで、「壊れずに正しく動いていた時間」の平均値です。例えば、100時間動かして2回壊れればMTBFは50時間です。この時間が長いほど壊れにくいといえます。",
+                explanationImage: "",
+                explanationUrl: "https://wa3.i-3-i.info/word15646.html"
+            },
+
+            // MTTR
+            {
+                category: "システムの構成要素",
+                question: "「平均修理時間」とも言われ、修理にかかった時間、つまりシステムが稼働していなかった時間の平均値",
+                image: "", 
+                choices: ["MTBF", "MTTR", "稼働率", "スループット"],
+                correctIndex: 1,
+                explanation: "「MTTR」（Mean Time To Repair）とは、「平均修復時間」のことで、「修理にかかった時間」の平均値です。例えば、2回故障してそれぞれ10時間、20時間で直せたら、MTTRは15時間となります。この時間が短いほど優れています。",
+                explanationImage: "",
+                explanationUrl: "https://wa3.i-3-i.info/word19795.html"
+            },
+
+            // スプーリング
+            {
+                category: "ソフトウェア",
+                question: "プリンターなどの低速な装置への出カデータを一旦高速な磁気ディスクに格納しておき、その後に目的の装置に出力する。",
+                image: "", 
+                choices: ["スプーリング", "スラッシング", "スワッピング", "ストライピング"],
+                correctIndex: 0,
+                explanation: "「スプーリング」とは、低速なプリンタへの印刷データなどを一時的にハードディスクへ格納する技術です。これによりCPUは印刷完了をまたずにすぐに別の作業に移れます。",
+                explanationImage: "images/image009.png",
+                explanationUrl: "https://wa3.i-3-i.info/word17824.html"
+            },
+
+            // バッファ
+            {
+                category: "ソフトウェア",
+                question: "入出力装置と処理装置との間に特別な記憶域を設け、処理速度の違いを緩和する。",
+                image: "", 
+                choices: ["アーカイブ", "クラスタ", "セクタ", "バッファ"],
+                correctIndex: 3,
+                explanation: "「バッファ」（Buffer）とは、処理速度の異なる2つの装置の差を補うために、データを一時的に溜めておく記憶装置のことです。Youtubeの再生において、途中で映像が止まらないようにデータを先行して読み込んでおく仕組みとしても使われています。",
+                explanationImage: "https://xtech.nikkei.com/it/pc/article/NPC/20060810/245616/1.jpg",
+                explanationUrl: "https://wa3.i-3-i.info/word11609.html"
+            },
+            // ディスパッチ
+            {
+                category: "ソフトウェア",
+                question: "実行可能なタスクに対してプロセッサの使用権を割り当てること。",
+                image: "", 
+                choices: ["コンテキストスイッチ", "スプーリング", "ディスパッチ", "排他処理"],
+                correctIndex: 2,
+                explanation: "「ディスパッチ」（Dispatch＝割り当て）とは、OSがタスクに「さあ、CPUを使っていいぞ」と実行状態に移すことです。",
+                explanationImage: "images/image010.png",
+                explanationUrl: "https://medium-company.com/%E3%83%87%E3%82%A3%E3%82%B9%E3%83%91%E3%83%83%E3%83%81/"
+            },
+
+            // ラウンドロビン方式
+            {
+                category: "ソフトウェア",
+                question: "各タスクに、均等にCPU時間を割り当てて実行させる方式。",
+                image: "", 
+                choices: ["FIFO", "ディスパッチ", "プリエンプション", "ラウンドロビン"],
+                correctIndex: 3,
+                explanation: "「ラウンドロビン」とは、タスクを一定時間ごとに切り替えて実行する方式です。",
+                explanationImage: "https://p.e-words.jp/img/Round-Robin.webp",
+                explanationUrl: "https://medium-company.com/%E3%83%A9%E3%82%A6%E3%83%B3%E3%83%89%E3%83%AD%E3%83%93%E3%83%B3%E6%96%B9%E5%BC%8F-%E3%82%BF%E3%82%B9%E3%82%AF%E3%82%B9%E3%82%B1%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AA%E3%83%B3%E3%82%B0/"
+            },
+
+            // ページング方式
+            {
+                category: "ソフトウェア",
+                question: "仮想記憶（仮想メモリ）を管理する方式の一つであり、仮想記憶と実記憶を「ページ」と呼ばれる同じ大きさ（固定長）の区画に分割して管理する方式。",
+                image: "", 
+                choices: ["スプーリング", "セグメント方式", "ページング方式", "メモリインタリーブ"],
+                correctIndex: 2,
+                explanation: "「ページング方式」とは、仮想記憶と実記憶を「ページ」と呼ぶ固定長の領域に分割して管理する方式です。",
+                explanationImage: "",
+                explanationUrl: "https://wa3.i-3-i.info/word13352.html"
+            },
+
+            // LRU
+            {
+                category: "ソフトウェア",
+                question: "仮想記憶管理のページ入替え方式のうち、最後に使われてからの経過時間が最も長いページを入れ替えるものはどれか。",
+                image: "", 
+                choices: ["FIFO", "LFU", "LIFO", "LRU"],
+                correctIndex: 3,
+                explanation: "「LRU」（Least Recently Used：最も使われなかったもの）とは、最後に使ってから最も長い時間が経過したページ（使われていない時間が最も長いデータ）を入れ替える方式です。しばらく着ていない服は今後も着ないから入れ替えるイメージです。",
+                explanationImage: "images/image011.png",
+                explanationUrl: "https://kouoboe.com/2023/07/07/kasoukioku/"
+            },
+
+            // スラッシング
+            {
+                category: "ソフトウェア",
+                question: "仮想記憶方式において、割り当てられる実記憶の容量が小さいとページアウト、ページインが頻発し、処理能力が低下する現象。",
+                image: "", 
+                choices: ["スラッシング", "スワッピング", "フラグメンテーション", "メモリリーク"],
+                correctIndex: 0,
+                explanation: "「スラッシング」（Thrashing）とは、主記憶（メモリ）の容量が不足したときに、主記憶のデータの入替え（ページアウト、ページイン）が頻繁に起こり、処理能力が低下する現象です。最近のPCならメモリは16GB以上欲しいところです。",
+                explanationImage: "images/image012.png",
+                explanationUrl: "https://wa3.i-3-i.info/word1766.html"
+            },
+
+
+
+
+
+
+
+
+
+        ];
+
+        // 状態管理
+        let queueIndices = [];       
+        let attemptedIndices = [];   
+        let firstTryCorrectCount = 0;
+        let missedFirstTryIndices = []; 
+        let reviewLaterIndices = []; 
+        let currentQuestion = null;
+        let currentQuestionIndex = null; 
+
+        // --- Cookie操作 ---
+        const COOKIE_NAME = "quiz_progress_fe02";
+
+        function saveProgressToCookie() {
+            const expires = new Date(Date.now() + 30 * 86400000).toUTCString();
+            const saveData = {
+                queue: queueIndices,
+                attempted: attemptedIndices,
+                firstTryCount: firstTryCorrectCount,
+                missedFirstTry: missedFirstTryIndices,
+                reviewLater: reviewLaterIndices
+            };
+            document.cookie = `${COOKIE_NAME}=${JSON.stringify(saveData)}; expires=${expires}; path=/`;
+        }
+
+        function loadProgressFromCookie() {
+            const match = document.cookie.match(new RegExp(`(?:^|; )${COOKIE_NAME}=([^;]+)`));
+            if (match) {
+                try {
+                    const parsed = JSON.parse(match[1]);
+                    if (Array.isArray(parsed)) {
+                        return { queue: parsed, attempted: [], firstTryCount: 0, missedFirstTry: [], reviewLater: [] };
+                    }
+                    return parsed;
+                } catch (e) {
+                    return null;
+                }
+            }
+            return null;
+        }
+
+        function clearProgressCookie() {
+            document.cookie = `${COOKIE_NAME}=; max-age=0; path=/`;
+        }
+
+        // --- DOM要素 ---
+        const progressBadge = document.getElementById("progress-badge");
+        const categoryBadge = document.getElementById("category-badge");
+        const questionText = document.getElementById("question-text");
+        
+        const questionImageContainer = document.getElementById("question-image-container");
+        const questionImage = document.getElementById("question-image");
+        
+        const choicesContainer = document.getElementById("choices-container");
+        const resultMessage = document.getElementById("result-message");
+        const nextBtn = document.getElementById("next-btn");
+        const reviewLaterBtn = document.getElementById("review-later-btn");
+        const resetBtn = document.getElementById("reset-btn");
+        const quizContainer = document.getElementById("quiz-container");
+        
+        const completionContainer = document.getElementById("completion-container");
+        const firstTryCountDisplay = document.getElementById("first-try-count-display");
+        const totalQuestionsDisplay = document.getElementById("total-questions-display");
+        const retryMissedBtn = document.getElementById("retry-missed-btn");
+        const retryReviewBtn = document.getElementById("retry-review-btn");
+        
+        const explanationContainer = document.getElementById("explanation-container");
+        const explanationText = document.getElementById("explanation-text");
+        
+        const explanationImageContainer = document.getElementById("explanation-image-container");
+        const explanationImage = document.getElementById("explanation-image");
+        
+        const explanationLink = document.getElementById("explanation-link");
+
+        // --- 初期化処理 ---
+        function initQuiz(forceReset = false) {
+            if (forceReset) {
+                clearProgressCookie();
+                queueIndices = null;
+            }
+
+            const savedData = loadProgressFromCookie();
+            const isValidSave = savedData && 
+                                Array.isArray(savedData.queue) &&
+                                savedData.queue.every(idx => idx >= 0 && idx < originalQuizData.length);
+
+            if (!forceReset && isValidSave) {
+                queueIndices = savedData.queue;
+                attemptedIndices = savedData.attempted || [];
+                firstTryCorrectCount = savedData.firstTryCount || 0;
+                missedFirstTryIndices = savedData.missedFirstTry || [];
+                reviewLaterIndices = savedData.reviewLater || [];
+            } else {
+                queueIndices = originalQuizData.map((_, index) => index);
+                attemptedIndices = [];
+                firstTryCorrectCount = 0;
+                missedFirstTryIndices = [];
+                reviewLaterIndices = [];
+            }
+
+            quizContainer.classList.remove("d-none");
+            completionContainer.classList.add("d-none");
+            resetBtn.style.display = "inline-block";
+            
+            loadNextQuestion();
+        }
+
+        // --- 不正解問題への再挑戦 ---
+        function retryMissedQuestions() {
+            queueIndices = [...missedFirstTryIndices];
+            attemptedIndices = [];
+            firstTryCorrectCount = 0;
+            missedFirstTryIndices = [];
+            saveProgressToCookie();
+            
+            quizContainer.classList.remove("d-none");
+            completionContainer.classList.add("d-none");
+            resetBtn.style.display = "inline-block";
+            
+            loadNextQuestion();
+        }
+
+        // --- 「後で見直す」問題への再挑戦 ---
+        function retryReviewQuestions() {
+            queueIndices = [...reviewLaterIndices];
+            attemptedIndices = [];
+            firstTryCorrectCount = 0;
+            missedFirstTryIndices = [];
+            saveProgressToCookie();
+            
+            quizContainer.classList.remove("d-none");
+            completionContainer.classList.add("d-none");
+            resetBtn.style.display = "inline-block";
+            
+            loadNextQuestion();
+        }
+
+        // --- 問題読み込み ---
+        function loadNextQuestion() {
+            if (queueIndices.length === 0) {
+                saveProgressToCookie(); 
+
+                quizContainer.classList.add("d-none");
+                completionContainer.classList.remove("d-none");
+                progressBadge.textContent = "クリア！";
+                resetBtn.style.display = "none";
+                
+                const currentSessionTotal = firstTryCorrectCount + missedFirstTryIndices.length;
+                firstTryCountDisplay.textContent = firstTryCorrectCount;
+                totalQuestionsDisplay.textContent = currentSessionTotal;
+
+                if (missedFirstTryIndices.length > 0) {
+                    retryMissedBtn.classList.remove("d-none");
+                } else {
+                    retryMissedBtn.classList.add("d-none");
+                }
+
+                if (reviewLaterIndices.length > 0) {
+                    retryReviewBtn.textContent = `⭐ 「後で見直す」問題にチャレンジ (${reviewLaterIndices.length}問)`;
+                    retryReviewBtn.classList.remove("d-none");
+                } else {
+                    retryReviewBtn.classList.add("d-none");
+                }
+                
+                return;
+            }
+
+            currentQuestionIndex = queueIndices[0];
+            currentQuestion = originalQuizData[currentQuestionIndex];
+
+            // UIの初期化
+            progressBadge.textContent = `残り ${queueIndices.length} 問`;
+            categoryBadge.textContent = currentQuestion.category;
+            questionText.textContent = currentQuestion.question;
+            
+            // 問題画像の表示判定
+            if (currentQuestion.image) {
+                questionImage.src = currentQuestion.image;
+                questionImageContainer.classList.remove("d-none");
+            } else {
+                questionImage.src = "";
+                questionImageContainer.classList.add("d-none");
+            }
+
+            choicesContainer.innerHTML = "";
+            resultMessage.style.display = "none";
+            explanationContainer.classList.add("d-none");
+            nextBtn.classList.add("d-none");
+            reviewLaterBtn.classList.add("d-none");
+
+            if (reviewLaterIndices.includes(currentQuestionIndex)) {
+                reviewLaterBtn.classList.replace("btn-outline-warning", "btn-warning");
+                reviewLaterBtn.textContent = "⭐ 見直しリストに登録済み";
+            } else {
+                reviewLaterBtn.classList.replace("btn-warning", "btn-outline-warning");
+                reviewLaterBtn.textContent = "⭐ 後で見直す";
+            }
+
+            currentQuestion.choices.forEach((choice, index) => {
+                const button = document.createElement("button");
+                button.textContent = choice;
+                button.className = "btn btn-outline-secondary choice-btn p-3";
+                button.onclick = () => checkAnswer(index, button);
+                choicesContainer.appendChild(button);
+            });
+        }
+
+        // --- 解答チェック ---
+        function checkAnswer(selectedIndex, clickedButton) {
+            const buttons = choicesContainer.querySelectorAll("button");
+            buttons.forEach(btn => btn.disabled = true);
+
+            const answeredIndex = queueIndices.shift(); 
+            
+            const isFirstTry = !attemptedIndices.includes(answeredIndex);
+            if (isFirstTry) {
+                attemptedIndices.push(answeredIndex);
+            }
+            
+            resultMessage.style.display = "block";
+
+            if (selectedIndex === currentQuestion.correctIndex) {
+                if (isFirstTry) {
+                    firstTryCorrectCount++;
+                }
+
+                clickedButton.classList.remove("btn-outline-secondary");
+                clickedButton.classList.add("btn-success", "text-white");
+                resultMessage.textContent = "⭕ 正解！";
+                resultMessage.className = "text-success mb-2";
+            } else {
+                if (isFirstTry) {
+                    missedFirstTryIndices.push(answeredIndex);
+                }
+                
+                queueIndices.push(answeredIndex);
+
+                clickedButton.classList.remove("btn-outline-secondary");
+                clickedButton.classList.add("btn-danger", "text-white");
+                buttons[currentQuestion.correctIndex].classList.remove("btn-outline-secondary");
+                buttons[currentQuestion.correctIndex].classList.add("btn-success", "text-white");
+
+                resultMessage.textContent = "❌ 不正解... (後で再出題されます)";
+                resultMessage.className = "text-danger mb-2";
+            }
+
+            saveProgressToCookie();
+
+            // 解説の表示ロジック
+            if (currentQuestion.explanation) {
+                explanationText.textContent = currentQuestion.explanation;
+                
+                if (currentQuestion.explanationImage) {
+                    explanationImage.src = currentQuestion.explanationImage;
+                    explanationImageContainer.classList.remove("d-none");
+                } else {
+                    explanationImage.src = "";
+                    explanationImageContainer.classList.add("d-none");
+                }
+
+                if (currentQuestion.explanationUrl) {
+                    explanationLink.href = currentQuestion.explanationUrl;
+                    explanationLink.classList.remove("d-none");
+                } else {
+                    explanationLink.classList.add("d-none");
+                }
+                explanationContainer.classList.remove("d-none");
+            }
+
+            nextBtn.classList.remove("d-none");
+            reviewLaterBtn.classList.remove("d-none");
+        }
+
+        // --- 「後で見直す」ボタンのクリック処理 ---
+        reviewLaterBtn.addEventListener("click", () => {
+            if (reviewLaterIndices.includes(currentQuestionIndex)) {
+                reviewLaterIndices = reviewLaterIndices.filter(index => index !== currentQuestionIndex);
+                saveProgressToCookie();
+                
+                reviewLaterBtn.classList.replace("btn-warning", "btn-outline-warning");
+                reviewLaterBtn.textContent = "⭐ 後で見直す";
+            } else {
+                reviewLaterIndices.push(currentQuestionIndex);
+                saveProgressToCookie();
+                
+                reviewLaterBtn.classList.replace("btn-outline-warning", "btn-warning");
+                reviewLaterBtn.textContent = "⭐ 見直しリストに登録済み";
+            }
+        });
+
+        // --- リセット処理 ---
+        resetBtn.addEventListener("click", () => {
+            if (confirm("これまでの解答状況をリセットして、最初からやり直しますか？")) {
+                initQuiz(true);
+            }
+        });
+
+        // イベント設定
+        nextBtn.addEventListener("click", loadNextQuestion);
+        window.onload = () => initQuiz(false);
+    </script>
+</body>
+</html>
