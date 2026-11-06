@@ -178,7 +178,7 @@
                 image: "", 
                 choices: ["デジタル署名", "電子証明書（デジタル証明書）", "電子透かし", "ワンタイムパスワード"],
                 correctIndex: 1,
-                explanation: "「電子証明書」（デジタル証明書）とは、「この公開鍵は、間違いなくAさんのものです」という証明をしてくれるデータのことです。「公開鍵証明書」とも呼ばれ、認証局（CA）という機関が発行します。",
+                explanation: "「電子証明書」（デジタル証明書）は「公開鍵証明書」とも呼ばれ、「この公開鍵は、間違いなくAさんのものです」という証明をしてくれるデータのことです。認証局（CA）という機関が発行します。",
                 explanationImage: "images/image019.png",
                 explanationUrl: "https://wa3.i-3-i.info/word1831.html"
             },
@@ -200,7 +200,7 @@
                 image: "", 
                 choices: ["共通鍵暗号方式", "デジタル署名", "電子透かし", "ハッシュ関数"],
                 correctIndex: 1,
-                explanation: "「デジタル署名」とは、「ハンコ」のようなもので、「送信者が本人であること」を証明します。具体的には、送信者しか持っていない「秘密鍵」で暗号化（署名）を行い、誰でも手に入る送信者の「公開鍵」で復号（検証）を行うことで、「なりすまし」と「改ざん」を防ぐ技術です。",
+                explanation: "「デジタル署名」とは、「ハンコ」のようなもので、「送信者が本人であること」を証明します。具体的には、送信者しか持っていない「秘密鍵」で暗号化（署名）を行い、誰でも手に入る送信者の「公開鍵」で復号（検証）を行うことで、「なりすまし」と「改ざん」を防ぐことができます。",
                 explanationImage: "images/image021.png",
                 explanationUrl: "https://wa3.i-3-i.info/word14396.html"
             },
@@ -252,36 +252,36 @@
             // S/MIME
             {
                 category: "セキュリティ",
-                question: "電子メールを安全に送るためのプロトコル。「暗号化」して盗聴を防いだり、「デジタル署名」により送信者のなりすましを防ぐことができる。",
+                question: "電子メールを安全に送るためのプロトコル。メールを「暗号化」して盗聴を防いだり、「デジタル署名」により送信者のなりすましを防ぐことができる。",
                 image: "", 
                 choices: ["IMAP4", "S/MIME", "SMTP", "WPA2"],
                 correctIndex: 1,
                 explanation: "「S/MIME」（Secure / Multipurpose Internet Mail Extensions）とは、メールを暗号化する仕組みです。メールの暗号化とデジタル署名により、メールの盗聴やなりすまし（フィッシング詐欺など）を防ぐことができます。",
-                explanationImage: "",
+                explanationImage: "https://jp.globalsign.com/images/service/clientcert/knowledge/ill_smime_01.png",
                 explanationUrl: "https://wa3.i-3-i.info/word15950.html"
             },
             // ブロックチェーン★除外
-            {
-                category: "セキュリティ",
-                question: "ビットコインなどの暗号資産の基盤技術として利用されており、複数のコンピュータが同じ内容のデータを保持し、各コンピュータがデータの正当性を検証して担保することによって、改ざんが非常に困難な技術",
-                image: "", 
-                choices: ["クラウドコンピューティング", "ディープラーニング", "ブロックチェーン", "リレーショナルデータベース"],
-                correctIndex: 2,
-                explanation: "「ブロックチェーン」とは、ビットコインなどの暗号資産を管理する技術です。取引記録の改ざんが非常に難しいという特徴をもちます。「ビットコイン」とくればブロックチェーンです。",
-                explanationImage: "",
-                explanationUrl: "https://wa3.i-3-i.info/word16453.html"
-            },
+            //{
+            //    category: "セキュリティ",
+            //    question: "ビットコインなどの暗号資産の基盤技術として利用されており、複数のコンピュータが同じ内容のデータを保持し、各コンピュータがデータの正当性を検証して担保することによって、改ざんが非常に困難な技術",
+            //    image: "", 
+            //    choices: ["クラウドコンピューティング", "ディープラーニング", "ブロックチェーン", "リレーショナルデータベース"],
+            //    correctIndex: 2,
+            //    explanation: "「ブロックチェーン」とは、ビットコインなどの暗号資産を管理する技術です。取引記録の改ざんが非常に難しいという特徴をもちます。「ビットコイン」とくればブロックチェーンです。",
+            //    explanationImage: "",
+            //    explanationUrl: "https://wa3.i-3-i.info/word16453.html"
+            //},
             // ソーシャルエンジニアリング★除外
-            {
-                category: "セキュリティ",
-                question: "ITの技術を使うのではなく、人間の心理的な隙を利用して機密情報を盗み出す手法。例えば、背中からパスワードを盗み見たり、ゴミ箱をあさったりシステム管理者になりすましてパスワードを聞き出すなど。",
-                image: "", 
-                choices: ["ブルートフォース攻撃", "ソーシャルエンジニアリング", "SQLインジェクション", "ゼロデイ攻撃"],
-                correctIndex: 1,
-                explanation: "「ソーシャルエンジニアリング」は、ITを使わず、人間の心理的な隙をついて不正を行います。",
-                explanationImage: "",
-                explanationUrl: "https://wa3.i-3-i.info/word1231.html"
-            },
+            //{
+            //    category: "セキュリティ",
+            //    question: "ITの技術を使うのではなく、人間の心理的な隙を利用して機密情報を盗み出す手法。例えば、背中からパスワードを盗み見たり、ゴミ箱をあさったりシステム管理者になりすましてパスワードを聞き出すなど。",
+            //    image: "", 
+            //    choices: ["ブルートフォース攻撃", "ソーシャルエンジニアリング", "SQLインジェクション", "ゼロデイ攻撃"],
+            //    correctIndex: 1,
+            //    explanation: "「ソーシャルエンジニアリング」は、ITを使わず、人間の心理的な隙をついて不正を行います。",
+            //    explanationImage: "",
+            //    explanationUrl: "https://wa3.i-3-i.info/word1231.html"
+            //},
             // 不正のトライアングル
             {
                 category: "セキュリティ",
@@ -312,7 +312,7 @@
                 choices: ["DoS攻撃", "SQLインジェクション", "パスワードリスト攻撃", "フィッシング"],
                 correctIndex: 2,
                 explanation: "「パスワードリスト攻撃」とは、どこかから不正に入手したIDとパスワードを試す攻撃です。複数のサイトで同じIDとパスワードを使いまわす利用者が多いことに着目しています。",
-                explanationImage: "",
+                explanationImage: "https://cacco.co.jp/frauddetection/media/wp-content/uploads/2026/03/%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E3%83%AA%E3%82%B9%E3%83%88%E5%9E%8B%E6%94%BB%E6%92%83%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC-1000x608.png",
                 explanationUrl: "https://wa3.i-3-i.info/word14991.html"
             },
             // スパイウェア
@@ -323,7 +323,7 @@
                 choices: ["スパイウェア", "トロイの木馬", "ボット", "ランサムウェア"],
                 correctIndex: 0,
                 explanation: "「スパイウェア」とは、利用者に気づかれないように個人情報などを収集するプログラムです。",
-                explanationImage: "",
+                explanationImage: "https://pc-yougo.com/wp-content/uploads/2017/11/spyware02-300x241.png",
                 explanationUrl: "https://wa3.i-3-i.info/word1127.html"
             },
             // バックドア
@@ -334,7 +334,7 @@
                 choices: ["キーロガー", "ハニーポット", "バックドア", "ボット"],
                 correctIndex: 2,
                 explanation: "「バックドア」とは、システムに不正アクセスするための裏口です。システムにバックドアを仕掛けることで、パスワード認証などせずに簡単に侵入できるようになります。",
-                explanationImage: "",
+                explanationImage: "https://www.netassist.ne.jp/wp-content/uploads/2023/06/computer_virus_backdoor.png",
                 explanationUrl: "https://wa3.i-3-i.info/word15087.html"
             },
             // キーロガー
@@ -345,7 +345,7 @@
                 choices: ["キーロガー", "バックドア", "ボット", "ランサムウェア"],
                 correctIndex: 0,
                 explanation: "「キーロガー」（KeyLogger）とは、キーボード入力を記録するプログラムです。ネットカフェのPCに仕掛けられていることがあり、利用者が入力したパスワードなどを記録し、盗み出します。",
-                explanationImage: "http://www.sql-master.net/wp-content/uploads/2018/10/keylogger-1.png",
+                explanationImage: "images/image023.png",
                 explanationUrl: "https://wa3.i-3-i.info/word14100.html"
             },
             // フィッシング
@@ -355,8 +355,8 @@
                 image: "", 
                 choices: ["クロスサイトスクリプティング", "ショルダーハック", "フィッシング", "ブルートフォース攻撃"],
                 correctIndex: 2,
-                explanation: "「フィッシング」とは、利用者を偽サイトに誘導し、個人情報を入力させて、それらを不正に取得することです。被害者をだまして「釣る」からフィッシングです。",
-                explanationImage: "images/image022.png",
+                explanation: "「フィッシング」とは、利用者を偽サイトに誘導し、個人情報を入力させて、それらを不正に取得する手口です。被害者をだまして「釣る」ことからフィッシングです。",
+                explanationImage: "https://www.sanei-fcg.com/blog/wordpress/wp-content/uploads/2019/04/20190422_06-768x523.jpg",
                 explanationUrl: "https://wa3.i-3-i.info/word15830.html"
             },
             // ドライブバイダウンロード
@@ -367,7 +367,7 @@
                 choices: ["DDoS攻撃", "SQLインジェクション", "ドライブバイダウンロード", "フィッシング"],
                 correctIndex: 2,
                 explanation: "「ドライブバイダウンロード」とは、Webブラウザの脆弱性を利用し、Webページを見ただけでウイルスに感染させる攻撃です。",
-                explanationImage: "",
+                explanationImage: "https://cz-cdn.shoeisha.jp/static/images/article/12353/12353_p02.jpg",
                 explanationUrl: "https://wa3.i-3-i.info/word12467.html"
             },
             // SEOポイズニング
@@ -378,7 +378,7 @@
                 choices: ["SEOポイズニング", "SQLインジェクション", "ゼロデイ攻撃", "ドライブバイダウンロード"],
                 correctIndex: 0,
                 explanation: "「SEOポイズニング」（Search Engine Optimization Poisoning）とは、悪意のあるサイトを検索サイトの検索結果の上位に表示させ、より多くの利用者に閲覧させることです。",
-                explanationImage: "",
+                explanationImage: "https://assets.st-note.com/img/1770119571-NjVf9Y7WurvhES6IXAde3cgC.png",
                 explanationUrl: "https://wa3.i-3-i.info/word111400.html"
             },
             // DNSキャッシュポイズニング
@@ -389,7 +389,7 @@
                 choices: ["DDoS攻撃", "DNSキャッシュポイズニング", "SQLインジェクション", "フィッシング"],
                 correctIndex: 1,
                 explanation: "「DNSキャッシュポイズニング」とは、DNSのキャッシュを不正に書き換えて本来とは別のWebサイトに誘導する攻撃です。利用者が正しいURLを入力しているにもかかわらず、偽サイトへ飛ばされてしまうため、被害に気づきにくい非常に危険な攻撃です。",
-                explanationImage: "",
+                explanationImage: "https://office110.jp/wp-content/uploads/2022/05/dns-cache-poisoning-structure-1.png",
                 explanationUrl: "https://wa3.i-3-i.info/word111943.html"
             },
             // SQLインジェクション
@@ -400,7 +400,7 @@
                 choices: ["SQLインジェクション", "クロスサイトスクリプティング", "ディレクトリトラバーサル", "バッファオーバーフロー"],
                 correctIndex: 0,
                 explanation: "「SQLインジェクション」（Injection=注入）とは、入力フォームに悪意のあるSQL文を「注入」して、裏側にあるデータベース（顧客名簿など）を不正に操作する攻撃です",
-                explanationImage: "",
+                explanationImage: "https://www.eg-secure.co.jp/wp-content/uploads/2026/07/sql-injection-2.jpg",
                 explanationUrl: "https://wa3.i-3-i.info/word12800.html"
             },
             // ディレクトリトラバーサル
@@ -414,39 +414,39 @@
                 explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15913.html"
             },
-            // リスクの受容
-            {
-                category: "マネジメント",
-                question: "リスク対応策のうち、リスクの発生確率や影響度が非常に小さいため、あえて何もしないこと。",
-                image: "", 
-                choices: ["リスクの回避", "リスクの軽減（低減）", "リスクの受容（保有）", "リスクの転嫁"],
-                correctIndex: 2,
-                explanation: "「リスクの受容（保有）」とは、あえて何も対策しないことです。もしものときはその損害を受け入れます（受容）。『例：画面の保護フィルムは高いから貼らない。もし割れたら、その時はその時だ』",
-                explanationImage: "",
-                explanationUrl: "https://wa3.i-3-i.info/word18829.html"
-            },
-            // リスクの軽減
-            {
-                category: "マネジメント",
-                question: "リスク対応策のうち、リスクが起きる「確率」を下げたり、万が一リスクが発生してしまった時の「被害の大きさ（ダメージ）」を小さく抑えるための対策をすること。",
-                image: "", 
-                choices: ["リスクの回避", "リスクの軽減（低減）", "リスクの受容（保有）", "リスクの転嫁"],
-                correctIndex: 1,
-                explanation: "「リスクの軽減（低減）」とは、リスクの発生確率を下げたり、被害ができるだけ小さくなるように対策しておくことです。『例：スマホを落としても割れにくいように頑丈なケースに入れる』",
-                explanationImage: "",
-                explanationUrl: "https://wa3.i-3-i.info/word111798.html"
-            },
-            // リスクの転嫁
-            {
-                category: "マネジメント",
-                question: "リスク対応策のうち、保険を掛ける、他社に業務を委託するなど、リスクを他社に移すこと。",
-                image: "", 
-                choices: ["リスクの回避", "リスクの軽減（低減）", "リスクの受容（保有）", "リスクの移転（共有）"],
-                correctIndex: 3,
-                explanation: "「リスクの移転（共有）」とは、「保険」をかけるなどして万が一のときの被害を別の会社に肩代わりしてもらうことです。「保険」とくれば必ず「リスクの移転」です。『例：月々お金を払ってAppleCare（端末保証・保険）に入る』",
-                explanationImage: "",
-                explanationUrl: "https://wa3.i-3-i.info/word111800.html"
-            },
+            // // リスクの受容
+            // {
+            //     category: "マネジメント",
+            //     question: "リスク対応策のうち、リスクの発生確率や影響度が非常に小さいため、あえて何もしないこと。",
+            //     image: "", 
+            //     choices: ["リスクの回避", "リスクの軽減（低減）", "リスクの受容（保有）", "リスクの転嫁"],
+            //     correctIndex: 2,
+            //     explanation: "「リスクの受容（保有）」とは、あえて何も対策しないことです。もしものときはその損害を受け入れます（受容）。『例：画面の保護フィルムは高いから貼らない。もし割れたら、その時はその時だ』",
+            //     explanationImage: "",
+            //     explanationUrl: "https://wa3.i-3-i.info/word18829.html"
+            // },
+            // // リスクの軽減
+            // {
+            //     category: "マネジメント",
+            //     question: "リスク対応策のうち、リスクが起きる「確率」を下げたり、万が一リスクが発生してしまった時の「被害の大きさ（ダメージ）」を小さく抑えるための対策をすること。",
+            //     image: "", 
+            //     choices: ["リスクの回避", "リスクの軽減（低減）", "リスクの受容（保有）", "リスクの転嫁"],
+            //     correctIndex: 1,
+            //     explanation: "「リスクの軽減（低減）」とは、リスクの発生確率を下げたり、被害ができるだけ小さくなるように対策しておくことです。『例：スマホを落としても割れにくいように頑丈なケースに入れる』",
+            //     explanationImage: "",
+            //     explanationUrl: "https://wa3.i-3-i.info/word111798.html"
+            // },
+            // // リスクの転嫁
+            // {
+            //     category: "マネジメント",
+            //     question: "リスク対応策のうち、保険を掛ける、他社に業務を委託するなど、リスクを他社に移すこと。",
+            //     image: "", 
+            //     choices: ["リスクの回避", "リスクの軽減（低減）", "リスクの受容（保有）", "リスクの移転（共有）"],
+            //     correctIndex: 3,
+            //     explanation: "「リスクの移転（共有）」とは、「保険」をかけるなどして万が一のときの被害を別の会社に肩代わりしてもらうことです。「保険」とくれば必ず「リスクの移転」です。『例：月々お金を払ってAppleCare（端末保証・保険）に入る』",
+            //     explanationImage: "",
+            //     explanationUrl: "https://wa3.i-3-i.info/word111800.html"
+            // },
             // BCP
             {
                 category: "ストラテジ",
@@ -455,20 +455,20 @@
                 choices: ["BCP", "BPO", "BTO", "CSR"],
                 correctIndex: 0,
                 explanation: "「BCP」（Business Continuity Plan：事業継続計画）とは、大規模な災害が起こったときにも、「どうやって事業を続けるか」（事業継続）の計画です。",
-                explanationImage: "",
+                explanationImage: "https://japaclip.com/files/earthquake-500x233.png",
                 explanationUrl: "https://wa3.i-3-i.info/word12143.html"
             },
-            // 機密性
-            {
-                category: "セキュリティ",
-                question: "情報セキュリティの3大要素の一つで、「許可された人だけが情報にアクセスできる」こと",
-                image: "", 
-                choices: ["完全性", "可用性", "機密性", "真正性"],
-                correctIndex: 2,
-                explanation: "「機密性」とは、データを見せたくない人には見せないように保護された状態のことです。（例：スマホの画面ロック、パスワード設定、ファイルの暗号化など）",
-                explanationImage: "",
-                explanationUrl: "https://wa3.i-3-i.info/word15461.html"
-            },
+            // // 機密性
+            // {
+            //     category: "セキュリティ",
+            //     question: "情報セキュリティの3大要素の一つで、「許可された人だけが情報にアクセスできる」こと",
+            //     image: "", 
+            //     choices: ["完全性", "可用性", "機密性", "真正性"],
+            //     correctIndex: 2,
+            //     explanation: "「機密性」とは、データを見せたくない人には見せないように保護された状態のことです。（例：スマホの画面ロック、パスワード設定、ファイルの暗号化など）",
+            //     explanationImage: "",
+            //     explanationUrl: "https://wa3.i-3-i.info/word15461.html"
+            // },
             // 完全性
             {
                 category: "セキュリティ",
@@ -477,20 +477,20 @@
                 choices: ["完全性", "可用性", "機密性", "真正性"],
                 correctIndex: 0,
                 explanation: "「完全性」とは、情報が「正しい（改ざんされていない）」状態であることです。",
-                explanationImage: "",
+                explanationImage: "https://directcloud.jp/contents/security-info/wp-content/uploads/sites/2/2024/04/security_3_1-2.svg",
                 explanationUrl: "https://wa3.i-3-i.info/word15462.html"
             },
-            // 可用性
-            {
-                category: "セキュリティ",
-                question: "情報セキュリティの3大要素の一つで、利用者が必要なときにいつでも利用できること",
-                image: "", 
-                choices: ["完全性", "可用性", "機密性", "真正性"],
-                correctIndex: 1,
-                explanation: "「可用性」とは、いつでも必要な時に使えることです。",
-                explanationImage: "",
-                explanationUrl: "https://wa3.i-3-i.info/word15460.html"
-            },
+            // // 可用性
+            // {
+            //     category: "セキュリティ",
+            //     question: "情報セキュリティの3大要素の一つで、利用者が必要なときにいつでも利用できること",
+            //     image: "", 
+            //     choices: ["完全性", "可用性", "機密性", "真正性"],
+            //     correctIndex: 1,
+            //     explanation: "「可用性」とは、いつでも必要な時に使えることです。",
+            //     explanationImage: "",
+            //     explanationUrl: "https://wa3.i-3-i.info/word15460.html"
+            // },
             // IDS
             {
                 category: "セキュリティ",
@@ -499,7 +499,7 @@
                 choices: ["IDS", "IPS", "検疫ネットワーク", "VPN"],
                 correctIndex: 0,
                 explanation: "「IDS」（Intrusion Detection System）とは、「侵入検知システム」のことです。サーバーやネットワークを監視し、侵入を検知した場合に管理者にメールなどで通知します。",
-                explanationImage: "",
+                explanationImage: "https://office110.jp/wp-content/uploads/2022/05/ips-ids-difference-2.png",
                 explanationUrl: "https://wa3.i-3-i.info/word15235.html"
             },
             // WAF
@@ -510,7 +510,7 @@
                 choices: ["DMZ", "IDS", "MACアドレスフィルタリング", "WAF"],
                 correctIndex: 3,
                 explanation: "「WAF」（Web Application Firewall）とは、Webサイトを不正なアクセスから保護するシステムのことです。",
-                explanationImage: "",
+                explanationImage: "https://www.eg-secure.co.jp/wp-content/uploads/2026/07/WAF.webp",
                 explanationUrl: "https://wa3.i-3-i.info/word15376.html"
             },
             // DMZ
@@ -520,19 +520,19 @@
                 image: "", 
                 choices: ["ファイアウォール", "プロキシ", "DMZ", "DNS"],
                 correctIndex: 2,
-                explanation: "DMZとは、外部ネットワークと内部ネットワークの間につくられる中間の領域です。たとえば家の「庭」のようなもので、勝手に入ってほしくないが、郵便屋さんだけは手紙を届けるために入ってもよいような中間の領域です。外部からのアクセスを許可しつつ、万が一そのサーバが乗っ取られても、社内の機密データを扱う内部ネットワークへの侵入を防ぐための「緩衝地帯」です。",
-                explanationImage: "",
+                explanation: "DMZとは、外部ネットワークと内部ネットワークの間につくられる中間の領域です。たとえば家の「庭」のようなもので、勝手に入ってほしくないが、郵便屋さんだけは手紙を届けるために入ってもよいような中間の領域です。外部からのアクセスを許可しつつ、万が一そのサーバが乗っ取られても、社内の機密データを扱う内部ネットワークへの侵入を防ぎます。",
+                explanationImage: "https://engineer-ninaritai.com/static/img/uploads/blog/kihon-dmz/image-20.webp",
                 explanationUrl: "https://wa3.i-3-i.info/word12988.html"
             },
             // HTTPS
             {
                 category: "セキュリティ",
-                question: "Webサイトを安全に閲覧するプロトコルで、WebサーバとWebブラウザの間の通信を暗号化したり、通信先のサーバーが本物であることを確認する。",
+                question: "Webサイトを安全に閲覧するプロトコル。WebサーバとWebブラウザの間の通信を暗号化したり、通信先のサーバーが本物であることを確認する。",
                 image: "", 
                 choices: ["FTP", "HTTP", "HTTPS", "SMTP"],
                 correctIndex: 2,
-                explanation: "「HTTPS」（HTTP Secure）とは、SSL/TLSを用いてHTTPによる通信を暗号化するためのプロトコルです。また、サーバ証明書によって通信先のWebサーバーが本物であることも確認でき、安全に通信を行うことができます。",
-                explanationImage: "",
+                explanation: "「HTTPS」（HTTP Secure）とは、HTTPによる通信を暗号化するためのプロトコルです。また、サーバ証明書によって通信先のWebサーバーが本物であることも確認でき、安全に通信を行うことができます。",
+                explanationImage: "https://thumb.ac-illust.com/4e/4efe342dac1cfcc0f9ce46dc86ef397d_t.jpeg",
                 explanationUrl: "https://wa3.i-3-i.info/word1232.html"
             },
             // WPA3
@@ -542,8 +542,8 @@
                 image: "", 
                 choices: ["MACアドレスフィルタリング", "WPA3", "WPS", "ESSID"],
                 correctIndex: 1,
-                explanation: "「WPA3」（Wi-Fi Protected Access 3）とは、無線LANのセキュリティ規格です。無線LAN（PCとアクセスポイントの間）を暗号化します。",
-                explanationImage: "",
+                explanation: "「WPA3」（Wi-Fi Protected Access 3）とは、無線LANのセキュリティ規格です。無線LANの区間（PCとアクセスポイント間の無線通信）を暗号化します。",
+                explanationImage: "https://www.privateinternetaccess.com/blog/wp-content/uploads/2026/08/featured-image-What-is-WPA3-1024x683.png",
                 explanationUrl: "https://wa3.i-3-i.info/word17975.html"
             },
             // パターンマッチング法
@@ -554,7 +554,7 @@
                 choices: ["サンドボックス", "パターンマッチング法", "ビヘイビア法", "ヒューリスティック法"],
                 correctIndex: 1,
                 explanation: "「パターンマッチング法」とは、すでに発見されているウイルスの特徴（シグネチャコード）をまとめた「ウイルス定義ファイル（パターンファイル）」と比較してウイルスを検出する方法です。",
-                explanationImage: "",
+                explanationImage: "images/image024.png",
                 explanationUrl: "https://wa3.i-3-i.info/word111880.html"
             },
             // BYOD
@@ -564,8 +564,8 @@
                 image: "", 
                 choices: ["BCP", "BYOD", "MDM", "VPN"],
                 correctIndex: 1,
-                explanation: "「BYOD」（Bring Your Own Device）とは、社員の「私物」の情報端末を、会社の許可を得たうえで仕事に使うことです。ただし、社員のプライベート用のコンピュータには会社のセキュリティ管理が届きにくいため、ウイルス感染などのリスクは高まります。",
-                explanationImage: "",
+                explanation: "「BYOD」（Bring Your Own Device）とは、社員の「私物」の情報端末をお仕事に使うことです。ただし、社員のプライベート用のコンピュータには会社のセキュリティ管理が届きにくいため、ウイルス感染などの危険があります。",
+                explanationImage: "https://media.good-relations.jp/cms/wp-content/uploads/2016/03/BYOD-02.png",
                 explanationUrl: "https://wa3.i-3-i.info/word12059.html"
             },
             // MDM
@@ -575,8 +575,8 @@
                 image: "", 
                 choices: ["BYOD", "MDM", "SSO", "VPN"],
                 correctIndex: 1,
-                explanation: "「MDM」（Mobile Device Management：モバイル端末管理）とは、業務に使うスマートフォンをセキュリティポリシーに従って一元管理することです。MDMを導入しておけば、万がースマートフォンを紛失した場合に、スマートフォンを遠隔操作することで、機密データを削除することも可能です。",
-                explanationImage: "",
+                explanation: "「MDM」（Mobile Device Management：モバイル端末管理）とは、業務に使うスマートフォンをセキュリティポリシーに従って一元管理することです。MDMを導入しておけば、万がースマートフォンを紛失した場合でも、遠隔操作でロックしたり、データを削除することも可能です。",
+                explanationImage: "https://www.artemis-jp.com/wp/wp-content/images/security_news/2018/mdmfunction.jpg",
                 explanationUrl: "https://wa3.i-3-i.info/word12920.html"
             },
         ];
