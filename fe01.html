@@ -41,9 +41,10 @@
                     <div class="mb-2">
                         <span id="category-badge" class="badge bg-primary px-3 py-2 rounded-pill shadow-sm"></span>
                     </div>
+                    <!-- question-text の中身は JavaScript (innerHTML) で挿入します -->
                     <p id="question-text" class="fs-5 mb-3 fw-bold">読み込み中...</p>
                     
-                    <!-- 問題画像エリア（画像がない場合は非表示になります） -->
+                    <!-- 問題画像エリア -->
                     <div id="question-image-container" class="text-center mb-4 d-none">
                         <img id="question-image" src="" alt="問題の画像" class="img-fluid w-100 rounded shadow-sm">
                     </div>
@@ -59,10 +60,10 @@
                         <div id="explanation-container" class="card bg-light text-start p-3 mb-3 d-none border-0">
                             <h6 class="fw-bold mb-2">💡 解説</h6>
                             
-                            <!-- 解説文 -->
+                            <!-- 解説文 (innerHTMLで挿入) -->
                             <p id="explanation-text" class="small mb-3 text-secondary"></p>
                             
-                            <!-- 解説画像エリア（説明文の後に移動しました） -->
+                            <!-- 解説画像エリア -->
                             <div id="explanation-image-container" class="text-center mb-3 d-none">
                                 <img id="explanation-image" src="" alt="解説の画像" class="img-fluid w-100 rounded shadow-sm">
                             </div>
@@ -123,7 +124,7 @@
                 image: "", 
                 choices: ["ハッシュ関数", "ハイブリッド暗号方式", "公開鍵暗号方式", "共通鍵暗号方式"],
                 correctIndex: 3,
-                explanation: "「共通鍵」暗号方式とは、暗号化と復号で「同じ鍵」を使う暗号方式です。公開鍵暗号方式に比べて高速に暗号化や復号ができます。",
+                explanation: "「共通鍵」暗号方式とは、暗号化と復号で「同じ鍵」を使う暗号方式です。\n\n公開鍵暗号方式に比べて高速に暗号化や復号ができます。",
                 explanationImage: "images/image015.png",
                 explanationUrl: "https://wa3.i-3-i.info/word1837.html"
             },
@@ -134,7 +135,7 @@
                 image: "", 
                 choices: ["ハッシュ関数", "ハイブリッド暗号方式", "公開鍵暗号方式", "共通鍵暗号方式"],
                 correctIndex: 2,
-                explanation: "「公開鍵暗号方式」とは、みんなに ばらまく「公開鍵」と、自分だけが隠し持つ「秘密鍵」という「鍵のペア」を使う暗号方式です。公開鍵で暗号化したものは、秘密鍵でしか復号できません。「鍵のペア」とくれば「公開鍵」暗号方式です。",
+                explanation: "「公開鍵暗号方式」とは、みんなに ばらまく「公開鍵」と、自分だけが隠し持つ「秘密鍵」という「鍵のペア」を使う暗号方式です。\n\n公開鍵で暗号化したものは、秘密鍵でしか復号できません。\n\n「鍵のペア」とくれば「公開鍵」暗号方式です。",
                 explanationImage: "images/image016.png",
                 explanationUrl: "https://wa3.i-3-i.info/word1828.html"
             },
@@ -145,7 +146,7 @@
                 image: "", 
                 choices: ["ハッシュ関数", "ハイブリッド暗号方式", "公開鍵暗号方式", "共通鍵暗号方式"],
                 correctIndex: 1,
-                explanation: "「ハイブリッド暗号方式」とは、「共通鍵暗号方式」と「公開鍵暗号方式」を組み合わせた方式です。まず公開鍵暗号方式で共通鍵を安全に受け渡し、その後はその共通鍵を使って共通鍵暗号方式でやり取りします。インターネットのWebサイト通信を守る「HTTPS（SSL/TLS）」などで使われています。",
+                explanation: "「ハイブリッド暗号方式」とは、「共通鍵暗号方式」と「公開鍵暗号方式」を組み合わせた方式です。\n\nまず公開鍵暗号方式で共通鍵を安全に受け渡し、その後はその共通鍵を使って共通鍵暗号方式でやり取りします。\n\nインターネットのWebサイト通信を守る「HTTPS（SSL/TLS）」などで使われています。",
                 explanationImage: "images/image017.png",
                 explanationUrl: "https://wa3.i-3-i.info/word17539.html"
             },
@@ -167,7 +168,7 @@
                 image: "", 
                 choices: ["AES", "PKI", "RSA", "SHA-256"],
                 correctIndex: 2,
-                explanation: "「RSA」とは、巨大な数の素因数分解が困難なことを利用した、公開鍵暗号方式の暗号化アルゴリズムです。「素因数分解」といえば「RSA」です。",
+                explanation: "「RSA」とは、巨大な数の素因数分解が困難なことを利用した、公開鍵暗号方式の暗号化アルゴリズムです。\n\n「素因数分解」といえば「RSA」です。",
                 explanationImage: "images/image018.png",
                 explanationUrl: "https://wa3.i-3-i.info/word15142.html"
             },
@@ -178,7 +179,7 @@
                 image: "", 
                 choices: ["デジタル署名", "電子証明書（デジタル証明書）", "電子透かし", "ワンタイムパスワード"],
                 correctIndex: 1,
-                explanation: "「電子証明書」（デジタル証明書）は「公開鍵証明書」とも呼ばれ、「この公開鍵は、間違いなくAさんのものです」という証明をしてくれるデータのことです。認証局（CA）という機関が発行します。",
+                explanation: "「電子証明書」（デジタル証明書）は「公開鍵証明書」とも呼ばれ、「この公開鍵は、間違いなくAさんのものです」という証明をしてくれるデータのことです。\n\n認証局（CA）という機関が発行します。",
                 explanationImage: "images/image019.png",
                 explanationUrl: "https://wa3.i-3-i.info/word1831.html"
             },
@@ -189,7 +190,7 @@
                 image: "", 
                 choices: ["CSIRT", "JPCERT/CC", "タイムスタンプ局（TSA）", "認証局（CA）"],
                 correctIndex: 3,
-                explanation: "「認証局（CA）」（Certification Authority）とは、公開鍵の持ち主が本物であるかを審査し、その証明書（電子証明書/デジタル証明書）を発行する機関です。インターネット上の「市役所」や「警察署」のような役割を果たします。",
+                explanation: "「認証局（CA）」（Certification Authority）とは、公開鍵の持ち主が本物であるかを審査し、その証明書（電子証明書/デジタル証明書）を発行する機関です。\n\nインターネット上の「市役所」や「警察署」のような役割を果たします。",
                 explanationImage: "images/image020.png",
                 explanationUrl: "https://wa3.i-3-i.info/word1832.html"
             },
@@ -200,7 +201,7 @@
                 image: "", 
                 choices: ["共通鍵暗号方式", "デジタル署名", "電子透かし", "ハッシュ関数"],
                 correctIndex: 1,
-                explanation: "「デジタル署名」とは、「ハンコ」のようなもので、「送信者が本人であること」を証明します。具体的には、送信者しか持っていない「秘密鍵」で暗号化（署名）を行い、誰でも手に入る送信者の「公開鍵」で復号（検証）を行うことで、「なりすまし」と「改ざん」を防ぐことができます。",
+                explanation: "「デジタル署名」とは、「ハンコ」のようなもので、「送信者が本人であること」を証明します。\n\n具体的には、送信者しか持っていない「秘密鍵」で暗号化（署名）を行い、誰でも手に入る送信者の「公開鍵」で復号（検証）を行うことで、「なりすまし」と「改ざん」を防ぐことができます。",
                 explanationImage: "images/image021.png",
                 explanationUrl: "https://wa3.i-3-i.info/word14396.html"
             },
@@ -211,7 +212,7 @@
                 image: "", 
                 choices: ["可用性", "危殆化", "脆弱性", "真正性"],
                 correctIndex: 1,
-                explanation: "「危殆化」（きたいか）とは、「危険な状態になること」という意味です。昔は安全だった暗号方式が、技術の進歩によって簡単に破られるようになってしまったり、脆弱性の発見によって、安全性を失ってしまうことを言います。",
+                explanation: "「危殆化」（きたいか）とは、「危険な状態になること」という意味です。\n\n昔は安全だった暗号方式が、技術の進歩によって簡単に破られるようになってしまったり、脆弱性の発見によって、安全性を失ってしまうことを言います。",
                 explanationImage: "",
                 explanationUrl: "https://wa3.i-3-i.info/word15905.html"
             },
@@ -222,7 +223,7 @@
                 image: "", 
                 choices: ["Aさんの公開鍵", "Aさんの秘密鍵", "Bさんの公開鍵", "Bさんの秘密鍵"],
                 correctIndex: 2,
-                explanation: "内容を秘密にして送るときは、受信者の公開鍵で暗号化します。復号できるのは、対応する秘密鍵を持つ受信者本人だけです。",
+                explanation: "内容を秘密にして送るときは、受信者の公開鍵で暗号化します。\n\n復号できるのは、対応する秘密鍵を持つ受信者本人だけです。",
                 explanationImage: "images/image016.png",
                 explanationUrl: "https://wa3.i-3-i.info/word1828.html"
             },
@@ -245,7 +246,7 @@
                 image: "", 
                 choices: ["可用性", "真正性", "透過性", "対タンパ性"],
                 correctIndex: 3,
-                explanation: "「対タンパ性」とは、ICカードなどのデータを不正に読み取られないようにする性質のことです。例えばICカードを無理やりこじ開けるなどした瞬間に、中のデータを自動的に破壊して読めなくします（自爆）。",
+                explanation: "「対タンパ性」とは、ICカードなどのデータを不正に読み取られないようにする性質のことです。\n\n例えばICカードを無理やりこじ開けるなどした瞬間に、中のデータを自動的に破壊して読めなくします（自爆）。",
                 explanationImage: "https://assets.st-note.com/img/1766324727-PBtfexERaSInljH1cQ3GpMLY.jpg",
                 explanationUrl: "https://wa3.i-3-i.info/word19055.html"
             },
@@ -256,7 +257,7 @@
                 image: "", 
                 choices: ["IMAP4", "S/MIME", "SMTP", "WPA2"],
                 correctIndex: 1,
-                explanation: "「S/MIME」（Secure / Multipurpose Internet Mail Extensions）とは、メールを暗号化する仕組みです。メールの暗号化とデジタル署名により、メールの盗聴やなりすまし（フィッシング詐欺など）を防ぐことができます。",
+                explanation: "「S/MIME」（Secure / Multipurpose Internet Mail Extensions）とは、メールを暗号化する仕組みです。\n\nメールの暗号化とデジタル署名により、メールの盗聴やなりすまし（フィッシング詐欺など）を防ぐことができます。",
                 explanationImage: "https://jp.globalsign.com/images/service/clientcert/knowledge/ill_smime_01.png",
                 explanationUrl: "https://wa3.i-3-i.info/word15950.html"
             },
@@ -289,7 +290,7 @@
                 image: "", 
                 choices: ["機会、情報、正当化", "機会、正当化、動機", "機会、情報、動機", "情報、正当化、動機"],
                 correctIndex: 1,
-                explanation: "「機会、正当化、動機」を不正のトライアングルと呼び、3つの要素が揃った場合に不正が発生することがあります。「機会＝不正のチャンス」「正当化＝不正の言い訳」「動機＝不正を行う理由」",
+                explanation: "「機会、正当化、動機」を不正のトライアングルと呼び、3つの要素が揃った場合に不正が発生することがあります。\n\n「機会＝不正のチャンス」\n「正当化＝不正の言い訳」\n「動機＝不正を行う理由」",
                 explanationImage: "https://www.abitus.co.jp/column_voice/img1.png",
                 explanationUrl: "https://wa3.i-3-i.info/word15928.html"
             },
@@ -300,7 +301,7 @@
                 image: "", 
                 choices: ["IPスプーフィング", "ソーシャルエンジニアリング", "ポートスキャン", "ブルートフォース攻撃"],
                 correctIndex: 2,
-                explanation: "「ポートスキャン」とは、サーバ上で動いているサービス(アプリケーションソフトウェア)を調査する行為です。攻撃できそうなサービスがあるかどうかの事前調査を行います。例えるなら、家の周りをぐるぐると歩き回って、『どこか開けっぱなしの窓はないか？』と探ることに似ています。",
+                explanation: "「ポートスキャン」とは、サーバ上で動いているサービス(アプリケーションソフトウェア)を調査する行為です。攻撃できそうなサービスがあるかどうかの事前調査を行います。\n\n例えるなら、家の周りをぐるぐると歩き回って、『どこか開けっぱなしの窓はないか？』と探ることに似ています。",
                 explanationImage: "https://cyber-insurance.jp/wp-content/uploads/2025/06/cyber-56_2_portscan.jpg",
                 explanationUrl: "https://wa3.i-3-i.info/word14945.html"
             },
@@ -311,7 +312,7 @@
                 image: "", 
                 choices: ["DoS攻撃", "SQLインジェクション", "パスワードリスト攻撃", "フィッシング"],
                 correctIndex: 2,
-                explanation: "「パスワードリスト攻撃」とは、どこかから不正に入手したIDとパスワードを試す攻撃です。複数のサイトで同じIDとパスワードを使いまわす利用者が多いことに着目しています。",
+                explanation: "「パスワードリスト攻撃」とは、どこかから不正に入手したIDとパスワードを試す攻撃です。\n\n複数のサイトで同じIDとパスワードを使いまわす利用者が多いことに着目しています。",
                 explanationImage: "https://cacco.co.jp/frauddetection/media/wp-content/uploads/2026/03/%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E3%83%AA%E3%82%B9%E3%83%88%E5%9E%8B%E6%94%BB%E6%92%83%E3%81%AE%E3%82%B3%E3%83%94%E3%83%BC-1000x608.png",
                 explanationUrl: "https://wa3.i-3-i.info/word14991.html"
             },
@@ -333,7 +334,7 @@
                 image: "", 
                 choices: ["キーロガー", "ハニーポット", "バックドア", "ボット"],
                 correctIndex: 2,
-                explanation: "「バックドア」とは、システムに不正アクセスするための裏口です。システムにバックドアを仕掛けることで、パスワード認証などせずに簡単に侵入できるようになります。",
+                explanation: "「バックドア」とは、システムに不正アクセスするための裏口です。\n\nシステムにバックドアを仕掛けることで、パスワード認証などせずに簡単に侵入できるようになります。",
                 explanationImage: "https://www.netassist.ne.jp/wp-content/uploads/2023/06/computer_virus_backdoor.png",
                 explanationUrl: "https://wa3.i-3-i.info/word15087.html"
             },
@@ -344,7 +345,7 @@
                 image: "", 
                 choices: ["キーロガー", "バックドア", "ボット", "ランサムウェア"],
                 correctIndex: 0,
-                explanation: "「キーロガー」（KeyLogger）とは、キーボード入力を記録するプログラムです。ネットカフェのPCに仕掛けられていることがあり、利用者が入力したパスワードなどを記録し、盗み出します。",
+                explanation: "「キーロガー」（KeyLogger）とは、キーボード入力を記録するプログラムです。\n\nネットカフェのPCなどに仕掛けられていることがあり、利用者が入力したパスワードなどを記録し、盗み出します。",
                 explanationImage: "images/image023.png",
                 explanationUrl: "https://wa3.i-3-i.info/word14100.html"
             },
@@ -355,7 +356,7 @@
                 image: "", 
                 choices: ["クロスサイトスクリプティング", "ショルダーハック", "フィッシング", "ブルートフォース攻撃"],
                 correctIndex: 2,
-                explanation: "「フィッシング」とは、利用者を偽サイトに誘導し、個人情報を入力させて、それらを不正に取得する手口です。被害者をだまして「釣る」ことからフィッシングです。",
+                explanation: "「フィッシング」とは、利用者を偽サイトに誘導し、個人情報を入力させて、それらを不正に取得する手口です。\n\n被害者をだまして「釣る」ことからフィッシングです。",
                 explanationImage: "https://www.sanei-fcg.com/blog/wordpress/wp-content/uploads/2019/04/20190422_06-768x523.jpg",
                 explanationUrl: "https://wa3.i-3-i.info/word15830.html"
             },
@@ -388,7 +389,7 @@
                 image: "", 
                 choices: ["DDoS攻撃", "DNSキャッシュポイズニング", "SQLインジェクション", "フィッシング"],
                 correctIndex: 1,
-                explanation: "「DNSキャッシュポイズニング」とは、DNSのキャッシュを不正に書き換えて本来とは別のWebサイトに誘導する攻撃です。利用者が正しいURLを入力しているにもかかわらず、偽サイトへ飛ばされてしまうため、被害に気づきにくい非常に危険な攻撃です。",
+                explanation: "「DNSキャッシュポイズニング」とは、DNSのキャッシュを不正に書き換えて本来とは別のWebサイトに誘導する攻撃です。\n\n利用者が正しいURLを入力しているにもかかわらず、偽サイトへ飛ばされてしまうため、被害に気づきにくい非常に危険な攻撃です。",
                 explanationImage: "https://office110.jp/wp-content/uploads/2022/05/dns-cache-poisoning-structure-1.png",
                 explanationUrl: "https://wa3.i-3-i.info/word111943.html"
             },
@@ -498,18 +499,18 @@
                 image: "", 
                 choices: ["IDS", "IPS", "検疫ネットワーク", "VPN"],
                 correctIndex: 0,
-                explanation: "「IDS」（Intrusion Detection System）とは、「侵入検知システム」のことです。サーバーやネットワークを監視し、侵入を検知した場合に管理者にメールなどで通知します。",
+                explanation: "「IDS」（Intrusion Detection System）とは、「侵入検知システム」のことです。\n\nサーバーやネットワークを監視し、侵入を検知した場合に管理者にメールなどで通知します。",
                 explanationImage: "https://office110.jp/wp-content/uploads/2022/05/ips-ids-difference-2.png",
                 explanationUrl: "https://wa3.i-3-i.info/word15235.html"
             },
             // WAF
             {
                 category: "セキュリティ",
-                question: "Webサイトへのアクセス内容を監視し,攻撃とみなされるパターンを検知したときにそのアクセスを遮断する。",
+                question: "「Webサイト」へのアクセス内容を監視し,攻撃とみなされるパターンを検知したときにそのアクセスを遮断する。",
                 image: "", 
                 choices: ["DMZ", "IDS", "MACアドレスフィルタリング", "WAF"],
                 correctIndex: 3,
-                explanation: "「WAF」（Web Application Firewall）とは、Webサイトを不正なアクセスから保護するシステムのことです。",
+                explanation: "「WAF」（Web Application Firewall）とは、「Webサイト」を不正なアクセスから保護するシステムのことです。",
                 explanationImage: "https://www.eg-secure.co.jp/wp-content/uploads/2026/07/WAF.webp",
                 explanationUrl: "https://wa3.i-3-i.info/word15376.html"
             },
@@ -520,7 +521,7 @@
                 image: "", 
                 choices: ["ファイアウォール", "プロキシ", "DMZ", "DNS"],
                 correctIndex: 2,
-                explanation: "DMZとは、外部ネットワークと内部ネットワークの間につくられる中間の領域です。たとえば家の「庭」のようなもので、勝手に入ってほしくないが、郵便屋さんだけは手紙を届けるために入ってもよいような中間の領域です。外部からのアクセスを許可しつつ、万が一そのサーバが乗っ取られても、社内の機密データを扱う内部ネットワークへの侵入を防ぎます。",
+                explanation: "DMZとは、外部ネットワークと内部ネットワークの間につくられる中間の領域です。\n\nたとえば家の「庭」のようなもので、勝手に入ってほしくないが、郵便屋さんだけは手紙を届けるために入ってもよいような中間の領域です。\n\n外部からのアクセスを許可しつつ、万が一そのサーバが乗っ取られても、社内の機密データを扱う内部ネットワークへの侵入を防ぎます。",
                 explanationImage: "https://engineer-ninaritai.com/static/img/uploads/blog/kihon-dmz/image-20.webp",
                 explanationUrl: "https://wa3.i-3-i.info/word12988.html"
             },
@@ -531,7 +532,7 @@
                 image: "", 
                 choices: ["FTP", "HTTP", "HTTPS", "SMTP"],
                 correctIndex: 2,
-                explanation: "「HTTPS」（HTTP Secure）とは、HTTPによる通信を暗号化するためのプロトコルです。また、サーバ証明書によって通信先のWebサーバーが本物であることも確認でき、安全に通信を行うことができます。",
+                explanation: "「HTTPS」（HTTP Secure）とは、HTTPによる通信を暗号化するためのプロトコルです。\n\nまた、サーバ証明書によって通信先のWebサーバーが本物であることも確認でき、安全に通信を行うことができます。",
                 explanationImage: "https://thumb.ac-illust.com/4e/4efe342dac1cfcc0f9ce46dc86ef397d_t.jpeg",
                 explanationUrl: "https://wa3.i-3-i.info/word1232.html"
             },
@@ -564,7 +565,7 @@
                 image: "", 
                 choices: ["BCP", "BYOD", "MDM", "VPN"],
                 correctIndex: 1,
-                explanation: "「BYOD」（Bring Your Own Device）とは、社員の「私物」の情報端末をお仕事に使うことです。ただし、社員のプライベート用のコンピュータには会社のセキュリティ管理が届きにくいため、ウイルス感染などの危険があります。",
+                explanation: "「BYOD」（Bring Your Own Device）とは、社員の「私物」の情報端末をお仕事に使うことです。\n\nただし、社員のプライベート用のコンピュータには会社のセキュリティ管理が届きにくいため、ウイルス感染などの危険があります。",
                 explanationImage: "https://media.good-relations.jp/cms/wp-content/uploads/2016/03/BYOD-02.png",
                 explanationUrl: "https://wa3.i-3-i.info/word12059.html"
             },
@@ -575,12 +576,11 @@
                 image: "", 
                 choices: ["BYOD", "MDM", "SSO", "VPN"],
                 correctIndex: 1,
-                explanation: "「MDM」（Mobile Device Management：モバイル端末管理）とは、業務に使うスマートフォンをセキュリティポリシーに従って一元管理することです。MDMを導入しておけば、万がースマートフォンを紛失した場合でも、遠隔操作でロックしたり、データを削除することも可能です。",
+                explanation: "「MDM」（Mobile Device Management：モバイル端末管理）とは、業務に使うスマートフォンをセキュリティポリシーに従って一元管理することです。\n\nMDMを導入しておけば、万がースマートフォンを紛失した場合でも、遠隔操作でロックしたり、データを削除することも可能です。",
                 explanationImage: "https://www.artemis-jp.com/wp/wp-content/images/security_news/2018/mdmfunction.jpg",
                 explanationUrl: "https://wa3.i-3-i.info/word12920.html"
             },
-        ];
-
+        ]
 
         // 状態管理
         let queueIndices = [];       
@@ -590,6 +590,19 @@
         let reviewLaterIndices = []; 
         let currentQuestion = null;
         let currentQuestionIndex = null; 
+
+        // --- テキストフォーマット用の関数 ---
+        // HTML特殊文字をエスケープ処理した上で、\n を <br> タグに変換します
+        function formatText(text) {
+            if (!text) return "";
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;")
+                .replace(/\n/g, "<br>");
+        }
 
         // --- Cookie操作 ---
         const COOKIE_NAME = "quiz_progress_fe01";
@@ -754,7 +767,9 @@
             // UIの初期化
             progressBadge.textContent = `残り ${queueIndices.length} 問`;
             categoryBadge.textContent = currentQuestion.category;
-            questionText.textContent = currentQuestion.question;
+            
+            // 【変更】改行を反映させるため formatText を経由して innerHTML に挿入
+            questionText.innerHTML = formatText(currentQuestion.question);
             
             // 問題画像の表示判定
             if (currentQuestion.image) {
@@ -831,7 +846,8 @@
 
             // 解説の表示ロジック
             if (currentQuestion.explanation) {
-                explanationText.textContent = currentQuestion.explanation;
+                // 【変更】改行を反映させるため formatText を経由して innerHTML に挿入
+                explanationText.innerHTML = formatText(currentQuestion.explanation);
                 
                 if (currentQuestion.explanationImage) {
                     explanationImage.src = currentQuestion.explanationImage;

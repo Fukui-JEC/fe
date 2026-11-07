@@ -41,9 +41,10 @@
                     <div class="mb-2">
                         <span id="category-badge" class="badge bg-primary px-3 py-2 rounded-pill shadow-sm"></span>
                     </div>
+                    <!-- question-text の中身は JavaScript (innerHTML) で挿入します -->
                     <p id="question-text" class="fs-5 mb-3 fw-bold">読み込み中...</p>
                     
-                    <!-- 問題画像エリア（画像がない場合は非表示になります） -->
+                    <!-- 問題画像エリア -->
                     <div id="question-image-container" class="text-center mb-4 d-none">
                         <img id="question-image" src="" alt="問題の画像" class="img-fluid w-100 rounded shadow-sm">
                     </div>
@@ -59,10 +60,10 @@
                         <div id="explanation-container" class="card bg-light text-start p-3 mb-3 d-none border-0">
                             <h6 class="fw-bold mb-2">💡 解説</h6>
                             
-                            <!-- 解説文 -->
+                            <!-- 解説文 (innerHTMLで挿入) -->
                             <p id="explanation-text" class="small mb-3 text-secondary"></p>
                             
-                            <!-- 解説画像エリア（説明文の後に移動しました） -->
+                            <!-- 解説画像エリア -->
                             <div id="explanation-image-container" class="text-center mb-3 d-none">
                                 <img id="explanation-image" src="" alt="解説の画像" class="img-fluid w-100 rounded shadow-sm">
                             </div>
@@ -581,15 +582,6 @@
                 explanationImage: "images/image012.png",
                 explanationUrl: "https://wa3.i-3-i.info/word1766.html"
             },
-
-
-
-
-
-
-
-
-
         ];
 
         // 状態管理
@@ -600,6 +592,19 @@
         let reviewLaterIndices = []; 
         let currentQuestion = null;
         let currentQuestionIndex = null; 
+
+        // --- テキストフォーマット用の関数 ---
+        // HTML特殊文字をエスケープ処理した上で、\n を <br> タグに変換します
+        function formatText(text) {
+            if (!text) return "";
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;")
+                .replace(/\n/g, "<br>");
+        }
 
         // --- Cookie操作 ---
         const COOKIE_NAME = "quiz_progress_fe02";
@@ -764,7 +769,9 @@
             // UIの初期化
             progressBadge.textContent = `残り ${queueIndices.length} 問`;
             categoryBadge.textContent = currentQuestion.category;
-            questionText.textContent = currentQuestion.question;
+            
+            // 【変更】改行を反映させるため formatText を経由して innerHTML に挿入
+            questionText.innerHTML = formatText(currentQuestion.question);
             
             // 問題画像の表示判定
             if (currentQuestion.image) {
@@ -841,7 +848,8 @@
 
             // 解説の表示ロジック
             if (currentQuestion.explanation) {
-                explanationText.textContent = currentQuestion.explanation;
+                // 【変更】改行を反映させるため formatText を経由して innerHTML に挿入
+                explanationText.innerHTML = formatText(currentQuestion.explanation);
                 
                 if (currentQuestion.explanationImage) {
                     explanationImage.src = currentQuestion.explanationImage;
