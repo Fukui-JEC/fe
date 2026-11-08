@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4択クイズ</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .choice-btn {
+            width: 100%;
+            margin-bottom: 10px;
+            text-align: left;
+            transition: all 0.2s;
+        }
+        .choice-btn:hover:not(:disabled) {
+            transform: translateX(5px);
+        }
+        #result-message {
+            display: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body class="bg-light pt-5">
+    <div class="container">
+        <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+            <div class="card-body p-4">
+                <!-- ヘッダー領域 -->
+                <div class="d-flex justify-content-between align-items-start mb-4 border-bottom pb-3">
+                    <h2 class="card-title m-0 pt-1">確認クイズ</h2>
+                    <div class="text-end">
+                        <span id="progress-badge" class="badge bg-secondary mb-2 d-block"></span>
+                        <button id="reset-btn" class="btn btn-sm btn-outline-danger" style="font-size: 0.8rem;">🔄 リセット</button>
+                    </div>
+                </div>
+                
+                <!-- クイズエリア -->
+                <div id="quiz-container">
+                    <div class="mb-2">
+                        <span id="category-badge" class="badge bg-primary px-3 py-2 rounded-pill shadow-sm"></span>
+                    </div>
+                    <!-- question-text の中身は JavaScript (innerHTML) で挿入します -->
+                    <p id="question-text" class="fs-5 mb-3 fw-bold">読み込み中...</p>
+                    
+                    <!-- 問題画像エリア -->
+                    <div id="question-image-container" class="text-center mb-4 d-none">
+                        <img id="question-image" src="" alt="問題の画像" class="img-fluid w-100 rounded shadow-sm">
+                    </div>
+                    
+                    <div id="choices-container">
+                        <!-- 選択肢がJavaScriptで生成されます -->
+                    </div>
+                    
+                    <!-- 結果表示・解説エリア -->
+                    <div id="result-container" class="mt-4 text-center">
+                        <p id="result-message" class="mb-2"></p>
+                        
+                        <div id="explanation-container" class="card bg-light text-start p-3 mb-3 d-none border-0">
+                            <h6 class="fw-bold mb-2">💡 解説</h6>
+                            
+                            <!-- 解説文 (innerHTMLで挿入) -->
+                            <p id="explanation-text" class="small mb-3 text-secondary"></p>
+                            
+                            <!-- 解説画像エリア -->
+                            <div id="explanation-image-container" class="text-center mb-3 d-none">
+                                <img id="explanation-image" src="" alt="解説の画像" class="img-fluid w-100 rounded shadow-sm">
+                            </div>
+                            
+                            <div>
+                                <a id="explanation-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-info">
+                                    詳細ページを開く ↗
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- アクションボタンエリア -->
+                        <div class="d-flex justify-content-center gap-2 mt-3">
+                            <button id="review-later-btn" class="btn btn-outline-warning d-none">⭐ 後で見直す</button>
+                            <button id="next-btn" class="btn btn-primary px-4 d-none">次の問題へ</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 完了画面 -->
+                <div id="completion-container" class="text-center d-none py-4">
+                    <h3 class="text-success mb-3">全問クリア！</h3>
+                    <p class="text-muted mb-4">お疲れ様でした。</p>
+                    
+                    <!-- 一発正解数の表示パネル -->
+                    <div class="card bg-light border-0 mb-4 mx-auto shadow-sm" style="max-width: 300px;">
+                        <div class="card-body">
+                            <h5 class="card-title text-secondary fs-6">一発正解数</h5>
+                            <p class="display-4 mb-0 text-primary fw-bold">
+                                <span id="first-try-count-display">0</span><span class="fs-4 text-muted fw-normal"> / <span id="total-questions-display">0</span></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- ボタンエリア -->
+                    <div class="d-grid gap-2 col-10 mx-auto">
+                        <button id="retry-missed-btn" onclick="retryMissedQuestions()" class="btn btn-danger fw-bold d-none">
+                            ⚠️ 不正解だった問題に再チャレンジ
+                        </button>
+                        <button id="retry-review-btn" onclick="retryReviewQuestions()" class="btn btn-warning text-dark fw-bold d-none">
+                            ⭐ 「後で見直す」問題にチャレンジ
+                        </button>
+                        <button onclick="initQuiz(true)" class="btn btn-outline-primary">
+                            最初からすべてやり直す
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const originalQuizData = [
+            // 差分バックアップ
+            {
+                category: "ソフトウェア",
+                question: "フルバックアップ以降、新たに追加されたデータのみをバックアップする方式",
+                image: "images/image037.png", 
+                choices: ["アーカイブ", "差分バックアップ", "増分バックアップ", "フルバックアップ"],
+                correctIndex: 1,
+                explanation: "「差分バックアップ」とは、フルバックアップを取ったあと追加されたデータのみをバックアップする方式です。\n\n" + 
+                    "バックアップするのはフルバックアップからの差分だけなので、バックアップにかかる時間は短いです。\n\n" +
+                    "反面、復旧にはフルバックアップと差分バックアップの2つのデータが必要になるので、復旧作業が煩雑になります。\n" + 
+                    "例えば、水曜日にデータベースを復旧する場合は、「日曜日のフルバックアップ」と「水曜日の差分バックアップ」の2つのデータを使って、システムを元の状態に戻します。",
+                explanationImage: "images/image036.png",
+                explanationUrl: "https://wa3.i-3-i.info/word11652.html"
+            },
+
+            // 増分バックアップ
+            {
+                category: "ソフトウェア",
+                question: "前回のバックアップから新たに追加されたデータのみをバックアップする方式。",
+                image: "images/image038.png", 
+                choices: ["アーカイブ", "差分バックアップ", "増分バックアップ", "フルバックアップ"],
+                correctIndex: 2,
+                explanation: "「増分バックアップ」とは、前回のバックアップから新たに追加されたデータのみをバックアップする方式です。\n\n" +
+                    "バックアップするのは前回のバックアップからの追加分だけなので、バックアップにかかる時間は差分バックアップよりもさらに短いです。\n\n" +
+                    "反面、バックアップのデータが複数になるので、復旧作業が差分バックアップよりもさらに煩雑になります。\n" +
+                    "例えば、水曜日にデータベースの復旧を行う場合は、「日曜日のフルバックアップ」と「月」「火」「水」の増分バックアップの4つのデータを使って、システムを元の状態に戻さなければなりません。",
+                explanationImage: "images/image039.png",
+                explanationUrl: "https://wa3.i-3-i.info/word11651.html"
+            },
+
+            // 最適化
+            {
+                category: "ソフトウェア",
+                question: "コンパイラによる最適化の主な目的はどれか。",
+                image: "", 
+                choices: ["目的プログラムを生成する時間を短縮する", "プログラムのデバッグを容易にする", "プログラムの保守性を改善する", "プログラムの実行時間を短縮する"],
+                correctIndex: 3,
+                explanation: "コンパイラの「最適化」とは、プログラムの動作は変えずに、実行速度を自動的に向上させる処理のことです。\n\n例えばソースコードの「A=10+20」のような式をあらかじめ計算し「A=30」に置き替えるなど、できるだけ実行速度が速くなるようにします。",
+                explanationImage: "https://assets.st-note.com/img/1768403233-lP7IUVErjkNyZxevS1w2D059.jpg",
+                explanationUrl: "https://www.fe-siken.com/s/kakomon/30_haru/q18.html"
+            },
+
+            // 静的テストツール
+            {
+                category: "ソフトウェア",
+                question: "プログラムは実行せずに、ソースコードを解析してプログラムの誤りを見つけるソフトウェア",
+                image: "", 
+                choices: ["カバレッジツール", "静的テストツール", "動的テストツール", "デバッガ"],
+                correctIndex: 1,
+                explanation: "「静的テストツール」とは、プログラムを「動かさない（静的な）」状態で、ソースコードの記述内容をチェックするツールです。",
+                explanationImage: "https://www.qbook.jp/column/assets_c/2026/11/73b10dd0ed28706eebe4baa27a005eca-thumb-autoxauto-q80.webp",
+                explanationUrl: "https://www.qbook.jp/column/2008.html"
+            },
+            // Eclipse
+            {
+                category: "ソフトウェア",
+                question: "オープンソースの統合開発環境の一つで、Javaなどのアプリケーション開発のためのツールが一つにまとまったソフトウェア。",
+                image: "", 
+                choices: ["Eclipse", "Perl", "PHP", "Ruby"],
+                correctIndex: 0,
+                explanation: "「Eclipse」とは、Javaなどが開発できるオープンソースの統合開発環境です。\n\n統合開発環境（IDE:Integrated Development Environment）とは、テキストエディタやコンパイラ、テストツールなど、開発に必要なツールが1つにまとまったソフトウェアです。",
+                explanationImage: "https://ai-kenkyujo.com/wp-content/uploads/2025/03/java-eclipse10.png.webp",
+                explanationUrl: ""
+            },
+            // フラッシュメモリ
+            {
+                category: "ハードウェア",
+                question: "電気的にデータの消去ができるメモリ",
+                image: "", 
+                choices: ["DRAM", "SRAM", "キャッシュメモリ", "フラッシュメモリ"],
+                correctIndex: 3,
+                explanation: "「フラッシュメモリ」とは、電気的にデータの消去や書き換えができるメモリです。\n\nUSBメモリやSSDに使われています。\n\nフラッシュメモリでは、データの消去は「ブロック」と呼ばれる、ビットをひとまとめにした単位で行います。",
+                explanationImage: "https://semi-journal.jp/wp-content/uploads/2022/02/flash-memory-1-768x215.jpg",
+                explanationUrl: "https://wa3.i-3-i.info/word11054.html"
+            },
+            // DRAM
+            {
+                category: "ハードウェア",
+                question: "主記憶に使われているメモリで、構造が単純なので大容量かつ安くでき、データを保持するために一定時間ごとに「リフレッシュ」操作を行わなければならないものはどれか",
+                image: "", 
+                choices: ["DRAM", "EEPROM", "SRAM", "フラッシュメモリ"],
+                correctIndex: 0,
+                explanation: "「DRAM」とは、主記憶装置（メインメモリ）で使われているメモリです。\n\n放置すると少しずつ電気が抜けてしまうため、記憶内容を維持するために、一定時間ごとに「リフレッシュ」（再充電）を行う必要があります。\n\n一方で、DRAMは回路が単純で小さいので、データ容量の大きい半導体メモリを安く作ることができます。",
+                explanationImage: "https://breezegroup.co.jp/wp-content/uploads/2024/02/dram-sram4.jpg.webp",
+                explanationUrl: "https://wa3.i-3-i.info/word16702.html"
+            },
+            // チャタリング
+            {
+                category: "ハードウェア",
+                question: "機械式の押しボタンスイッチを1回押すわずかな瞬間に、複数回のON/OFFが発生する現象",
+                image: "", 
+                choices: ["サンプリング", "シェアリング", "チャタリング", "バッファリング"],
+                correctIndex: 2,
+                explanation: "「チャタリング」とは、機械式スイッチのオン/オフが切り替わる短い間に、意図しないオン/オフが何度も繰り返される現象のことです。\n\n例えば、マウスを一度しかクリックしていないのにダブルクリックと認識されたりするような現象をチャタリングといいます。",
+                explanationImage: "https://p.e-words.jp/img/Chattering.webp",
+                explanationUrl: "https://wa3.i-3-i.info/word11377.html"
+            },
+
+            // アウトラインフォント
+            {
+                category: "マルチメディア",
+                question: "文字を画面上で拡大・縮小したり、解像度の異なるプリンタで印刷したりしても、輪郭がギザギザにならずになめらかに表示・印字できるフォント。",
+                image: "", 
+                choices: ["アウトラインフォント", "等幅フォント", "ビットマップフォント", "プロポーショナルフォント"],
+                correctIndex: 0,
+                explanation: "「アウトラインフォント」とは、文字の形状を「座標値や方程式などのデータ」として保持しており、文字を拡大·縮小するたびに形状を再計算するので、どんなに拡大·縮小しても、なめらかな曲線で表示されます。ギザギザが目立つようなことはありません。\n\nそのため、アウトラインフォントは、文字を任意の倍率に拡大して表示するケースなどに適しています。\n\n一方、「ビットマップフォント」は、ドットの集まりで文字を表現しているため、拡大するとギザギザが目立ちます。",
+                explanationImage: "images/image040.png",
+                explanationUrl: "https://wa3.i-3-i.info/word13827.html"
+            },
+
+            // クリッピング
+            {
+                category: "マルチメディア",
+                question: "3次元グラフィックスにおいて、ウィンドウと呼ばれる枠を指定して、設定されたカメラ（視点）の視野角から外れているため画面には映らない部分を計算から除外して描画しないようにする処理。",
+                image: "", 
+                choices: ["アンチエイリアシング", "クリッピング", "シェーディング", "モデリング"],
+                correctIndex: 1,
+                explanation: "「クリッピング」とは、画像の一部分を切り抜くことです。\n\n特に、3次元グラフィックスの画像においては、クリッピングは作成した3次元画像にウィンドウと呼ばれる枠を指定して、ウィンドウの中だけを画像として取り出すことです。",
+                explanationImage: "images/image041.png",
+                explanationUrl: ""
+            },
+            // アンチエイリアシング
+            {
+                category: "マルチメディア",
+                question: "液晶ディスプレイなどの表示装置において、傾いた直線の境界を滑らかに表示する手法",
+                image: "images/image042.png", 
+                choices: ["アンチエイリアシング", "シェーディング", "テクスチャマッピング", "バンプマッピング"],
+                correctIndex: 0,
+                explanation: "「アンチエイリアシング」（Anti-Aliasing）とは、画像処理の際に生じる線や輪郭のギザギザを目立たなくする手法です。",
+                explanationImage: "https://www.adobe.com/jp/creativecloud/roc/blog/photography/media_1bb1b34bbe67f42a4d676435b7166e95a3db397f7.jpg",
+                explanationUrl: "https://wa3.i-3-i.info/word111788.html"
+            },
+            // テクスチャマッピング
+            {
+                category: "マルチメディア",
+                question: "3DCGにおいて、物体の表面に模様などの画像を貼り付けて質感を出す手法",
+                image: "", 
+                choices: ["シェーディング", "テクスチャマッピング", "モデリング", "レイトレーシング"],
+                correctIndex: 1,
+                explanation: "「テクスチャマッピング」とは、3次元の立体モデルの表面に、木目や金属、レンガ、布などの模様が描かれた画像を貼り付けることで、物体の質感をリアルに表現する手法です。",
+                explanationImage: "images/image043.png",
+                explanationUrl: "https://e-words.jp/w/%E3%83%86%E3%82%AF%E3%82%B9%E3%83%81%E3%83%A3%E3%83%9E%E3%83%83%E3%83%94%E3%83%B3%E3%82%B0.html"
+            },
+
+            // H.264/MPEG-4 AVC
+            {
+                category: "マルチメディア",
+                question: "ワンセグ放送で使用されている動画圧縮技術",
+                image: "", 
+                choices: ["H.264/MPEG-4 AVC", "JPEG", "MIDI", "MP3"],
+                correctIndex: 0,
+                explanation: "「H.264/MPEG-4 AVC」とは、動画を圧縮する技術です。\n\n動画の中で「変化があった部分(差分)」だけを保存することで、動画のファイルサイズを小さくします。\n\n現在は、ワンセグ放送、Blu-ray Disc、YouTubeなど、さまざまなメディアで使われています。",
+                explanationImage: "https://askmedia.co.jp/blog/wp-content/uploads/2026/11/h264_codec_guide.jpg",
+                explanationUrl: "https://askmedia.co.jp/blog/what-is-h264-video-codec-guide/"
+            },
+            // 関係データベース
+            {
+                category: "データベース",
+                question: "データを行と列の2次元の表形式で表すデータベース",
+                image: "", 
+                choices: ["オブジェクト型データベース", "階層型データベース", "関係データベース", "ネットワーク型データベース"],
+                correctIndex: 2,
+                explanation: "「関係データベース」とは、SQLの授業でみなさんがいつも使っている表形式のデータベースです。リレーショナルデータベースとも言います。",
+                explanationImage: "images/image044.png",
+                explanationUrl: "https://wa3.i-3-i.info/word15439.html"
+            },
+            // 主キー
+            {
+                category: "データベース",
+                question: "リレーショナルデータベースの表において、テーブルの中からレコードを一意に識別するための列",
+                image: "", 
+                choices: ["インデックス", "外部キー", "候補キー", "主キー"],
+                correctIndex: 3,
+                explanation: "「主キー」とは、テーブルの中から特定のレコードを一意に識別するための列です。例えば「学籍番号」や「社員ID」などです。\n\n表のデータを確実に一つに特定するため、主キーになるには次の2つの条件を満たす必要があります。\n\n(1) 重複する値がないこと（一意性）\n(2) データが空（NULL）でないこと（NOT NULL制約）」",
+                explanationImage: "https://medium-company.com/wp-content/uploads/2021/01/primarykey1.png",
+                explanationUrl: "https://wa3.i-3-i.info/word1991.html"
+            },
+        ];
+
+        // 状態管理
+        let queueIndices = [];       
+        let attemptedIndices = [];   
+        let firstTryCorrectCount = 0;
+        let missedFirstTryIndices = []; 
+        let reviewLaterIndices = []; 
+        let currentQuestion = null;
+        let currentQuestionIndex = null; 
+
+        // --- テキストフォーマット用の関数 ---
+        // HTML特殊文字をエスケープ処理した上で、\n を <br> タグに変換します
+        function formatText(text) {
+            if (!text) return "";
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;")
+                .replace(/\n/g, "<br>");
+        }
+
+        // --- Cookie操作 ---
+        const COOKIE_NAME = "quiz_progress_fe03";
+
+        function saveProgressToCookie() {
+            const expires = new Date(Date.now() + 30 * 86400000).toUTCString();
+            const saveData = {
+                queue: queueIndices,
+                attempted: attemptedIndices,
+                firstTryCount: firstTryCorrectCount,
+                missedFirstTry: missedFirstTryIndices,
+                reviewLater: reviewLaterIndices
+            };
+            document.cookie = `${COOKIE_NAME}=${JSON.stringify(saveData)}; expires=${expires}; path=/`;
+        }
+
+        function loadProgressFromCookie() {
+            const match = document.cookie.match(new RegExp(`(?:^|; )${COOKIE_NAME}=([^;]+)`));
+            if (match) {
+                try {
+                    const parsed = JSON.parse(match[1]);
+                    if (Array.isArray(parsed)) {
+                        return { queue: parsed, attempted: [], firstTryCount: 0, missedFirstTry: [], reviewLater: [] };
+                    }
+                    return parsed;
+                } catch (e) {
+                    return null;
+                }
+            }
+            return null;
+        }
+
+        function clearProgressCookie() {
+            document.cookie = `${COOKIE_NAME}=; max-age=0; path=/`;
+        }
+
+        // --- DOM要素 ---
+        const progressBadge = document.getElementById("progress-badge");
+        const categoryBadge = document.getElementById("category-badge");
+        const questionText = document.getElementById("question-text");
+        
+        const questionImageContainer = document.getElementById("question-image-container");
+        const questionImage = document.getElementById("question-image");
+        
+        const choicesContainer = document.getElementById("choices-container");
+        const resultMessage = document.getElementById("result-message");
+        const nextBtn = document.getElementById("next-btn");
+        const reviewLaterBtn = document.getElementById("review-later-btn");
+        const resetBtn = document.getElementById("reset-btn");
+        const quizContainer = document.getElementById("quiz-container");
+        
+        const completionContainer = document.getElementById("completion-container");
+        const firstTryCountDisplay = document.getElementById("first-try-count-display");
+        const totalQuestionsDisplay = document.getElementById("total-questions-display");
+        const retryMissedBtn = document.getElementById("retry-missed-btn");
+        const retryReviewBtn = document.getElementById("retry-review-btn");
+        
+        const explanationContainer = document.getElementById("explanation-container");
+        const explanationText = document.getElementById("explanation-text");
+        
+        const explanationImageContainer = document.getElementById("explanation-image-container");
+        const explanationImage = document.getElementById("explanation-image");
+        
+        const explanationLink = document.getElementById("explanation-link");
+
+        // --- 初期化処理 ---
+        function initQuiz(forceReset = false) {
+            if (forceReset) {
+                clearProgressCookie();
+                queueIndices = null;
+            }
+
+            const savedData = loadProgressFromCookie();
+            const isValidSave = savedData && 
+                                Array.isArray(savedData.queue) &&
+                                savedData.queue.every(idx => idx >= 0 && idx < originalQuizData.length);
+
+            if (!forceReset && isValidSave) {
+                queueIndices = savedData.queue;
+                attemptedIndices = savedData.attempted || [];
+                firstTryCorrectCount = savedData.firstTryCount || 0;
+                missedFirstTryIndices = savedData.missedFirstTry || [];
+                reviewLaterIndices = savedData.reviewLater || [];
+            } else {
+                queueIndices = originalQuizData.map((_, index) => index);
+                attemptedIndices = [];
+                firstTryCorrectCount = 0;
+                missedFirstTryIndices = [];
+                reviewLaterIndices = [];
+            }
+
+            quizContainer.classList.remove("d-none");
+            completionContainer.classList.add("d-none");
+            resetBtn.style.display = "inline-block";
+            
+            loadNextQuestion();
+        }
+
+        // --- 不正解問題への再挑戦 ---
+        function retryMissedQuestions() {
+            queueIndices = [...missedFirstTryIndices];
+            attemptedIndices = [];
+            firstTryCorrectCount = 0;
+            missedFirstTryIndices = [];
+            saveProgressToCookie();
+            
+            quizContainer.classList.remove("d-none");
+            completionContainer.classList.add("d-none");
+            resetBtn.style.display = "inline-block";
+            
+            loadNextQuestion();
+        }
+
+        // --- 「後で見直す」問題への再挑戦 ---
+        function retryReviewQuestions() {
+            queueIndices = [...reviewLaterIndices];
+            attemptedIndices = [];
+            firstTryCorrectCount = 0;
+            missedFirstTryIndices = [];
+            saveProgressToCookie();
+            
+            quizContainer.classList.remove("d-none");
+            completionContainer.classList.add("d-none");
+            resetBtn.style.display = "inline-block";
+            
+            loadNextQuestion();
+        }
+
+        // --- 問題読み込み ---
+        function loadNextQuestion() {
+            if (queueIndices.length === 0) {
+                saveProgressToCookie(); 
+
+                quizContainer.classList.add("d-none");
+                completionContainer.classList.remove("d-none");
+                progressBadge.textContent = "クリア！";
+                resetBtn.style.display = "none";
+                
+                const currentSessionTotal = firstTryCorrectCount + missedFirstTryIndices.length;
+                firstTryCountDisplay.textContent = firstTryCorrectCount;
+                totalQuestionsDisplay.textContent = currentSessionTotal;
+
+                if (missedFirstTryIndices.length > 0) {
+                    retryMissedBtn.classList.remove("d-none");
+                } else {
+                    retryMissedBtn.classList.add("d-none");
+                }
+
+                if (reviewLaterIndices.length > 0) {
+                    retryReviewBtn.textContent = `⭐ 「後で見直す」問題にチャレンジ (${reviewLaterIndices.length}問)`;
+                    retryReviewBtn.classList.remove("d-none");
+                } else {
+                    retryReviewBtn.classList.add("d-none");
+                }
+                
+                return;
+            }
+
+            currentQuestionIndex = queueIndices[0];
+            currentQuestion = originalQuizData[currentQuestionIndex];
+
+            // UIの初期化
+            progressBadge.textContent = `残り ${queueIndices.length} 問`;
+            categoryBadge.textContent = currentQuestion.category;
+            
+            // 【変更】改行を反映させるため formatText を経由して innerHTML に挿入
+            questionText.innerHTML = formatText(currentQuestion.question);
+            
+            // 問題画像の表示判定
+            if (currentQuestion.image) {
+                questionImage.src = currentQuestion.image;
+                questionImageContainer.classList.remove("d-none");
+            } else {
+                questionImage.src = "";
+                questionImageContainer.classList.add("d-none");
+            }
+
+            choicesContainer.innerHTML = "";
+            resultMessage.style.display = "none";
+            explanationContainer.classList.add("d-none");
+            nextBtn.classList.add("d-none");
+            reviewLaterBtn.classList.add("d-none");
+
+            if (reviewLaterIndices.includes(currentQuestionIndex)) {
+                reviewLaterBtn.classList.replace("btn-outline-warning", "btn-warning");
+                reviewLaterBtn.textContent = "⭐ 見直しリストに登録済み";
+            } else {
+                reviewLaterBtn.classList.replace("btn-warning", "btn-outline-warning");
+                reviewLaterBtn.textContent = "⭐ 後で見直す";
+            }
+
+            currentQuestion.choices.forEach((choice, index) => {
+                const button = document.createElement("button");
+                button.textContent = choice;
+                button.className = "btn btn-outline-secondary choice-btn p-3";
+                button.onclick = () => checkAnswer(index, button);
+                choicesContainer.appendChild(button);
+            });
+        }
+
+        // --- 解答チェック ---
+        function checkAnswer(selectedIndex, clickedButton) {
+            const buttons = choicesContainer.querySelectorAll("button");
+            buttons.forEach(btn => btn.disabled = true);
+
+            const answeredIndex = queueIndices.shift(); 
+            
+            const isFirstTry = !attemptedIndices.includes(answeredIndex);
+            if (isFirstTry) {
+                attemptedIndices.push(answeredIndex);
+            }
+            
+            resultMessage.style.display = "block";
+
+            if (selectedIndex === currentQuestion.correctIndex) {
+                if (isFirstTry) {
+                    firstTryCorrectCount++;
+                }
+
+                clickedButton.classList.remove("btn-outline-secondary");
+                clickedButton.classList.add("btn-success", "text-white");
+                resultMessage.textContent = "⭕ 正解！";
+                resultMessage.className = "text-success mb-2";
+            } else {
+                if (isFirstTry) {
+                    missedFirstTryIndices.push(answeredIndex);
+                }
+                
+                queueIndices.push(answeredIndex);
+
+                clickedButton.classList.remove("btn-outline-secondary");
+                clickedButton.classList.add("btn-danger", "text-white");
+                buttons[currentQuestion.correctIndex].classList.remove("btn-outline-secondary");
+                buttons[currentQuestion.correctIndex].classList.add("btn-success", "text-white");
+
+                resultMessage.textContent = "❌ 不正解... (後で再出題されます)";
+                resultMessage.className = "text-danger mb-2";
+            }
+
+            saveProgressToCookie();
+
+            // 解説の表示ロジック
+            if (currentQuestion.explanation) {
+                // 【変更】改行を反映させるため formatText を経由して innerHTML に挿入
+                explanationText.innerHTML = formatText(currentQuestion.explanation);
+                
+                if (currentQuestion.explanationImage) {
+                    explanationImage.src = currentQuestion.explanationImage;
+                    explanationImageContainer.classList.remove("d-none");
+                } else {
+                    explanationImage.src = "";
+                    explanationImageContainer.classList.add("d-none");
+                }
+
+                if (currentQuestion.explanationUrl) {
+                    explanationLink.href = currentQuestion.explanationUrl;
+                    explanationLink.classList.remove("d-none");
+                } else {
+                    explanationLink.classList.add("d-none");
+                }
+                explanationContainer.classList.remove("d-none");
+            }
+
+            nextBtn.classList.remove("d-none");
+            reviewLaterBtn.classList.remove("d-none");
+        }
+
+        // --- 「後で見直す」ボタンのクリック処理 ---
+        reviewLaterBtn.addEventListener("click", () => {
+            if (reviewLaterIndices.includes(currentQuestionIndex)) {
+                reviewLaterIndices = reviewLaterIndices.filter(index => index !== currentQuestionIndex);
+                saveProgressToCookie();
+                
+                reviewLaterBtn.classList.replace("btn-warning", "btn-outline-warning");
+                reviewLaterBtn.textContent = "⭐ 後で見直す";
+            } else {
+                reviewLaterIndices.push(currentQuestionIndex);
+                saveProgressToCookie();
+                
+                reviewLaterBtn.classList.replace("btn-outline-warning", "btn-warning");
+                reviewLaterBtn.textContent = "⭐ 見直しリストに登録済み";
+            }
+        });
+
+        // --- リセット処理 ---
+        resetBtn.addEventListener("click", () => {
+            if (confirm("これまでの解答状況をリセットして、最初からやり直しますか？")) {
+                initQuiz(true);
+            }
+        });
+
+        // イベント設定
+        nextBtn.addEventListener("click", loadNextQuestion);
+        window.onload = () => initQuiz(false);
+    </script>
+</body>
+</html>
