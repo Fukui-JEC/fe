@@ -286,14 +286,62 @@
             // 主キー
             {
                 category: "データベース",
-                question: "リレーショナルデータベースの表において、テーブルの中からレコードを一意に識別するための列",
+                question: "リレーショナルデータベースの表において、テーブルの中のレコードを一意に識別するための列",
                 image: "", 
                 choices: ["インデックス", "外部キー", "候補キー", "主キー"],
                 correctIndex: 3,
-                explanation: "「主キー」とは、テーブルの中から特定のレコードを一意に識別するための列です。例えば「学籍番号」や「社員ID」などです。\n\n表のデータを確実に一つに特定するため、主キーになるには次の2つの条件を満たす必要があります。\n\n(1) 重複する値がないこと（一意性）\n(2) データが空（NULL）でないこと（NOT NULL制約）」",
+                explanation: "「主キー」とは、テーブルの中から特定のレコードを識別するための列です。例えば「学籍番号」や「社員ID」などです。\n\n表のデータを確実に一つに特定するため、主キーになるには次の2つの条件を満たす必要があります。\n\n(1) 重複する値がないこと（一意性）\n(2) データが空（NULL）でないこと（NOT NULL制約）」",
                 explanationImage: "https://medium-company.com/wp-content/uploads/2021/01/primarykey1.png",
                 explanationUrl: "https://wa3.i-3-i.info/word1991.html"
             },
+
+            // 外部キー
+            {
+                category: "データベース",
+                question: "別のテーブルの主キーを参照する列",
+                image: "", 
+                choices: ["インデックス", "外部キー", "候補キー", "主キー"],
+                correctIndex: 1,
+                explanation: "「外部キー」とは、別のテーブルの主キーを参照する列のことです。\n\n下の図では「学生テーブル」の「教員番号」が外部キーになります。\n\n外部キーの値は、必ず他のテーブルの主キーに存在する値でければなりません。このような制約を参照制約といいます。",
+                explanationImage: "images/image047.png",
+                explanationUrl: "https://wa3.i-3-i.info/word1992.html"
+            },
+            // E-R図
+            {
+                category: "データベース",
+                question: "データの関係性を「エンティティ（実体）」と「リレーションシップ（関連）」で表した図",
+                image: "", 
+                choices: ["DFD", "E-R図", "UML", "状態遷移図"],
+                correctIndex: 1,
+                explanation: "「E-R図」はデータの関係性を表す図です。\n\nデータの関係をエンティティ（実体）とリレーションシップ（関連）で表します。データベースを作成する際の設計図になります。",
+                explanationImage: "images/image048.png",
+                explanationUrl: "https://wa3.i-3-i.info/word11593.html"
+            },
+            // 射影
+            {
+                category: "データベース",
+                question: "表の中から、特定の列だけ取り出すこと",
+                image: "", 
+                choices: ["結合", "射影", "選択", "和"],
+                correctIndex: 1,
+                explanation: "「射影」とは、表から特定の列のみ取り出すことです。\n\n一方、特定の行（レコード）を取り出す操作を「選択」といいます。",
+                explanationImage: "images/image049.png",
+                explanationUrl: "https://wa3.i-3-i.info/word11647.html"
+            },
+            // インデックス
+            {
+                category: "データベース",
+                question: "データベースの検索を高速化する機能",
+                image: "", 
+                choices: ["アーカイブ", "インデックス", "ディレクトリ", "ビュー"],
+                correctIndex: 1,
+                explanation: "「インデックス」とは、データベースの検索を高速化する機能です。\n\nインデックスは「索引」という意味で、仕組みは、本の索引と同じです。データベースにインデックスを作っておけば、必要なデータをすぐに見つけることができます。",
+                explanationImage: "images/image050.png",
+                explanationUrl: "https://wa3.i-3-i.info/word11906.html"
+            },
+
+
+
         ];
 
         // 状態管理
