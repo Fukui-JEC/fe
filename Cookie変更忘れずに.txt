@@ -2,7 +2,7 @@ Cookie変更忘れずに
 
             // 
             {
-                category: "データベース",
+                category: "ネットワーク",
                 question: "",
                 image: "", 
                 choices: ["", "", "", ""],

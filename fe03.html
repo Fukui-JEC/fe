@@ -122,12 +122,11 @@
                 category: "ソフトウェア",
                 question: "フルバックアップ以降、新たに追加されたデータのみをバックアップする方式",
                 image: "images/image037.png", 
-                choices: ["アーカイブ", "差分バックアップ", "増分バックアップ", "フルバックアップ"],
+                choices: ["アーカイブ", "差分バックアップ", "フルバックアップ", "増分バックアップ"],
                 correctIndex: 1,
-                explanation: "「差分バックアップ」とは、フルバックアップを取ったあと追加されたデータのみをバックアップする方式です。\n\n" + 
+                explanation: "「差分バックアップ」とは、フルバックアップ（全データのバックアップ）のあとに追加されたデータのみをバックアップする方式です。\n\n" + 
                     "バックアップするのはフルバックアップからの差分だけなので、バックアップにかかる時間は短いです。\n\n" +
-                    "反面、復旧にはフルバックアップと差分バックアップの2つのデータが必要になるので、復旧作業が煩雑になります。\n" + 
-                    "例えば、水曜日にデータベースを復旧する場合は、「日曜日のフルバックアップ」と「水曜日の差分バックアップ」の2つのデータを使って、システムを元の状態に戻します。",
+                    "反面、復旧にはフルバックアップと差分バックアップの2つのデータが必要になるので、復旧作業が煩雑になります。（下図AとB）\n",
                 explanationImage: "images/image036.png",
                 explanationUrl: "https://wa3.i-3-i.info/word11652.html"
             },
@@ -137,12 +136,11 @@
                 category: "ソフトウェア",
                 question: "前回のバックアップから新たに追加されたデータのみをバックアップする方式。",
                 image: "images/image038.png", 
-                choices: ["アーカイブ", "差分バックアップ", "増分バックアップ", "フルバックアップ"],
-                correctIndex: 2,
+                choices: ["アーカイブ", "差分バックアップ", "フルバックアップ", "増分バックアップ"],
+                correctIndex: 3,
                 explanation: "「増分バックアップ」とは、前回のバックアップから新たに追加されたデータのみをバックアップする方式です。\n\n" +
                     "バックアップするのは前回のバックアップからの追加分だけなので、バックアップにかかる時間は差分バックアップよりもさらに短いです。\n\n" +
-                    "反面、バックアップのデータが複数になるので、復旧作業が差分バックアップよりもさらに煩雑になります。\n" +
-                    "例えば、水曜日にデータベースの復旧を行う場合は、「日曜日のフルバックアップ」と「月」「火」「水」の増分バックアップの4つのデータを使って、システムを元の状態に戻さなければなりません。",
+                    "反面、バックアップのデータが複数になるので、復旧作業が差分バックアップよりもさらに煩雑になります。（下図 A+B+C+D）\n",
                 explanationImage: "images/image039.png",
                 explanationUrl: "https://wa3.i-3-i.info/word11651.html"
             },
@@ -170,17 +168,6 @@
                 explanationImage: "https://www.qbook.jp/column/assets_c/2026/11/73b10dd0ed28706eebe4baa27a005eca-thumb-autoxauto-q80.webp",
                 explanationUrl: "https://www.qbook.jp/column/2008.html"
             },
-            // Eclipse
-            {
-                category: "ソフトウェア",
-                question: "オープンソースの統合開発環境の一つで、Javaなどのアプリケーション開発のためのツールが一つにまとまったソフトウェア。",
-                image: "", 
-                choices: ["Eclipse", "Perl", "PHP", "Ruby"],
-                correctIndex: 0,
-                explanation: "「Eclipse」とは、Javaなどが開発できるオープンソースの統合開発環境です。\n\n統合開発環境（IDE:Integrated Development Environment）とは、テキストエディタやコンパイラ、テストツールなど、開発に必要なツールが1つにまとまったソフトウェアです。",
-                explanationImage: "https://ai-kenkyujo.com/wp-content/uploads/2025/03/java-eclipse10.png.webp",
-                explanationUrl: ""
-            },
             // フラッシュメモリ
             {
                 category: "ハードウェア",
@@ -188,7 +175,7 @@
                 image: "", 
                 choices: ["DRAM", "SRAM", "キャッシュメモリ", "フラッシュメモリ"],
                 correctIndex: 3,
-                explanation: "「フラッシュメモリ」とは、電気的にデータの消去や書き換えができるメモリです。\n\nUSBメモリやSSDに使われています。\n\nフラッシュメモリでは、データの消去は「ブロック」と呼ばれる、ビットをひとまとめにした単位で行います。",
+                explanation: "「フラッシュメモリ」とは、電気的にデータの消去や書き換えができるメモリです。USBメモリやSSDに使われています。\n\nフラッシュメモリでは、データの消去は「ブロック」と呼ばれる、ビットをひとまとめにした単位で行います。\n\nフラッシュメモリ↓",
                 explanationImage: "https://semi-journal.jp/wp-content/uploads/2022/02/flash-memory-1-768x215.jpg",
                 explanationUrl: "https://wa3.i-3-i.info/word11054.html"
             },
@@ -215,6 +202,10 @@
                 explanationUrl: "https://wa3.i-3-i.info/word11377.html"
             },
 
+            //-------------------------------------
+            //    マルチメディア
+            //-------------------------------------
+
             // アウトラインフォント
             {
                 category: "マルチメディア",
@@ -222,7 +213,7 @@
                 image: "", 
                 choices: ["アウトラインフォント", "等幅フォント", "ビットマップフォント", "プロポーショナルフォント"],
                 correctIndex: 0,
-                explanation: "「アウトラインフォント」とは、どんなに拡大·縮小しても、なめらかな曲線で表示されるフォントです。\n\n文字の形状を「座標値や方程式などのデータ」として保持しており、文字を拡大·縮小するたびに形状を再計算するので、ギザギザが目立つようなことはありません。\n\n一方、「ビットマップフォント」は、ドットの集まりで文字を表現しているため、拡大するとギザギザが目立ちます。",
+                explanation: "「アウトラインフォント」とは、どんなに拡大·縮小しても、なめらかな曲線で表示されるフォントです。\n\n文字の形状を座標や計算式として保持しており、文字を拡大·縮小するたびに形状を再計算するので、ギザギザが目立つようなことはありません。\n\n一方、「ビットマップフォント」は、ドットの集まりで文字を表現しているため、拡大するとギザギザが目立ちます。",
                 explanationImage: "images/image040.png",
                 explanationUrl: "https://wa3.i-3-i.info/word13827.html"
             },
@@ -245,7 +236,7 @@
                 image: "images/image042.png", 
                 choices: ["アンチエイリアシング", "シェーディング", "テクスチャマッピング", "バンプマッピング"],
                 correctIndex: 0,
-                explanation: "「アンチエイリアシング」（Anti-Aliasing）とは、画像処理の際に生じる線や輪郭のギザギザを目立たなくする手法です。",
+                explanation: "「アンチエイリアシング」（Anti-Aliasing）とは、輪郭のギザギザを目立たなくする手法です。",
                 explanationImage: "https://www.adobe.com/jp/creativecloud/roc/blog/photography/media_1bb1b34bbe67f42a4d676435b7166e95a3db397f7.jpg",
                 explanationUrl: "https://wa3.i-3-i.info/word111788.html"
             },
@@ -268,32 +259,37 @@
                 image: "", 
                 choices: ["H.264/MPEG-4 AVC", "JPEG", "MIDI", "MP3"],
                 correctIndex: 0,
-                explanation: "「H.264/MPEG-4 AVC」とは、動画を圧縮する技術です。\n\n動画の中で「変化があった部分(差分)」だけを保存することで、動画のファイルサイズを小さくします。\n\n現在は、ワンセグ放送、Blu-ray Disc、YouTubeなど、さまざまなメディアで使われています。",
-                explanationImage: "https://askmedia.co.jp/blog/wp-content/uploads/2026/11/h264_codec_guide.jpg",
+                explanation: "「H.264/MPEG-4 AVC」とは、動画を圧縮する技術です。\n\n動画の中で「変化があった部分」（差分）だけを保存することで、動画のファイルサイズを小さくします。\n\n現在は、ワンセグ放送、Blu-ray Disc、YouTubeなど、さまざまなメディアで使われています。",
+                explanationImage: "https://cdn-ak.f.st-hatena.com/images/fotolife/n/networkcamera/20181212/20181212235854.jpg",
                 explanationUrl: "https://askmedia.co.jp/blog/what-is-h264-video-codec-guide/"
             },
+
+            //-------------------------------------
+            //    データベース
+            //-------------------------------------
+
             // 関係データベース
-            {
-                category: "データベース",
-                question: "データを行と列の2次元の表形式で表すデータベース",
-                image: "", 
-                choices: ["オブジェクト型データベース", "階層型データベース", "関係データベース", "ネットワーク型データベース"],
-                correctIndex: 2,
-                explanation: "「関係データベース」とは、SQLの授業でみなさんがいつも使っている表形式のデータベースです。リレーショナルデータベースとも言います。",
-                explanationImage: "images/image044.png",
-                explanationUrl: "https://wa3.i-3-i.info/word15439.html"
-            },
+            // {
+            //     category: "データベース",
+            //     question: "データを行と列の2次元の表形式で表すデータベース",
+            //     image: "", 
+            //     choices: ["オブジェクト型データベース", "階層型データベース", "関係データベース", "ネットワーク型データベース"],
+            //     correctIndex: 2,
+            //     explanation: "「関係データベース」とは、SQLの授業でみなさんがいつも使っている表形式のデータベースです。リレーショナルデータベースとも言います。",
+            //     explanationImage: "images/image044.png",
+            //     explanationUrl: "https://wa3.i-3-i.info/word15439.html"
+            // },
             // 主キー
-            {
-                category: "データベース",
-                question: "リレーショナルデータベースの表において、テーブルの中のレコードを一意に識別するための列",
-                image: "", 
-                choices: ["インデックス", "外部キー", "候補キー", "主キー"],
-                correctIndex: 3,
-                explanation: "「主キー」とは、テーブルの中から特定のレコードを識別するための列です。例えば「学籍番号」や「社員ID」などです。\n\n表のデータを確実に一つに特定するため、主キーになるには次の2つの条件を満たす必要があります。\n\n(1) 重複する値がないこと（一意性）\n(2) データが空（NULL）でないこと（NOT NULL制約）」",
-                explanationImage: "https://medium-company.com/wp-content/uploads/2021/01/primarykey1.png",
-                explanationUrl: "https://wa3.i-3-i.info/word1991.html"
-            },
+            // {
+            //     category: "データベース",
+            //     question: "リレーショナルデータベースの表において、テーブルの中のレコードを一意に識別するための列",
+            //     image: "", 
+            //     choices: ["インデックス", "外部キー", "候補キー", "主キー"],
+            //     correctIndex: 3,
+            //     explanation: "「主キー」とは、テーブルの中から特定のレコードを識別するための列です。例えば「学籍番号」や「社員ID」などです。\n\n表のデータを確実に一つに特定するため、主キーになるには次の2つの条件を満たす必要があります。\n\n(1) 重複する値がないこと（一意性）\n(2) データが空（NULL）でないこと（NOT NULL制約）",
+            //     explanationImage: "https://medium-company.com/wp-content/uploads/2021/01/primarykey1.png",
+            //     explanationUrl: "https://wa3.i-3-i.info/word1991.html"
+            // },
 
             // 外部キー
             {
@@ -324,7 +320,7 @@
                 image: "", 
                 choices: ["結合", "射影", "選択", "和"],
                 correctIndex: 1,
-                explanation: "「射影」とは、表から特定の列のみ取り出すことです。\n\n一方、特定の行（レコード）を取り出す操作を「選択」といいます。",
+                explanation: "「射影」とは、表から特定の「列」のみ取り出すことです。\n\n一方、特定の「行」（レコード）を取り出す操作は「選択」といいます。\n「射影」と「選択」は区別できるようにしておきましょう。",
                 explanationImage: "images/image049.png",
                 explanationUrl: "https://wa3.i-3-i.info/word11647.html"
             },
@@ -339,7 +335,211 @@
                 explanationImage: "images/image050.png",
                 explanationUrl: "https://wa3.i-3-i.info/word11906.html"
             },
+            // 原子性
+            {
+                category: "データベース",
+                question: "DBMSのACID特性の一つで、トランザクション内の処理が「すべて実行される」か、「すべてが取り消される」かのどちらかの結果になること",
+                image: "", 
+                choices: ["原子性(Atomicity)", "一貫性(Consistency)", "独立性(Isolation)", "耐久性(Durability)"],
+                correctIndex: 0,
+                explanation: "「原子性」とは、トランザクション内の処理が「すべて実行される」か、「すべてが取り消される」かのどちらかの結果になることです。つまり、中途半端な状態にならないようにします。",
+                explanationImage: "images/image051.png",
+                explanationUrl: "https://wa3.i-3-i.info/word110351.html"
+            },
 
+            // ログファイル
+            {
+                category: "データベース",
+                question: "データベースの更新前や更新後の値を書き出して、データベースの更新記録として保存するファイル",
+                image: "", 
+                choices: ["ダンプファイル", "チェックポイントファイル", "バックアップファイル", "ログファイル"],
+                correctIndex: 3,
+                explanation: "「ログファイル」とは、データベースを更新する前後の状態を保存したファイルです。\n\nDBを更新する前の状態を保存したログを「更新前ログファイル」、更新した後の状態を保存したログを「更新後ログファイル」といいます。\n\nデータベースに障害が発生したときは、このログファイルを使ってデータベースを復旧させることができます。",
+                explanationImage: "images/image052.png",
+                explanationUrl: ""
+            },
+            // ロールバック
+            {
+                category: "ネットワーク",
+                question: "データベース更新の途中で障害が発生した際に、更新前ログファイルを使用してデータベースを更新前の状態に戻すこと。",
+                image: "", 
+                choices: ["コミット", "チェックポイント", "ロールバック", "ロールフォワード"],
+                correctIndex: 2,
+                explanation: "「ロールバック」とは、データベースを更新している途中でエラーが発生した際に、データベースを更新前の状態に戻すことです。\n\nロールバックでは、障害が発生したら更新「前」ログファイルを使ってデータベースを復元します。",
+                explanationImage: "images/image063.png",
+                explanationUrl: "https://wa3.i-3-i.info/word143.html"
+            },
+            // 排他制御
+            {
+                category: "データベース",
+                question: "複数の人が同じデータを同時に更新しようとした場合に、データベースをロックするなどしてデータに矛盾が生じないようにする機能",
+                image: "", 
+                choices: ["再編成", "正規化", "整合性制約", "排他制御"],
+                correctIndex: 3,
+                explanation: "「排他制御」とは、複数の人が同じデータを同時に更新しようとした場合に、データに不整合が起きるのを防ぐ機能です。\n\n例えばデータにロックをかけて、同時に一人しか書き込めないようにします。",
+                explanationImage: "https://medium-company.com/wp-content/uploads/2021/03/lock1.png",
+                explanationUrl: "https://wa3.i-3-i.info/word19090.html"
+            },
+
+            //-------------------------------------
+            //    ネットワーク
+            //-------------------------------------
+
+            // CRC方式
+            {
+                category: "ネットワーク",
+                question: "データをあらかじめ決められた生成多項式でわり算し、その余りをチェックデータとしてデータに付け加えて送ることで、ビット誤りを検出する方式",
+                image: "", 
+                choices: ["CRC方式", "垂直パリティチェック方式", "水平パリティチェック方式", "ハミング符号方式"],
+                correctIndex: 0,
+                explanation: "「CRC方式」とは、データをあらかじめ決められた生成多項式でわり算し、その余りをチェックデータとしてデータに付け加えて送る方式です。受信側でも同じ計算をして、計算結果がチェックデータと同じになれば誤りがないことになります。\n\n" + 
+                "少し難しい説明ですが、安心してください。\n基本情報技術者試験では、上記の「多項式でわり算し、その余りをチェックデータとして付け加える」という、CRC方式の特徴しか出題されません。具体的な計算方法は出題されません。\n\n" + 
+                "「多項式」や「生成多項式」というキーワードが出たら「CRC方式!」が答えです。",
+                explanationImage: "https://utataneblog760.com/wp-content/uploads/2026/08/556-1.jpg",
+                explanationUrl: "https://utataneblog760.com/556crc/"
+            },
+
+            // ポート番号
+            {
+                category: "ネットワーク",
+                question: "ネットワークにおいて、通信相手のアプリケーションを識別するための番号",
+                image: "", 
+                choices: ["MACアドレス", "シーケンス番号", "プロトコル番号", "ポート番号"],
+                correctIndex: 3,
+                explanation: "「ポート番号」とは、通信相手のアプリケーションを識別するための番号です。アプリケーションとは、具体的には「ブラウザ」や「メールソフト」などです。\n\nIPアドレスはコンピュータを識別する番号ですが、コンピュータを特定しただけでは、コンピュータ上で動いているどのアプリケーションソフトウェアと通信すればよいか分かりません。例えば、ブラウザとメールソフトを同時に起動している場合、IPアドレスだけではどちらのアプリケーションソフトウェアと通信したらよいか判断できません。\n\nそこで必要になるのがポート番号です。\n\nそれぞれのアプリケーションソフトウェアに個別に割り当てられているポート番号を使って、通信相手となるアプリケーションソフトウェアを特定します。\n\nちなみに、ポート番号「80番はWebの通信」「25番はメール送信」のように代表的な番号は決まっています。",
+                explanationImage: "images/image053.png",
+                explanationUrl: "https://wa3.i-3-i.info/word171.html"
+            },
+            // MACアドレスの構成
+            {
+                category: "ネットワーク",
+                question: "MACアドレスの構成として正しいものはどれか。",
+                image: "", 
+                choices: ["エリアID　+　IPアドレス", 
+                          "エリアID　+　固有製造番号", 
+                          "ベンダID　+　IPアドレス", 
+                          "ベンダID　+　固有製造番号"],
+                correctIndex: 3,
+                explanation: "「MACアドレス」は、48ビットの番号で、前半24ビットが「ベンダID」、後半24ビットが「固有製造番号」になります。\n\nちなみに、MACアドレスとは、ネットワーク機器ごとに割り当てられている固有の番号です。\n\nIPアドレスは「最終的な通信相手」を特定する番号なのに対して、MACアドレスは「次の通信相手」を特定する番号です。\n\n仮にネットワークを電車の路線と考えるならば、MACアドレスは乗り換え駅の名前、IPアドレスは最終目的地の駅の名前です。\n\n",
+                explanationImage: "images/image054.png",
+                explanationUrl: "https://medium-company.com/mac%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%81%A8%E3%81%AF/"
+            },
+            // IPv4, IPv6
+            {
+                category: "ネットワーク",
+                question: "IPアドレスのIPv4とIPv6はそれぞれ何ビットか",
+                image: "", 
+                choices: ["IPv4=32ビット、IPv6=48ビット", 
+                          "IPv4=32ビット、IPv6=128ビット", 
+                          "IPv4=48ビット、IPv6=48ビット", 
+                          "IPv4=48ビット、IPv6=128ビット"],
+                correctIndex: 1,
+                explanation: "IPアドレスのバージョン4であるIPv4は32ビット、IPv6は128ビットです。\n\nIPv4は32ビットなので43億個（2の32乗）のIPアドレスが設定できますが、世界の人口よりも少ないため足りなくなってしまいました。\nそこで「IPアドレスの枯渇問題」を解決するために登場したのがIPv6です。\n\nIPv6は128ビットで構成されているので、IPアドレスの総数は340兆の1兆倍の1兆倍（2の128乗）になります。この数は、地球上に転がっている石よりも多く、ほぼ無限大といえます。",
+                explanationImage: "images/image064.png",
+                explanationUrl: "https://wa3.i-3-i.info/word11735.html"
+            },
+            // DHCP
+            {
+                category: "ネットワーク",
+                question: "IPアドレスを動的に割り当てるプロトコル",
+                image: "", 
+                choices: ["ARP", "DHCP", "RIP", "SMTP"],
+                correctIndex: 1,
+                explanation: "「DHCP」とは、IPアドレスを自動的に割り当てるプロトコルです。\n\nコンピュータが通信するには各コンピュータにIPアドレスを設定する必要がありますが、コンピュータが数十台、数百台となると大変です。DHCPはこのIPアドレスの設定を自動化してくれます。",
+                explanationImage: "images/image055.png",
+                explanationUrl: "https://wa3.i-3-i.info/word1959.html"
+            },
+            // NAT
+            {
+                category: "ネットワーク",
+                question: "プライベートIPアドレスとグローバルIPアドレスを相互に変換する機能",
+                image: "", 
+                choices: ["DHCP", "DNS", "NAT", "VPN"],
+                correctIndex: 2,
+                explanation: "「NAT」（Network Address Translation：ネットワークアドレス変換）とは、「プライベートIPアドレス」を「グローバルIPアドレス」へ変換する技術です。\n\nインターネットに接続するにはグローバルIPアドレスが必要なのですが、IPv4ではアドレスが43億個しかないので、すべてのコンピュータにグローバルIPアドレスを割り当てることができません。そこで、NATの技術を使って、インターネットへの接続が必要ないときはプライベートIPアドレスを使い、必要になったときのみ、グローバルIPアドレスに変換することでIPv4の不足問題を解決しています。",
+                explanationImage: "images/image056.png",
+                explanationUrl: "https://wa3.i-3-i.info/word11978.html"
+            },
+            // NAPT
+            {
+                category: "ネットワーク",
+                question: "プライベートIPアドレスの複数の端末が,一つのグローバルIPアドレスを使ってインターネットに接続する仕組み。",
+                image: "", 
+                choices: ["DHCP", "DNS", "RADIUS", "NAPT"],
+                correctIndex: 3,
+                explanation: "「NAPT」とは、「複数のプライベートIPアドレス」を、1つのグローバルIPアドレスに変換する技術です。\n\nNAPTを利用すると、プライベートIPアドレスを持つ複数のコンピュータが、同時にインターネットにアクセスできます。\n\n先ほどのNATも、プライベートIPアドレスをグローバルIPアドレスに変換するという点ではNAPTと似た技術ですが、NATは「1つの」プライベートIPアドレスを1つのグローバルIPアドレスに変換することしかできません。この点がNAPTと大きく異なるので注意してください。",
+                explanationImage: "images/image057.png",
+                explanationUrl: "https://wa3.i-3-i.info/word11979.html"
+            },
+            // DNS
+            // {
+            //     category: "ネットワーク",
+            //     question: "ドメイン名やホスト名などとIPアドレスとを対応付ける仕組み。",
+            //     image: "", 
+            //     choices: ["DHCP", "DNS", "VPN", "NAPT"],
+            //     correctIndex: 1,
+            //     explanation: "「DNS」とは、ドメイン名をIPアドレスに変換するシステムです。\n\nコンピュータが通信するにはIPアドレスが必要ですが、「13.112.248.159」のような数字だけのIPアドレスは人間にとって覚えにくいです。そこでDNSという仕組みによってドメイン名をIPアドレスに変換することで、「www.example.co.jp」のような名前でWebサイト等にアクセスできるようにしています。\n\n基本情報技術者試験では「ドメイン名とIPアドレスを対応させる仕組み」という文章で出題されることがあります。",
+
+            //     explanationImage: "images/image058.png",
+            //     explanationUrl: "https://wa3.i-3-i.info/word1287.html"
+            // },
+
+            // NTP
+            // {
+            //     category: "ネットワーク",
+            //     question: "時刻合わせをするプロトコル",
+            //     image: "", 
+            //     choices: ["ARP", "ICMP", "NTP", "RIP"],
+            //     correctIndex: 2,
+            //     explanation: "「NTP」（Network Time Protocol）とは、コンピュータの時刻を合わせるためのプロトコルです。",
+            //     explanationImage: "images/image059.png",
+            //     explanationUrl: "https://wa3.i-3-i.info/word12071.html"
+            // },
+            // MIME
+            {
+                category: "ネットワーク",
+                question: "メールでテキストだけでなく、音声、画像なども扱えるようにしたものはどれか",
+                image: "", 
+                choices: ["HTML", "MHS", "MIME", "SMTP"],
+                correctIndex: 2,
+                explanation: "「MIME」（Multipurpose Internet Mail Extensions）とは、電子メールで文字以外の画像や音声、動画といった、さまざまな形式のデータを転送するための規格です。\n\n実はメールはもともとアメリカで生まれたこともあり、半角英数字しか送ることができません。\n\nそこで画像や動画などの文字以外のデータは、わざわざ一度文字コードに変換してから送信しています。このとき使われる規格がMIMEです。",
+                explanationImage: "",
+                explanationUrl: "https://wa3.i-3-i.info/word11118.html"
+            },
+
+            // リピーター
+            {
+                category: "ネットワーク",
+                question: "伝送距離を延長するために減衰した信号を増幅する装置",
+                image: "", 
+                choices: ["ルーター", "アクセスポイント", "スイッチングハブ", "リピーター"],
+                correctIndex: 3,
+                explanation: "「リピーター」とは、長いケーブルを通って弱くなってしまった信号を増幅・成形する装置です。",
+                explanationImage: "images/image062.png",
+                explanationUrl: "https://wa3.i-3-i.info/word12044.html"
+            },
+            // スイッチングハブ
+            {
+                category: "ネットワーク",
+                question: "受信したパケットを、宛先MACアドレスが存在するLANポートだけに転送する装置",
+                image: "", 
+                choices: ["ルーター", "アクセスポイント", "スイッチングハブ", "リピーター"],
+                correctIndex: 2,
+                explanation: "「スイッチングハブ」とは、宛先MACアドレスを見て、そのMACアドレスが存在するポートだけに転送する装置です。\n\n「レイヤー2スイッチ」ともいいます。",
+                explanationImage: "images/image061.png",
+                explanationUrl: "https://wa3.i-3-i.info/word1956.html"
+            },
+            // ルーター
+            {
+                category: "ネットワーク",
+                question: "IPアドレスを見てルーティング（経路選択）を行う装置",
+                image: "", 
+                choices: ["ルーター", "アクセスポイント", "スイッチングハブ", "リピーター"],
+                correctIndex: 0,
+                explanation: "「ルーター」（Router）とは、宛先IPアドレスを読み取り、データを送り出す先を決定する装置です。",
+                explanationImage: "images/image060.png",
+                explanationUrl: "https://wa3.i-3-i.info/word1393.html"
+            },
 
 
         ];
